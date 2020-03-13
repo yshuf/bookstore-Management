@@ -74,6 +74,7 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log($(".el-aside").css("width", "65px"));
+      s;
       console.log(key, keyPath);
     }
   }

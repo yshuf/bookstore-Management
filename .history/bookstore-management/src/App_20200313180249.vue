@@ -67,13 +67,14 @@ export default {
       isCollapse: false
     };
   },
-  mounted() {},
+  mounted() {
+    console.log($);
+  },
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
-      console.log($(".el-aside").css("width", "65px"));
       console.log(key, keyPath);
     }
   }
