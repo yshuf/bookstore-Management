@@ -6,9 +6,18 @@
         <img src="../assets/logo.png" alt />
       </div>
       <!-- 表单区域 -->
-      <el-form label-width="80px">
-        <el-form-item label="活动名称">
-          <el-input></el-input>
+      <el-form class="login_input" ref="loginValidateRef" :model="loginForm" :rules="loginRules">
+        <!-- 用户名  prefix-icon 添加前置图标-->
+        <el-form-item prop="username">
+          <el-input prefix-icon="iconfont icon-yonghu" v-model="loginForm.username"></el-input>
+        </el-form-item>
+        <!-- 密码 -->
+        <el-form-item prop="password">
+         <el-input type="password" prefix-icon="iconfont icon-denglumima" v-model="loginForm.password"></el-input>
+        </el-form-item>
+        <el-form-item class="btns">
+          <el-button type="primary" @click="login">登录</el-button>
+          <el-button type="info" @click="resetForm">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -17,7 +26,40 @@
 
 <script>
 export default {
-
+  data(){
+    return {
+      // 登录表单信息
+      loginForm: {
+        username:"",
+        password:"",
+      },
+      loginRules:{
+        username:[{ required: true, message: '请输入用户名', trigger: 'blur' },
+            { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+          ],
+          password:[
+            { required: true, message: '请输入登录密码', trigger: 'blur' },
+            { min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'blur' }
+          ]
+      }
+    }
+  },
+  methods: {
+    // 重置按钮
+    resetForm(){
+      this.$refs.loginValidateRef.resetFields();
+    },
+    // 登录操作
+    login(){
+      this.$refs.loginValidateRef.validate(async valid=>{
+        console.log(valid)
+        if(!valid) return;
+        // 如果一个方法返回promise 用 await 和async简化
+        let resules= await this.$http.post('post',this.loginForm);
+        
+      })
+    }
+  },  
 }
 </script>
 
@@ -53,5 +95,16 @@ export default {
       background: #eee;
     }
   }
+}
+.login_input{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+.btns{
+  display: flex;
+  justify-content: flex-end
 }
 </style>

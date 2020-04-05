@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import $ from "Jquery";
+import $ from "jquery";
 export default {
   name: 'app',
 };
