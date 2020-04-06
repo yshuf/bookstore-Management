@@ -26,12 +26,13 @@
 
 <script>
 export default {
+  name:'Login',
   data(){
     return {
       // 登录表单信息
       loginForm: {
-        username:"",
-        password:"",
+        username:"admin",
+        password:"123456",
       },
       loginRules:{
         username:[{ required: true, message: '请输入用户名', trigger: 'blur' },
@@ -52,11 +53,21 @@ export default {
     // 登录操作
     login(){
       this.$refs.loginValidateRef.validate(async valid=>{
-        console.log(valid)
+        // this.$message({
+        //   message: '恭喜你，这是一条成功消息',
+        //   type: 'success'
+        // });
         if(!valid) return;
         // 如果一个方法返回promise 用 await 和async简化
-        let resules= await this.$http.post('post',this.loginForm);
-        
+        // let resules= await this.$http.post(url,this.loginForm);
+
+        // 将登陆成功之后的 token，保存到客户端的 sessionStorage中
+        //  1.项目中出了登录之外的其他API接口，必须在登陆之后才能访问
+        //  2.token 只应在当前网站打开期间生效,所以token保存在sessionStorage中
+        // 通过编程式导航跳转到后台主页，路由地址为 /home
+        window.sessionStorage.setItem('token','123456789');
+        this.$router.push('/home');
+
       })
     }
   },  
@@ -105,6 +116,6 @@ export default {
 }
 .btns{
   display: flex;
-  justify-content: flex-end
+  justify-content: flex-end;
 }
 </style>
