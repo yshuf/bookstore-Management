@@ -1,7 +1,35 @@
 <template>
-  <div class="hello">
+  <el-container class="home-container">
+  <el-header>
+    <div> 
+      <img src="" alt="">
+      <span>书店后台管理系统</span>
+    </div>
     <el-button type="info" @click="loginout">退出</el-button>
-  </div>
+  </el-header>
+  <el-container>
+    <el-aside width="200px">
+      <el-menu
+      class="el-menu-vertical-demo"
+      background-color="#000"
+      text-color="#fff"
+      active-text-color="#ffd04b">
+      <el-submenu index="1">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>导航一</span>
+        </template>
+        <el-menu-item index="1-4-1">
+          <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>导航一</span>
+        </template></el-menu-item>
+      </el-submenu>
+    </el-menu>
+    </el-aside>
+    <el-main>Main</el-main>
+  </el-container>
+</el-container>
 </template>
 
 <script>
@@ -25,5 +53,25 @@ export default{
 </script>
 
 <style scoped lang="less">
+.home-container {
+  height:100%;
+}
+.el-header {
+    background:#000;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 0;
+    color:#fff;
+    font-size: 20px;
+    // >div {
 
+    // }
+}
+.el-aside {
+  background: #000;
+}
+.el-main {
+  background: #eaedf1;
+}
 </style>

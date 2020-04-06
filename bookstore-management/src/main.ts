@@ -15,7 +15,14 @@ import store from "./store";
 
 Vue.use(ElementUI);
 //挂载到原型对象（配置请求的根路径）
-axios.defaults.baseURL=''
+axios.defaults.baseURL='';
+// axios 请求拦截
+axios.interceptors.request.use(config=>{
+  // 为请求头对象，添加Token 验证 Authorization 字段  
+  // console.log(config);
+  config.headers.Authorization=window.sessionStorage.getItem('token');
+  return config
+})
 Vue.prototype.$http=axios;
 Vue.config.productionTip = false;
 
