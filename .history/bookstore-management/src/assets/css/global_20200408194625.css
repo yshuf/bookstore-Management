@@ -1,0 +1,15 @@
+/* 全局样式 */
+body,
+html,
+#app {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.page-content {
+    background: #fff;
+    min-height: 100%;
+    box-shadow: 0 2px 2px 0 #ccc;
+    padding: 20px;
+}

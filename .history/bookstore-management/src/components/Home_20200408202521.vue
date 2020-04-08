@@ -181,7 +181,7 @@ export default {
   }
   .toggle-btn {
     color: #fff;
-    font-size: 18px;
+    font-size: 20px;
     text-align: center;
     background: #090909;
     line-height: 24px;

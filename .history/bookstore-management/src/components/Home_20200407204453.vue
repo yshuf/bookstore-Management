@@ -2,18 +2,14 @@
   <el-container class="home-container">
     <el-header>
       <div>
-        <img src alt />
+        <img src="" alt="" />
         <span>书店后台管理系统</span>
       </div>
       <el-button type="info" @click="loginout">退出</el-button>
     </el-header>
     <el-container>
-      <!-- 左侧菜单栏 -->
       <el-aside :width="isCollapse ? '64px' : '200px'">
-        <div class="toggle-btn" @click="togglemenu()">
-          <i class="el-icon-s-fold" v-if="!isCollapse"></i>
-          <i class="el-icon-s-unfold" v-if="isCollapse"></i>
-        </div>
+        <div class="toggle-btn" @click="togglemenu()">《《</div>
         <!-- unique-opened 唯一展开某一菜单  collapse 开启菜单的折叠 collapse-transition 折叠动画 -->
         <el-menu
           class="el-menu-vertical-demo"
@@ -23,33 +19,31 @@
           unique-opened
           :collapse="isCollapse"
           :collapse-transition="false"
-          router
-          :default-active="activePath"
         >
-          <el-submenu :index="'/'+item.path" v-for="item in menuList" :key="item.id">
+          <el-submenu
+            :index="item.id + ''"
+            v-for="item in menuList"
+            :key="item.id"
+          >
             <!-- 防止这里点击第一个菜单时，其他项菜单联动打开，这里的的 index 属性应该设置为不同的值  -->
             <template slot="title">
               <i :class="iconsList[item.id]"></i>
               <span class="menuTxt">{{ item.authName }}</span>
             </template>
             <el-menu-item
-              :index="'/'+subItem.path"
+              :index="subItem.id + ''"
               v-for="subItem in item.children"
               :key="subItem.id"
-              @click="saveNavStatus('/'+subItem.path)"
             >
               <template slot="title">
-                <i class="el-icon-menu"></i>
+                <i class="el-icon-location"></i>
                 <span>{{ subItem.authName }}</span>
-              </template>
-            </el-menu-item>
+              </template></el-menu-item
+            >
           </el-submenu>
         </el-menu>
       </el-aside>
-      <!-- 主体部分 -->
-      <el-main>
-        <router-view></router-view>
-      </el-main>
+      <el-main>Main</el-main>
     </el-container>
   </el-container>
 </template>
@@ -57,11 +51,10 @@
 <script>
 export default {
   name: 'Home',
-  created () {
+  created() {
     this.getMenuList()
-    this.activePath = window.sessionStorage.getItem('active_path');
   },
-  data () {
+  data() {
     return {
       // 左侧菜单栏
       menuList: [],
@@ -72,17 +65,15 @@ export default {
         '104': 'icon iconfont icon-yonghu',
         '105': 'icon iconfont icon-icon-'
       },
-      isCollapse: false,
-      // 默认激活菜单为空
-      activePath: ''
+      isCollapse: false
     }
   },
   methods: {
-    loginout () {
+    loginout() {
       window.sessionStorage.clear()
       this.$router.push('/login')
     },
-    async getMenuList () {
+    async getMenuList() {
       //   const { data: res } = await this.$http.get('menus')
       //   if (res.meta.status !== 200)
       //     return this.$message({
@@ -93,24 +84,24 @@ export default {
         {
           id: 100,
           authName: '数据统计',
-          path: 'overview',
+          path: null,
           children: []
         },
         {
           id: 101,
           authName: '账号管理',
-          path: "userAccount",
+          path: null,
           children: [
             {
               id: 102,
               authName: '用户账号',
-              path: 'userAccount',
+              path: null,
               children: []
             },
             {
               id: 103,
               authName: '员工账号',
-              path: 'adminAccount',
+              path: null,
               children: []
             }
           ]
@@ -118,24 +109,24 @@ export default {
         {
           id: 105,
           authName: '书籍管理',
-          path: "bookManagement",
+          path: null,
           children: [
             {
               id: 106,
               authName: '书籍列表',
-              path: "bookManagement",
+              path: null,
               children: []
             },
             {
               id: 107,
               authName: '分类参数',
-              path: 'sortParams',
+              path: null,
               children: []
             },
             {
               id: 108,
               authName: '书籍分类',
-              path: 'booksSort',
+              path: null,
               children: []
             }
           ]
@@ -143,19 +134,13 @@ export default {
         {
           id: 104,
           authName: '个人中心',
-          path: "userCenter",
+          path: null,
           children: []
         }
       ]
     },
-    // 点击按钮，切换菜单的折叠与展开
-    togglemenu () {
+    togglemenu() {
       this.isCollapse = !this.isCollapse
-    },
-    // 保存当前点击菜单的路由
-    saveNavStatus (url) {
-      window.sessionStorage.setItem('active_path', url);
-      this.activePath = url;
     }
   }
 }
@@ -181,7 +166,7 @@ export default {
   }
   .toggle-btn {
     color: #fff;
-    font-size: 18px;
+    font-size: 14px;
     text-align: center;
     background: #090909;
     line-height: 24px;

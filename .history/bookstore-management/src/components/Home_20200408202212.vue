@@ -10,10 +10,7 @@
     <el-container>
       <!-- 左侧菜单栏 -->
       <el-aside :width="isCollapse ? '64px' : '200px'">
-        <div class="toggle-btn" @click="togglemenu()">
-          <i class="el-icon-s-fold" v-if="!isCollapse"></i>
-          <i class="el-icon-s-unfold" v-if="isCollapse"></i>
-        </div>
+        <div class="toggle-btn" @click="togglemenu()">《《</div>
         <!-- unique-opened 唯一展开某一菜单  collapse 开启菜单的折叠 collapse-transition 折叠动画 -->
         <el-menu
           class="el-menu-vertical-demo"
@@ -181,7 +178,7 @@ export default {
   }
   .toggle-btn {
     color: #fff;
-    font-size: 18px;
+    font-size: 14px;
     text-align: center;
     background: #090909;
     line-height: 24px;

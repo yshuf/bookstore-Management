@@ -5,10 +5,6 @@ import Home from '../components/Home.vue'
 import Overview from '../components/overview.vue'
 import UserCenter from '../components/userCenter.vue'
 import UserAccount from '../components/userAccount.vue'
-import AdminAccount from '../components/adminAccount.vue'
-import BookManagement from '../components/bookManagement.vue'
-import SortParams from '../components/sortParams.vue'
-import BooksSort from '../components/booksSort.vue'
 
 Vue.use(VueRouter)
 
@@ -32,26 +28,6 @@ const router = new VueRouter({
           path: '/userAccount',
           name: 'UserAccount',
           component: UserAccount
-        },
-        {
-          path: '/adminAccount',
-          name: 'AdminAccount',
-          component: AdminAccount
-        },
-        {
-          path: '/bookManagement',
-          name: 'BookManagement',
-          component: BookManagement
-        },
-        {
-          path: '/sortParams',
-          name: 'SortParams',
-          component: SortParams
-        },
-        {
-          path: '/booksSort',
-          name: 'BooksSort',
-          component: BooksSort
         }
       ]
     }

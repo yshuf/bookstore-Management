@@ -1,0 +1,24 @@
+<template>
+  <div class="login_container">
+    <div class="login_box"></div>
+  </div>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style lang="less" scoped>
+.login_container {
+  height: 100%;
+  background: #2b4b6b;
+}
+.login_box {
+  width: 450px;
+  height: 300px;
+  border-radius: 3px;
+  background: #fff;
+}
+</style>
