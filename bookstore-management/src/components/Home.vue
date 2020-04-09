@@ -5,7 +5,11 @@
         <img src alt />
         <span>书店后台管理系统</span>
       </div>
-      <el-button type="info" @click="loginout">退出</el-button>
+      <div style="margin-right:25px;" @click="loginout">
+        <span class="userName">admin</span>
+        <i class="icon iconfont icon-guangji" style="font-size:18px; cursor:pointer;"></i>
+      </div>
+      <!-- <el-button type="info" @click="loginout">退出</el-button> -->
     </el-header>
     <el-container>
       <!-- 左侧菜单栏 -->
@@ -164,6 +168,10 @@ export default {
 <style scoped lang="less">
 .home-container {
   height: 100%;
+  .userName {
+    font-size: 14px;
+    margin-right: 10px;
+  }
 }
 .el-header {
   background: #000;
