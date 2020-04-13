@@ -1,4 +1,5 @@
 /* 全局样式 */
+
 body,
 html,
 #app {
@@ -34,4 +35,9 @@ html,
 
 .el-table--enable-row-transition .el-table__body td {
     text-align: center;
+}
+
+.el-input-group--append .el-input__inner,
+.el-input-group__prepend {
+    width: 280px;
 }
