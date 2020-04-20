@@ -71,7 +71,7 @@ export default {
       menuList: [],
       // 菜单栏字体图标
       iconsList: {
-        '100': 'icon iconfont icon-guanli',
+        '99': 'icon iconfont icon-guanli',
         '101': 'icon iconfont icon-yonghuguanli',
         '104': 'icon iconfont icon-yonghu',
         '105': 'icon iconfont icon-icon-'
@@ -95,10 +95,17 @@ export default {
       //     })
       this.menuList = [
         {
-          id: 100,
+          id: 99,
           authName: '数据统计',
           path: 'overview',
-          children: []
+          children: [
+            {
+              id: 100,
+              authName: '概览统计',
+              path: 'overview',
+              children: []
+            }
+          ]
         },
         {
           id: 101,
