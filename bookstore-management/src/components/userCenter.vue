@@ -3,7 +3,7 @@
     <div class="top-block">
       <div class="top-block-info">
         <div class="avator">
-          <img src="/static/images/ent/headimg.png" />
+          <!-- <img src="../assets/images/headimg.png" /> -->
         </div>
         <div class="title">
           <p class="title_welcome">
@@ -401,7 +401,7 @@ export default {
     height: 161px;
     display: flex;
     align-items: center;
-    background: #fff url('../static/images/business-bg.png') bottom right
+    background: #fff url('../assets/images/business-bg.png') bottom right
       no-repeat;
     background-size: 60% 110px;
 
