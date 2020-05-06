@@ -155,7 +155,9 @@ export default {
           id: 104,
           authName: '个人中心',
           path: "userCenter",
-          children: []
+          children: [
+
+          ]
         }
       ]
     },

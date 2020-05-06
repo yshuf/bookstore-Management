@@ -3,8 +3,15 @@
     <div class="title">统计概览页面</div>
     <!-- <div :id="id" style="width:100%" /> -->
     <div class="dataCharts">
-      <div class="chart" id="lineCharts" style="height:300px;" />
-      <div id="bookRank" style="height:300px;"></div>
+      <div class="chart" id="lineCharts" style="height:350px;" />
+      <div id="bookRank" style="height:350px;"></div>
+      <div style="height:350px;" id="loginChart">
+        <!-- <div>过去一周登录走势图</div> -->
+      </div>
+      <div style="height:350px;" id="dealAmount">
+        <div>过去一周成交总额情况</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -12,33 +19,43 @@
 <script>
 export default {
   name: 'Overview',
-  data() {
+  data () {
     return {
       id: '',
-      myChart: null
+      myChart: null,
+      dealTotalAmount: [
+        { number: 1, unit: '家', name: '白夜行', num: '50', },
+        { number: 2, unit: '家', name: '白夜行', num: '50', },
+        { number: 3, unit: '家', name: '白夜行', num: '50', },
+        { number: 4, unit: '家', name: '白夜行', num: '50', },
+        { number: 5, unit: '家', name: '白夜行', num: '50', },
+      ]
     }
   },
-  created() {
+  created () {
     this.id = Math.random()
       .toString(36)
       .substr(2)
   },
-  mounted() {
-    this.drawLine()
+  mounted () {
+    this.$nextTick(function () {
+      this.drawLine()
+    })
+
   },
   methods: {
-    drawLine() {
+    drawLine () {
       let myChart = this.$echarts.init(document.getElementById('lineCharts'))
-      let bookRankChart = this.$echarts.init(
-        document.getElementById('bookRank')
-      )
+      let bookRankChart = this.$echarts.init(document.getElementById('bookRank'))
+      let loginChart = this.$echarts.init(document.getElementById('loginChart'))
       myChart.setOption({
         color: ['#3398DB'],
         title: {
-          text: '最近一周销售情况'
+          text: '最近一周销售书籍排名情况'
         },
         tooltip: {
           trigger: 'axis',
+        //   formatter: '{a} <br/>{b}: {c}本',
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
             type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
@@ -53,7 +70,7 @@ export default {
         xAxis: [
           {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            data: ['白夜行', '八十天环游世界', '追风筝的人', '羊脂球', '飘'],
             axisTick: {
               alignWithLabel: true
             }
@@ -66,14 +83,26 @@ export default {
         ],
         series: [
           {
-            name: '直接访问',
+            name: '销售量',
             type: 'bar',
-            barWidth: '60%',
-            data: [10, 52, 200, 334, 390, 330, 220]
+            barWidth: '35%',
+            data: [200, 10, 52, 334, 390],
+            itemStyle:{
+                        normal:{
+                            color:function (params) {
+                                let colorList=['#FBC103','rgba(0, 183, 147, 0.6)','#FBC103','rgba(0, 183, 147, 0.6)','#FBC103']
+                                return colorList[params.dataIndex]
+
+                            }
+                        }
+                    }
           }
         ]
       })
       bookRankChart.setOption({
+        title: {
+          text: '过去一周查询搜索书籍排名'
+        },
         color: [
           '#00b793',
           'rgba(0, 183, 147, 0.8)',
@@ -83,16 +112,17 @@ export default {
         ],
         tooltip: {
           trigger: 'item',
-          formatter: '{a} <br/>{b}: {c} ({d}%)'
+          formatter: '{a} <br/>{b}: {c}次 ({d}%)'
         },
         legend: {
           orient: 'vertical',
           left: 10,
-          data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+          top: 50,
+          data: ['追风筝的人', '白夜行', '岛上书店', '浮生物语', '挪威的森林']
         },
         series: [
           {
-            name: '访问来源',
+            name: '搜索排名',
             type: 'pie',
             radius: ['50%', '70%'],
             avoidLabelOverlap: false,
@@ -111,12 +141,85 @@ export default {
               show: false
             },
             data: [
-              { value: 335, name: '直接访问' },
-              { value: 310, name: '邮件营销' },
-              { value: 234, name: '联盟广告' },
-              { value: 135, name: '视频广告' },
-              { value: 1548, name: '搜索引擎' }
+              { value: 335, name: '追风筝的人' },
+              { value: 310, name: '白夜行' },
+              { value: 234, name: '岛上书店' },
+              { value: 135, name: '浮生物语' },
+              { value: 1548, name: '挪威的森林' }
             ]
+          }
+        ]
+      })
+      loginChart.setOption({
+        title: {
+          text: '过去一周登录走势图'
+        },
+        color: ['#00b793'],
+        tooltip: {
+          trigger: 'axis',
+          formatter: '{b}<br />{c}人'
+        },
+        grid: {
+          left: 90,
+        },
+
+        xAxis: {
+          type: 'category',
+          data: ['4月22日', '4月23日', '4月24日', '4月25日', '4月26日'],
+          axisLabel: {
+            color: '#666',
+            fontSize: 10,
+            interval: 0,
+          },
+          axisTick: {
+            show: false
+          }
+        },
+        yAxis: {
+          type: 'value',
+          axisLabel: {
+            color: '#666',
+            fontSize: 14,
+            formatter: '{value} 人'
+          },
+          splitLine: {
+            lineStyle: {
+              color: ['#e3e3e3']
+            }
+          },
+          // minInterval: max?max/2:0.5,
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          }
+        },
+
+        series: [
+          {
+            // name:'申请量',
+            type: 'line',
+            barGap: 0,
+            data: [20, 53, 66, 43, 20],
+            barWidth: 10,
+            areaStyle: {
+              normal: {
+                color: {
+                  type: 'linear',
+                  x: 0,
+                  y: 0,
+                  x2: 0,
+                  y2: 1,
+                  colorStops: [{
+                    offset: 0, color: 'rgba(0, 183, 147, 0.3)' // 0% 处的颜色
+                  }, {
+                    offset: 1, color: '#fff' // 100% 处的颜色
+                  }],
+                  globalCoord: false // 缺省为 false
+                }
+              }
+            }
           }
         ]
       })
@@ -127,18 +230,24 @@ export default {
 
 <style lang="less" scoped>
 .title {
-  padding: 20px;
-  font-size: 18px;
-  background: #fff;
+    margin: 0 auto 10px;
+    padding: 20px;
+    font-size: 18px;
+    background: #fff;
+    width: 95%;
+    font-size: 18px;
 }
 .dataCharts {
   width: 100%;
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
   div {
     background: #fff;
     padding: 20px;
     width: 45%;
+    margin-bottom: 20px;
   }
-}</style
+}
+</style
 >>
