@@ -1,6 +1,6 @@
 <template>
   <div class="overview_container">
-    <div class="title">统计概览页面</div>
+    <div class="title">统计概览</div>
     <!-- <div :id="id" style="width:100%" /> -->
     <div class="dataCharts">
       <div class="chart" id="lineCharts" style="height:350px;" />
@@ -235,7 +235,8 @@ export default {
     font-size: 18px;
     background: #fff;
     width: 95%;
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: 600;
 }
 .dataCharts {
   width: 100%;

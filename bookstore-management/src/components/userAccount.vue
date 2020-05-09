@@ -2,18 +2,9 @@
   <div class="page-content">
     <p class="page-title">用户账号</p>
     <div class="search">
-      <div class="selectInput">
-        <el-input
-          placeholder="请输入姓名/手机"
-          v-model="key"
-          class="input-with-select"
-        >
-          <el-button slot="append" icon="el-icon-search"></el-button>
-        </el-input>
-      </div>
       <div class="select">
-        <p class="title">状态 :</p>
-        <el-select v-model="value" placeholder="请选择">
+        <div class="title">状态 :</div>
+        <el-select v-model="value" @change="selectStatus" placeholder="请选择">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -22,28 +13,38 @@
           ></el-option>
         </el-select>
       </div>
+
+      <div class="block select">
+        <p class="title">创建时间 :</p>
+        <el-date-picker
+          v-model="time"
+          type="daterange"
+          align="right"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          value-format="yyyy-MM-dd"
+          @change="selectTime"
+        ></el-date-picker>
+      </div>
+
+      <div class="select">
+        <el-input placeholder="请输入姓名/用户名/手机" v-model="key" class="input-with-select">
+          <el-button slot="append" icon="el-icon-search" @click="search()"></el-button>
+        </el-input>
+      </div>
+
       <div class="select addBtn">
-        <el-button type="primary" @click="addAndEdit('add')"
-          >添加账号</el-button
-        >
+        <el-button type="primary" @click="addAndEdit('add')">添加账号</el-button>
       </div>
     </div>
-    <el-table :data="tableData" border style="width: 100%">
-      <el-table-column prop="id" label="序号" width="180"></el-table-column>
-      <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-      <el-table-column
-        prop="phone"
-        label="手机号"
-        width="180"
-      ></el-table-column>
-      <el-table-column prop="address" label="地址"></el-table-column>
-      <el-table-column prop="status" label="状态" width="180"></el-table-column>
-      <el-table-column
-        prop="date"
-        label="创建时间"
-        width="180"
-      ></el-table-column>
-      <el-table-column fixed="right" label="操作" width="100">
+    <el-table :data="tableData" style="width: 100%">
+      <el-table-column prop="id" label="序号" width="200"></el-table-column>
+      <el-table-column prop="name" label="姓名" width="200"></el-table-column>
+      <el-table-column prop="userName" label="用户名"></el-table-column>
+      <el-table-column prop="phone" label="手机号" width="200"></el-table-column>
+      <el-table-column prop="status" label="状态" width="200"></el-table-column>
+      <el-table-column prop="date" label="创建时间" width="200"></el-table-column>
+      <el-table-column fixed="right" label="操作" width="200">
         <template slot-scope="scope">
           <el-popconfirm
             confirmButtonText="好的"
@@ -52,11 +53,10 @@
             iconColor="red"
             title="这是一段内容确定删除吗？"
             onConfirm="handleClick(scope.row)"
-            ><el-button type="text" size="small">删除</el-button></el-popconfirm
           >
-          <el-button type="text" size="small" @click="addAndEdit('edit')"
-            >编辑</el-button
-          >
+            <el-button type="text" size="small">删除</el-button>
+          </el-popconfirm>
+          <el-button type="text" size="small" @click="addAndEdit('edit')">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -82,9 +82,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false"
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -93,10 +91,20 @@
 <script>
 export default {
   name: 'UserAccount',
-  data() {
+  created () {
+
+  },
+  mounted () {
+
+  },
+  data () {
     return {
       value: '',
       key: '',
+      time: '',
+      status: '', // 状态
+      startTime: '', // 创建时间 开始时间
+      endTime: '',   // 结束时间
       dialogFormVisible: false,
       titleName: '',
       formLabelWidth: '120px',
@@ -105,7 +113,7 @@ export default {
           id: 1,
           date: '2016-05-02',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
+          userName: 'zhengce',
           phone: '18870772596',
           status: '停用'
         },
@@ -113,7 +121,7 @@ export default {
           id: 2,
           date: '2016-05-04',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
+          userName: 'cy7480',
           phone: '18870772596',
           status: '停用'
         },
@@ -121,7 +129,7 @@ export default {
           id: 3,
           date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
+          userName: 'zytest7410',
           phone: '18870772596',
           status: '停用'
         },
@@ -129,7 +137,7 @@ export default {
           id: 4,
           date: '2016-05-03',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
+          userName: 'dsad',
           phone: '18870772596',
           status: '停用'
         }
@@ -157,9 +165,22 @@ export default {
     }
   },
   methods: {
-    addAndEdit(type) {
+    addAndEdit (type) {
       this.dialogFormVisible = true
       this.titleName = type === 'add' ? '添加账号' : '编辑账号'
+    },
+    // 状态筛选
+    selectStatus (type) {
+      this.status = type;
+    },
+    // 时间筛选
+    selectTime (data) {
+      this.startTime = data[0]
+      this.endTime = data[1]
+    },
+    // 点击筛选按钮
+    search () {
+      console.log(this.key)
     }
   }
 }
@@ -169,25 +190,20 @@ export default {
 .search {
   display: flex;
   margin-bottom: 10px;
+  position: relative;
 }
 
-.selectInput,
 .select {
   display: flex;
   align-items: center;
-}
-
-.select {
-  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .addBtn {
   text-align: right;
-}
-
-.title {
-  font-size: 16px;
-  margin-right: 8px;
+  position: absolute;
+  top: -45px;
+  right: 20px;
 }
 
 .el-dialog__wrapper .el-dialog {

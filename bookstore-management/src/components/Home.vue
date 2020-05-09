@@ -6,7 +6,7 @@
         <span>书店后台管理系统</span>
       </div>
       <div style="margin-right:25px;" @click="loginout">
-        <span class="userName">admin</span>
+        <span class="userName">你好，欢迎您！ admin</span>
         <i class="icon iconfont icon-guangji" style="font-size:18px; cursor:pointer;"></i>
       </div>
       <!-- <el-button type="info" @click="loginout">退出</el-button> -->

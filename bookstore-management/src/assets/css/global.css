@@ -19,8 +19,24 @@ html,
     font-weight: 600;
 }
 
+.select {
+    display: flex;
+    margin-left: 20px;
+    align-items: center;
+}
+
+.select .title {
+    font-size: 16px;
+    margin-right: 8px;
+}
+
 .el-table {
     border-radius: 8px;
+}
+
+.search {
+    display: flex;
+    margin-bottom: 10px;
 }
 
 .el-table td,
@@ -29,8 +45,8 @@ html,
 }
 
 .el-table th.is-leaf {
-    background: #EBEEF5;
-    /* color: #fff; */
+    background: #3A424F;
+    color: #fff;
 }
 
 .el-table--enable-row-transition .el-table__body td {
