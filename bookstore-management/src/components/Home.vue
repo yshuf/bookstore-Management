@@ -23,7 +23,7 @@
           class="el-menu-vertical-demo"
           background-color="#000"
           text-color="#fff"
-          active-text-color="#409EFF"
+          active-text-color="#00b793"
           unique-opened
           :collapse="isCollapse"
           :collapse-transition="false"
@@ -156,7 +156,12 @@ export default {
           authName: '个人中心',
           path: "userCenter",
           children: [
-
+            {
+              id: 105,
+              authName: '个人中心',
+              path: "userCenter",
+              children: []
+            }
           ]
         }
       ]

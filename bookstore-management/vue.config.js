@@ -1,8 +1,26 @@
 const webpack = require("webpack");
 module.exports = {
     runtimeCompiler: true,
+    /* 注意sass，scss，less的配置 */
+    css: {
+        loaderOptions: {
+            sass: {
+                prependData: `
+          @import "~@/assets/name.scss";
+        `
+            },
+            scss: {
+                prependData: `@import "~@/variables.scss";`
+            },
+            less: {
+                globalVars: {
+                    primary: '#fff'
+                }
+            }
+        }, // Enable CSS modules for all css / pre-processor files. // This option does not affect *.vue files.
+    },
     devServer: {
-        port: 8081, // 端口号
+        port: 8888, // 端口号
         host: 'localhost',
         https: false, // https:{type:Boolean}
         open: true, //配置自动启动浏览器

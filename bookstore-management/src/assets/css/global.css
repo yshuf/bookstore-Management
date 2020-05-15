@@ -1,4 +1,5 @@
 /* 全局样式 */
+@import './global.scss';
 
 body,
 html,
@@ -28,6 +29,7 @@ html,
 .select .title {
     font-size: 16px;
     margin-right: 8px;
+    white-space: nowrap;
 }
 
 .el-table {
@@ -56,4 +58,22 @@ html,
 .el-input-group--append .el-input__inner,
 .el-input-group__prepend {
     width: 280px;
+}
+
+.el-button--primary {
+    background-color: #00b793 !important;
+    border-color: #00b793 !important;
+}
+
+.el-button--text {
+    color: #00b793 !important;
+}
+
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+    background-color: #00b793 !important;
+    color: #FFF;
+}
+
+.el-pagination.is-background .el-pager li:not(.disabled):hover {
+    color: #00b793 !important;
 }

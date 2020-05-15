@@ -3,10 +3,27 @@
     <div class="countNum">
       <div class="count_item">
         <div>全部</div>
-        <div>250本</div>
+        <div>
+          <span class="num">250</span>
+          <span class="unit">本</span>
+        </div>
       </div>
-      <div class="count_item">上架</div>
-      <div class="count_item">下架</div>
+      <div class="count_item">
+        <div>上架</div>
+        <div>
+          <span class="num">123</span>
+          <span class="unit">本</span>
+        </div>
+      </div>
+      <div class="count_item">
+        <div>
+          <div>下架</div>
+          <div>
+            <span class="num">127</span>
+            <span class="unit">本</span>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="page-content">
       <p class="page-title">书籍管理</p>
@@ -44,13 +61,17 @@
       </div>
 
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="id" label="序号" width="200"></el-table-column>
-        <el-table-column prop="name" label="姓名" width="200"></el-table-column>
-        <el-table-column prop="userName" label="用户名"></el-table-column>
-        <el-table-column prop="phone" label="手机号" width="200"></el-table-column>
-        <el-table-column prop="status" label="状态" width="200"></el-table-column>
-        <el-table-column prop="date" label="创建时间" width="200"></el-table-column>
-        <el-table-column fixed="right" label="操作" width="200">
+        <el-table-column prop="id" label="序号" width="100"></el-table-column>
+        <el-table-column prop="code" label="编号" width="150"></el-table-column>
+        <el-table-column prop="name" label="书籍名称" width="150"></el-table-column>
+        <el-table-column prop="auth" label="作者" width="200"></el-table-column>
+        <el-table-column prop="press" label="出版社" width="200"></el-table-column>
+        <el-table-column prop="price" label="书籍价格（元）" width="100"></el-table-column>
+        <el-table-column prop="num" label="现存数量" width="100"></el-table-column>
+        <el-table-column prop="type" label="类别" width="200"></el-table-column>
+        <el-table-column prop="status" label="状态" width="100"></el-table-column>
+        <el-table-column prop="date" label="入库时间"></el-table-column>
+        <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope">
             <el-popconfirm
               confirmButtonText="好的"
@@ -62,10 +83,28 @@
             >
               <el-button type="text" size="small">删除</el-button>
             </el-popconfirm>
+            <el-button type="text" @click="open">上架</el-button>
             <el-button type="text" size="small" @click="addAndEdit('edit')">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
+    </div>
+  </div>
+</template>
+        </el-table-column>
+      </el-table>
+
+      <div class="block">
+        <el-pagination
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+          :page-size="10"
+          layout="prev, pager, next, jumper"
+          :total="100"
+        ></el-pagination>
+      </div>
     </div>
   </div>
 </template>
@@ -75,6 +114,10 @@ export default {
   name: 'BookManagement',
   data () {
     return {
+      value: '',
+      time: '',
+      key: '',
+      currentPage: 6,
       options: [
         {
           value: '0',
@@ -93,38 +136,97 @@ export default {
         {
           id: 1,
           date: '2016-05-02',
-          name: '王小虎',
-          userName: 'zhengce',
-          phone: '18870772596',
-          status: '停用'
+          code: '123456',
+          name: '恶意',
+          press: '清华大学出版社',
+          price: '39',
+          auth: 'zhengce',
+          num: '50',
+          type: '18870772596',
+          status: '上架'
         },
         {
           id: 2,
           date: '2016-05-04',
-          name: '王小虎',
-          userName: 'cy7480',
-          phone: '18870772596',
-          status: '停用'
+          code: '123456',
+          name: '岛上书店',
+          press: '清华大学出版社',
+          price: '25',
+          auth: 'cy7480',
+          num: '50',
+          type: '18870772596',
+          status: '下架'
         },
         {
           id: 3,
           date: '2016-05-01',
-          name: '王小虎',
-          userName: 'zytest7410',
-          phone: '18870772596',
-          status: '停用'
+          code: '123456',
+          name: '追风筝的人',
+          press: '电子工业出版社',
+          price: '28',
+          auth: 'zytest7410',
+          num: '50',
+          type: '18870772596',
+          status: '下架'
         },
         {
           id: 4,
           date: '2016-05-03',
-          name: '王小虎',
-          userName: 'dsad',
-          phone: '18870772596',
-          status: '停用'
+          code: '123456',
+          name: '白夜行',
+          press: '电子工业出版社',
+          price: '28',
+          auth: 'dsad',
+          num: '50',
+          type: '18870772596',
+          status: '上架'
         }
       ],
     }
-  }
+  },
+  methods: {
+    // 状态筛选
+    selectStatus (type) {
+      this.status = type;
+    },
+    // 时间筛选
+    selectTime (data) {
+      this.startTime = data[0]
+      this.endTime = data[1]
+    },
+    // 点击筛选按钮
+    search () {
+      console.log(this.key)
+    },
+    handleSizeChange (val) {
+      console.log(`每页 ${val} 条`);
+    },
+    //  点击页数
+    handleCurrentChange (val) {
+      this.currentPage = val
+      console.log(`当前页: ${val}`);
+    },
+    //  上下架提示
+    open () {
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    }
+  },
+
 }
 </script>
 
@@ -132,15 +234,31 @@ export default {
 <style lang="less" scoped>
 .countNum {
   display: flex;
-  width: 100%;
+  width: 97%;
   margin: 0 auto 20px;
   background: #fff;
   height: 100px;
+  padding: 20px;
   .count_item {
+    padding: 25px 0;
+    border-right: 1px solid rgb(227, 227, 227);
     width: 33%;
     text-align: center;
-    height: 100%;
-    vertical-align: middle;
+    color: #666;
+    font-size: 16px;
+    .num {
+      font-size: 30px;
+      font-style: italic;
+      color: rgb(0, 183, 147);
+    }
+    .unit {
+      display: inline-block;
+      margin-left: 10px;
+    }
   }
+}
+.block {
+  text-align: right;
+  margin: 20px 0;
 }
 </style>
