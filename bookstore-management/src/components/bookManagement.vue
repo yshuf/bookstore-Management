@@ -73,27 +73,18 @@
         <el-table-column prop="date" label="入库时间"></el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope">
-            <el-popconfirm
-              confirmButtonText="好的"
-              cancelButtonText="不用了"
-              icon="el-icon-info"
-              iconColor="red"
-              title="这是一段内容确定删除吗？"
-              onConfirm="handleClick(scope.row)"
-            >
-              <el-button type="text" size="small">删除</el-button>
-            </el-popconfirm>
-            <el-button type="text" @click="open">上架</el-button>
+            <el-popover placement="top" width="80" v-model="visible">
+              <p>是否确定上架此书籍？</p>
+              <div style="text-align: right; margin: 0">
+                <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+                <el-button type="primary" size="mini" @click="visible = false">确定</el-button>
+              </div>
+              <el-button slot="reference" @click="visible=true">上架</el-button>
+            </el-popover>
             <el-button type="text" size="small" @click="addAndEdit('edit')">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
-    </div>
-  </div>
-</template>
-        </el-table-column>
-      </el-table>
-
       <div class="block">
         <el-pagination
           background
@@ -107,6 +98,8 @@
       </div>
     </div>
   </div>
+  <!-- </div>
+  </div>-->
 </template>
 
 <script>
@@ -114,6 +107,7 @@ export default {
   name: 'BookManagement',
   data () {
     return {
+      visible: false,
       value: '',
       time: '',
       key: '',
@@ -206,25 +200,6 @@ export default {
       this.currentPage = val
       console.log(`当前页: ${val}`);
     },
-    //  上下架提示
-    open () {
-      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-        center: true
-      }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        });
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });
-    }
   },
 
 }
@@ -259,6 +234,6 @@ export default {
 }
 .block {
   text-align: right;
-  margin: 20px 0;
+  //   margin: 20px 0;
 }
 </style>
