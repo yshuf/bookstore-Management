@@ -393,8 +393,8 @@ export default {
 
 <style scoped lang="less">
 #userCenter {
-  width: 100%;
-  //margin: 1rem auto;
+  width: 97%;
+  margin: 1rem auto;
 
   .top-block {
     /*background-color: #fff;*/

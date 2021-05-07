@@ -348,7 +348,6 @@ export default {
 <style lang="less" scoped>
 #overview_container {
   width: 100%;
-  height: 100%;
   .title {
     margin-bottom: 20px;
     padding: 20px;

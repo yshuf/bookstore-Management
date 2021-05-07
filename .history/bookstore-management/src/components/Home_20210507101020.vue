@@ -188,7 +188,6 @@ export default {
   }
 }
 .el-header {
-  width: 100%;
   position: fixed;
   background: #000;
   display: flex;

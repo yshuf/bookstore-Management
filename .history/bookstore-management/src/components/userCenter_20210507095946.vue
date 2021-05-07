@@ -8,7 +8,7 @@
         <div class="title">
           <p class="title_welcome">
             您好，
-            <span>{{realName||'admin'}}</span>，欢迎来到 xxx 书店管理系统！
+            <span>{{realName||'admin'}}</span>，欢迎来到xxx 书店管理系统！
           </p>
           <p
             class="title_introduce"
@@ -393,8 +393,8 @@ export default {
 
 <style scoped lang="less">
 #userCenter {
-  width: 100%;
-  //margin: 1rem auto;
+  width: 97%;
+  margin: 1rem auto;
 
   .top-block {
     /*background-color: #fff;*/

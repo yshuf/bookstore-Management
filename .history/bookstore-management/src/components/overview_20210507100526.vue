@@ -1,5 +1,5 @@
 <template>
-  <div id="overview_container">
+  <div class="overview_container">
     <div class="title">统计概览</div>
     <!-- <div :id="id" style="width:100%" /> -->
     <div class="dataCharts">
@@ -346,26 +346,26 @@ export default {
 </script>
 
 <style lang="less" scoped>
-#overview_container {
+.overview_container {
   width: 100%;
-  height: 100%;
   .title {
-    margin-bottom: 20px;
+    margin-bottom:10px;
     padding: 20px;
     font-size: 18px;
     background: #fff;
+    width: 100%;
     font-size: 16px;
     font-weight: 600;
   }
   .dataCharts {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
     div {
       background: #fff;
       padding: 20px;
-      width: 47%;
+      width: 45%;
       margin-bottom: 20px;
     }
   }

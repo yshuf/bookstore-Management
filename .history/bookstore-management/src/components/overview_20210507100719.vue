@@ -348,9 +348,8 @@ export default {
 <style lang="less" scoped>
 #overview_container {
   width: 100%;
-  height: 100%;
   .title {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding: 20px;
     font-size: 18px;
     background: #fff;
@@ -360,7 +359,7 @@ export default {
   .dataCharts {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
     div {
       background: #fff;
