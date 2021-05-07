@@ -8,7 +8,7 @@
         <div class="title">
           <p class="title_welcome">
             您好，
-            <span>{{realName}}</span>，欢迎来到舟山E周融！
+            <span>{{realName||'admin'}}</span>，欢迎来到舟山E周融！
           </p>
           <p
             class="title_introduce"
