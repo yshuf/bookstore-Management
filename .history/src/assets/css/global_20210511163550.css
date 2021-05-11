@@ -84,6 +84,6 @@ html,
 .pointer {
   cursor: pointer;
 }
-.color-theme {
-  color: @color-theme;
+. {
+  color:@color-theme
 }

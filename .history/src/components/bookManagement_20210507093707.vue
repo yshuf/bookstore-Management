@@ -72,17 +72,10 @@
         <el-table-column prop="status" label="状态" width="100"></el-table-column>
         <el-table-column prop="date" label="入库时间"></el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
-          <template slot-scope="scope">
-            <el-popover placement="top" width="80" v-model="visible">
-              <p>是否确定上架此书籍？</p>
-              <div style="text-align: right; margin: 0">
-                <el-button size="mini" type="text" @click="visible = false">取消</el-button>
-                <el-button type="primary" size="mini" @click="visible = false">确定</el-button>
-              </div>
-              <el-button slot="reference" @click="visible=true">上架</el-button>
-            </el-popover>
-            <el-button type="text" size="small" @click="addAndEdit('edit')">编辑</el-button>
-          </template>
+         <template slot-scope="scope">
+          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+          <el-button type="text" size="small">编辑</el-button>
+        </template>
         </el-table-column>
       </el-table>
       <div class="block">
@@ -235,5 +228,9 @@ export default {
 .block {
   text-align: right;
   //   margin: 20px 0;
+}
+.edit-box {
+  display: flex;
+  justify-content: center;
 }
 </style>

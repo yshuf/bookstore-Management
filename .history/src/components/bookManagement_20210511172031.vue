@@ -62,7 +62,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="page-pagination">
+      <div class="block">
         <el-pagination
           background
           @size-change="handleSizeChange"
@@ -210,8 +210,8 @@ export default {
       border-right: 1px solid rgb(227, 227, 227);
     }
 }
-.page-pagination {
+.block {
   text-align: right;
-  margin-top: 20px;
+  //   margin: 20px 0;
 }
 </style>

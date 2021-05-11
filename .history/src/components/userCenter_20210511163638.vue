@@ -526,7 +526,7 @@ export default {
         color: rgba(0, 0, 0, 0.65);
 
         &:hover {
-          color: rgba(18, 141, 233, 1);
+          color: @color-theme;
           border-bottom: 1px dashed rgba(18, 141, 233, 1);
           transform: translateY(-1px);
         }

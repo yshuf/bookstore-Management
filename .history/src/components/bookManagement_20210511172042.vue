@@ -210,8 +210,8 @@ export default {
       border-right: 1px solid rgb(227, 227, 227);
     }
 }
-.page-pagination {
+.block {
   text-align: right;
-  margin-top: 20px;
+  //   margin: 20px 0;
 }
 </style>

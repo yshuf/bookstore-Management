@@ -1,11 +1,27 @@
 <template>
   <div>
     <div class="countNum">
-      <div class="count_item" v-for="(item,index) in options" :key="index">
-        <div>{{item.label}}</div>
+      <div class="count_item">
+        <div>全部</div>
         <div>
-          <span class="num">{{item.value}}</span>
+          <span class="num">250</span>
           <span class="unit">本</span>
+        </div>
+      </div>
+      <div class="count_item">
+        <div>上架</div>
+        <div>
+          <span class="num">123</span>
+          <span class="unit">本</span>
+        </div>
+      </div>
+      <div class="count_item">
+        <div>
+          <div>下架</div>
+          <div>
+            <span class="num">127</span>
+            <span class="unit">本</span>
+          </div>
         </div>
       </div>
     </div>
@@ -24,7 +40,7 @@
           </el-select>
         </div>
 
-        <div class="select">
+        <div class="block select">
           <p class="title">创建时间 :</p>
           <el-date-picker
             v-model="time"
@@ -56,13 +72,20 @@
         <el-table-column prop="status" label="状态" width="100"></el-table-column>
         <el-table-column prop="date" label="入库时间"></el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
-           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-            <el-button type="text" size="small">编辑</el-button>
+          <template slot-scope="scope">
+            <el-popover placement="top" width="80" v-model="visible">
+              <p>是否确定上架此书籍？</p>
+              <div style="text-align: right; margin: 0">
+                <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+                <el-button type="primary" size="mini" @click="visible = false">确定</el-button>
+              </div>
+              <el-button slot="reference" @click="visible=true">上架</el-button>
+            </el-popover>
+            <el-button type="text" size="small" @click="addAndEdit('edit')">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <div class="page-pagination">
+      <div class="block">
         <el-pagination
           background
           @size-change="handleSizeChange"
@@ -192,6 +215,7 @@ export default {
   padding: 20px;
   .count_item {
     padding: 25px 0;
+    border-right: 1px solid rgb(227, 227, 227);
     width: 33%;
     text-align: center;
     color: #666;
@@ -207,11 +231,11 @@ export default {
     }
   }
   .count_item:not(:last-child){
-      border-right: 1px solid rgb(227, 227, 227);
+      border: none;
     }
 }
-.page-pagination {
+.block {
   text-align: right;
-  margin-top: 20px;
+  //   margin: 20px 0;
 }
 </style>
