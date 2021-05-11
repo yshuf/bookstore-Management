@@ -5,18 +5,13 @@
         <img src alt />
         <span>XXX书店后台管理系统</span>
       </div>
-      <div class="right-info">
-        <div @click="onclickFullScreen" title="全屏" class="pointer">
-          <i :class="isFullScreen?'el-icon-plus':'el-icon-full-screen'"></i>
-        </div>
-        <div class="userName">你好，欢迎您！ admin</div>
-        <div  @click="loginout">
-          <i class="icon iconfont icon-guangji" style="font-size:18px; cursor:pointer;"></i>
-        </div>
+      <div style="margin-right:25px;" @click="loginout">
+        <span class="userName">你好，欢迎您！ admin</span>
+        <i class="icon iconfont icon-guangji" style="font-size:18px; cursor:pointer;"></i>
       </div>
       <!-- <el-button type="info" @click="loginout">退出</el-button> -->
     </el-header>
-    <el-container class="left-container">
+    <el-container>
       <!-- 左侧菜单栏 -->
       <el-aside :width="isCollapse ? '64px' : '200px'">
         <div class="toggle-btn" @click="togglemenu()">
@@ -26,7 +21,7 @@
         <!-- unique-opened 唯一展开某一菜单  collapse 开启菜单的折叠 collapse-transition 折叠动画 -->
         <el-menu
           class="el-menu-vertical-demo"
-          background-color="rgb(48, 65, 86)"
+          background-color="#000"
           text-color="#fff"
           active-text-color="#00b793"
           unique-opened
@@ -64,25 +59,22 @@
 </template>
 
 <script>
-import screenfull from 'screenfull'
 export default {
   name: 'Home',
   created () {
     this.getMenuList()
-    this.activePath = window.sessionStorage.getItem('active_path')
+    this.activePath = window.sessionStorage.getItem('active_path');
   },
   data () {
     return {
-      // 是否全屏
-      isFullScreen: false,
       // 左侧菜单栏
       menuList: [],
       // 菜单栏字体图标
       iconsList: {
-        99: 'icon iconfont icon-guanli',
-        101: 'icon iconfont icon-yonghuguanli',
-        104: 'icon iconfont icon-yonghu',
-        105: 'icon iconfont icon-icon-'
+        '99': 'icon iconfont icon-guanli',
+        '101': 'icon iconfont icon-yonghuguanli',
+        '104': 'icon iconfont icon-yonghu',
+        '105': 'icon iconfont icon-icon-'
       },
       isCollapse: false,
       // 默认激活菜单为空
@@ -90,21 +82,6 @@ export default {
     }
   },
   methods: {
-    /**
-     * @desc 全屏
-     * @param {Objetc} event - 事件html对象
-     */
-    onclickFullScreen (event) {
-      if(!screenfull.isEnabled){
-        this.$message({
-          message:'不支持全屏',
-          tyupe: 'warning'
-        })
-        return false;
-      }
-      this.isFullScreen = !this.isFullScreen;
-      screenfull.toggle();
-    },
     loginout () {
       window.sessionStorage.clear()
       this.$router.push('/login')
@@ -133,7 +110,7 @@ export default {
         {
           id: 101,
           authName: '账号管理',
-          path: 'userAccount',
+          path: "userAccount",
           children: [
             {
               id: 102,
@@ -152,12 +129,12 @@ export default {
         {
           id: 105,
           authName: '书籍管理',
-          path: 'bookManagement',
+          path: "bookManagement",
           children: [
             {
               id: 106,
               authName: '书籍列表',
-              path: 'bookManagement',
+              path: "bookManagement",
               children: []
             },
             {
@@ -177,12 +154,12 @@ export default {
         {
           id: 104,
           authName: '个人中心',
-          path: 'userCenter',
+          path: "userCenter",
           children: [
             {
               id: 105,
               authName: '个人中心',
-              path: 'userCenter',
+              path: "userCenter",
               children: []
             }
           ]
@@ -195,8 +172,8 @@ export default {
     },
     // 保存当前点击菜单的路由
     saveNavStatus (url) {
-      window.sessionStorage.setItem('active_path', url)
-      this.activePath = url
+      window.sessionStorage.setItem('active_path', url);
+      this.activePath = url;
     }
   }
 }
@@ -205,33 +182,24 @@ export default {
 <style scoped lang="less">
 .home-container {
   height: 100%;
-  .left-container {
-    margin-top: 60px;
+  .userName {
+    font-size: 14px;
+    margin-right: 10px;
   }
 }
 .el-header {
   width: 100%;
   position: fixed;
-  background: rgb(48, 65, 86);
+  background: #000;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-left: 0;
   color: #fff;
   font-size: 20px;
-  z-index: 1000;
-  .right-info {
-    display: flex;
-    align-items: center;
-    margin-right: 25px;
-    .userName {
-      font-size: 14px;
-      margin: 0 10px;
-    }
-  }
 }
 .el-aside {
-  background: rgb(48, 65, 86);
+  background: #000;
   .el-menu {
     border-right: none;
   }
@@ -239,7 +207,7 @@ export default {
     color: #fff;
     font-size: 18px;
     text-align: center;
-    background: rgb(48, 65, 86);
+    background: #090909;
     line-height: 24px;
     cursor: pointer;
     letter-spacing: 0.2px; // 字体间距

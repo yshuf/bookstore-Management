@@ -5,8 +5,8 @@
         <img src alt />
         <span>XXX书店后台管理系统</span>
       </div>
-      <div class="right-info">
-        <div @click="onclickFullScreen" title="全屏" class="pointer">
+      <div style="margin-right:25px;" class="right-info">
+        <div @click="onclickFullScreen" title="全屏">
           <i :class="isFullScreen?'el-icon-plus':'el-icon-full-screen'"></i>
         </div>
         <div class="userName">你好，欢迎您！ admin</div>
@@ -90,11 +90,7 @@ export default {
     }
   },
   methods: {
-    /**
-     * @desc 全屏
-     * @param {Objetc} event - 事件html对象
-     */
-    onclickFullScreen (event) {
+    onclickFullScreen () {
       if(!screenfull.isEnabled){
         this.$message({
           message:'不支持全屏',
@@ -102,7 +98,7 @@ export default {
         })
         return false;
       }
-      this.isFullScreen = !this.isFullScreen;
+      this.isFullscreen = !this.isFullscreen;
       screenfull.toggle();
     },
     loginout () {
@@ -205,6 +201,10 @@ export default {
 <style scoped lang="less">
 .home-container {
   height: 100%;
+  .userName {
+    font-size: 14px;
+    margin: 0 10px;
+  }
   .left-container {
     margin-top: 60px;
   }
@@ -222,12 +222,6 @@ export default {
   z-index: 1000;
   .right-info {
     display: flex;
-    align-items: center;
-    margin-right: 25px;
-    .userName {
-      font-size: 14px;
-      margin: 0 10px;
-    }
   }
 }
 .el-aside {

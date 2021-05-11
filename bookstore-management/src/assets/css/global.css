@@ -18,11 +18,12 @@ html,
 
 .page-title {
     font-weight: 600;
+    margin-bottom: 20px;
 }
 
 .select {
     display: flex;
-    margin-left: 20px;
+    margin-right: 20px;
     align-items: center;
 }
 
@@ -76,4 +77,8 @@ html,
 
 .el-pagination.is-background .el-pager li:not(.disabled):hover {
     color: #00b793 !important;
+}
+
+.pointer {
+  cursor: pointer;
 }

@@ -90,10 +90,6 @@ export default {
     }
   },
   methods: {
-    /**
-     * @desc 全屏
-     * @param {Objetc} event - 事件html对象
-     */
     onclickFullScreen (event) {
       if(!screenfull.isEnabled){
         this.$message({

@@ -6,7 +6,7 @@
         <span>XXX书店后台管理系统</span>
       </div>
       <div class="right-info">
-        <div @click="onclickFullScreen" title="全屏" class="pointer">
+        <div @click="onclickFullScreen" title="全屏">
           <i :class="isFullScreen?'el-icon-plus':'el-icon-full-screen'"></i>
         </div>
         <div class="userName">你好，欢迎您！ admin</div>
@@ -90,10 +90,6 @@ export default {
     }
   },
   methods: {
-    /**
-     * @desc 全屏
-     * @param {Objetc} event - 事件html对象
-     */
     onclickFullScreen (event) {
       if(!screenfull.isEnabled){
         this.$message({
@@ -102,7 +98,8 @@ export default {
         })
         return false;
       }
-      this.isFullScreen = !this.isFullScreen;
+      this.isFullscreen = !this.isFullscreen;
+      console.log('状态',this.isFullScreen);
       screenfull.toggle();
     },
     loginout () {

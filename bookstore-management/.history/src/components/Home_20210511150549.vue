@@ -5,14 +5,9 @@
         <img src alt />
         <span>XXX书店后台管理系统</span>
       </div>
-      <div class="right-info">
-        <div @click="onclickFullScreen" title="全屏" class="pointer">
-          <i :class="isFullScreen?'el-icon-plus':'el-icon-full-screen'"></i>
-        </div>
-        <div class="userName">你好，欢迎您！ admin</div>
-        <div  @click="loginout">
-          <i class="icon iconfont icon-guangji" style="font-size:18px; cursor:pointer;"></i>
-        </div>
+      <div style="margin-right:25px;" @click="loginout">
+        <span class="userName">你好，欢迎您！ admin</span>
+        <i class="icon iconfont icon-guangji" style="font-size:18px; cursor:pointer;"></i>
       </div>
       <!-- <el-button type="info" @click="loginout">退出</el-button> -->
     </el-header>
@@ -26,7 +21,7 @@
         <!-- unique-opened 唯一展开某一菜单  collapse 开启菜单的折叠 collapse-transition 折叠动画 -->
         <el-menu
           class="el-menu-vertical-demo"
-          background-color="rgb(48, 65, 86)"
+          background-color="#000"
           text-color="#fff"
           active-text-color="#00b793"
           unique-opened
@@ -64,7 +59,6 @@
 </template>
 
 <script>
-import screenfull from 'screenfull'
 export default {
   name: 'Home',
   created () {
@@ -73,8 +67,6 @@ export default {
   },
   data () {
     return {
-      // 是否全屏
-      isFullScreen: false,
       // 左侧菜单栏
       menuList: [],
       // 菜单栏字体图标
@@ -90,21 +82,6 @@ export default {
     }
   },
   methods: {
-    /**
-     * @desc 全屏
-     * @param {Objetc} event - 事件html对象
-     */
-    onclickFullScreen (event) {
-      if(!screenfull.isEnabled){
-        this.$message({
-          message:'不支持全屏',
-          tyupe: 'warning'
-        })
-        return false;
-      }
-      this.isFullScreen = !this.isFullScreen;
-      screenfull.toggle();
-    },
     loginout () {
       window.sessionStorage.clear()
       this.$router.push('/login')
@@ -205,6 +182,10 @@ export default {
 <style scoped lang="less">
 .home-container {
   height: 100%;
+  .userName {
+    font-size: 14px;
+    margin-right: 10px;
+  }
   .left-container {
     margin-top: 60px;
   }
@@ -219,16 +200,6 @@ export default {
   padding-left: 0;
   color: #fff;
   font-size: 20px;
-  z-index: 1000;
-  .right-info {
-    display: flex;
-    align-items: center;
-    margin-right: 25px;
-    .userName {
-      font-size: 14px;
-      margin: 0 10px;
-    }
-  }
 }
 .el-aside {
   background: rgb(48, 65, 86);

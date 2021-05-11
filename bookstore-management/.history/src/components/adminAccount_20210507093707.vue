@@ -1,9 +1,9 @@
 <template>
   <div class="page-content">
-    <div class="page-title">用户账号</div>
+    <p class="page-title">员工列表</p>
     <div class="search">
       <div class="select">
-        <div class="title">状态 :</div>
+        <p class="title">状态 :</p>
         <el-select v-model="value" @change="selectStatus" placeholder="请选择">
           <el-option
             v-for="item in options"
@@ -28,23 +28,29 @@
       </div>
 
       <div class="select">
-        <el-input placeholder="请输入姓名/用户名/手机" v-model="key" class="input-with-select">
-          <el-button slot="append" icon="el-icon-search" @click="search()"></el-button>
+        <el-input
+          placeholder="请输入姓名/用户名/手机"
+          v-model="key"
+          @click="search"
+          class="input-with-select"
+        >
+          <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>
       </div>
-
       <div class="select addBtn">
         <el-button type="primary" @click="addAndEdit('add')">添加账号</el-button>
       </div>
     </div>
     <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="id" label="序号" width="200"></el-table-column>
-      <el-table-column prop="name" label="姓名" width="200"></el-table-column>
-      <el-table-column prop="userName" label="用户名"></el-table-column>
-      <el-table-column prop="phone" label="手机号" width="200"></el-table-column>
-      <el-table-column prop="status" label="状态" width="200"></el-table-column>
-      <el-table-column prop="date" label="创建时间" width="200"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="200">
+      <el-table-column prop="id" label="序号" width="180"></el-table-column>
+      <el-table-column prop="name" label="姓名" width="180"></el-table-column>
+      <el-table-column prop="userName" label="用户名" width="180"></el-table-column>
+      <el-table-column prop="sex" label="性别" width="180"></el-table-column>
+      <el-table-column prop="phone" label="手机号" width="180"></el-table-column>
+      <el-table-column prop="idCard" label="身份证号"></el-table-column>
+      <el-table-column prop="status" label="状态" width="180"></el-table-column>
+      <el-table-column prop="date" label="创建时间" width="180"></el-table-column>
+      <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
           <el-popconfirm
             confirmButtonText="好的"
@@ -90,13 +96,7 @@
 
 <script>
 export default {
-  name: 'UserAccount',
-  created () {
-
-  },
-  mounted () {
-
-  },
+  name: 'AdminAccount',
   data () {
     return {
       value: '',
@@ -104,7 +104,7 @@ export default {
       time: '',
       status: '', // 状态
       startTime: '', // 创建时间 开始时间
-      endTime: '', // 结束时间
+      endTime: '',   // 结束时间
       dialogFormVisible: false,
       titleName: '',
       formLabelWidth: '120px',
@@ -113,7 +113,9 @@ export default {
           id: 1,
           date: '2016-05-02',
           name: '王小虎',
-          userName: 'zhengce',
+          userName: 'cest',
+          sex: '男',
+          idCard: '3623****2563',
           phone: '18870772596',
           status: '停用'
         },
@@ -121,7 +123,9 @@ export default {
           id: 2,
           date: '2016-05-04',
           name: '王小虎',
-          userName: 'cy7480',
+          userName: 'cest',
+          sex: '男',
+          idCard: '3623****2563',
           phone: '18870772596',
           status: '停用'
         },
@@ -129,7 +133,9 @@ export default {
           id: 3,
           date: '2016-05-01',
           name: '王小虎',
-          userName: 'zytest7410',
+          userName: 'cest',
+          sex: '男',
+          idCard: '3623****2563',
           phone: '18870772596',
           status: '停用'
         },
@@ -137,7 +143,9 @@ export default {
           id: 4,
           date: '2016-05-03',
           name: '王小虎',
-          userName: 'dsad',
+          userName: 'cest',
+          sex: '男',
+          idCard: '3623****2563',
           phone: '18870772596',
           status: '停用'
         }
@@ -171,7 +179,7 @@ export default {
     },
     // 状态筛选
     selectStatus (type) {
-      this.status = type
+      this.status = type;
     },
     // 时间筛选
     selectTime (data) {
@@ -187,23 +195,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.search {
-  display: flex;
-  margin-bottom: 10px;
-  position: relative;
-}
-
-.select {
-  display: flex;
-  align-items: center;
-  margin-right: 20px;
-}
-
 .addBtn {
   text-align: right;
-  position: absolute;
-  top: -45px;
-  right: 20px;
+}
+
+.title {
+  font-size: 16px;
+  margin-right: 8px;
 }
 
 .el-dialog__wrapper .el-dialog {

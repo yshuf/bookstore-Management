@@ -90,10 +90,6 @@ export default {
     }
   },
   methods: {
-    /**
-     * @desc 全屏
-     * @param {Objetc} event - 事件html对象
-     */
     onclickFullScreen (event) {
       if(!screenfull.isEnabled){
         this.$message({
@@ -102,6 +98,7 @@ export default {
         })
         return false;
       }
+      console.log('状态改变后',this.isFullScreen);
       this.isFullScreen = !this.isFullScreen;
       screenfull.toggle();
     },

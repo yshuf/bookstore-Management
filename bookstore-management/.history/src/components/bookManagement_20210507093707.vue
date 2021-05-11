@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="page-content">
-      <div class="page-title">书籍管理</div>
+      <p class="page-title">书籍管理</p>
       <div class="search">
         <div class="select">
           <div class="title">状态 :</div>
@@ -124,7 +124,7 @@ export default {
         {
           value: '2',
           label: '下架'
-        }
+        },
       ],
       tableData: [
         {
@@ -175,13 +175,13 @@ export default {
           type: '18870772596',
           status: '上架'
         }
-      ]
+      ],
     }
   },
   methods: {
     // 状态筛选
     selectStatus (type) {
-      this.status = type
+      this.status = type;
     },
     // 时间筛选
     selectTime (data) {
@@ -193,17 +193,18 @@ export default {
       console.log(this.key)
     },
     handleSizeChange (val) {
-      console.log(`每页 ${val} 条`)
+      console.log(`每页 ${val} 条`);
     },
     //  点击页数
     handleCurrentChange (val) {
       this.currentPage = val
-      console.log(`当前页: ${val}`)
-    }
-  }
+      console.log(`当前页: ${val}`);
+    },
+  },
 
 }
 </script>
+
 
 <style lang="less" scoped>
 .countNum {

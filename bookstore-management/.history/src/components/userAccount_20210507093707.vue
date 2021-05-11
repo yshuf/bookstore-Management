@@ -1,6 +1,6 @@
 <template>
   <div class="page-content">
-    <div class="page-title">用户账号</div>
+    <p class="page-title">用户账号</p>
     <div class="search">
       <div class="select">
         <div class="title">状态 :</div>
@@ -104,7 +104,7 @@ export default {
       time: '',
       status: '', // 状态
       startTime: '', // 创建时间 开始时间
-      endTime: '', // 结束时间
+      endTime: '',   // 结束时间
       dialogFormVisible: false,
       titleName: '',
       formLabelWidth: '120px',
@@ -171,7 +171,7 @@ export default {
     },
     // 状态筛选
     selectStatus (type) {
-      this.status = type
+      this.status = type;
     },
     // 时间筛选
     selectTime (data) {
