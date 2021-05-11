@@ -1,6 +1,8 @@
 /* 全局样式 */
 @import './global.scss';
 
+@color-theme:'#00b793';
+
 body,
 html,
 #app {
@@ -62,21 +64,21 @@ html,
 }
 
 .el-button--primary {
-    background-color: #00b793 !important;
-    border-color: #00b793 !important;
+    background-color: @color-theme !important;
+    border-color: @color-theme !important;
 }
 
 .el-button--text {
-    color: #00b793 !important;
+    color: @color-theme !important;
 }
 
 .el-pagination.is-background .el-pager li:not(.disabled).active {
-    background-color: #00b793 !important;
+    background-color: @color-theme !important;
     color: #FFF;
 }
 
 .el-pagination.is-background .el-pager li:not(.disabled):hover {
-    color: #00b793 !important;
+    color: @color-theme !important;
 }
 
 .pointer {
