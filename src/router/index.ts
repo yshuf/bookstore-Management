@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../components/Login.vue'
-import Home from '../components/Home.vue'
-import Overview from '../components/overview.vue'
-import UserCenter from '../components/userCenter.vue'
-import UserAccount from '../components/userAccount.vue'
-import AdminAccount from '../components/adminAccount.vue'
-import BookManagement from '../components/bookManagement.vue'
-import SortParams from '../components/sortParams.vue'
-import BooksSort from '../components/booksSort.vue'
+import Login from '../views/Login.vue'
+import Home from '../views/Home.vue'
+import Overview from '../views/overview.vue'
+import UserCenter from '../views/userCenter.vue'
+import UserAccount from '../views/userAccount.vue'
+import AdminAccount from '../views/adminAccount.vue'
+import BookManagement from '../views/bookManagement.vue'
+import SortParams from '../views/sortParams.vue'
+import BooksSort from '../views/booksSort.vue'
 
 Vue.use(VueRouter)
 
