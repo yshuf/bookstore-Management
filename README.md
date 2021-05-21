@@ -36,3 +36,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 1. npm install --save screenfull
 2. 使用页面引入 import screenfull from 'screenful'
 3. 调用 screenfull.togger() 方法
+
+## 使用 nprogress 插件
+1. npm install --save nprogess
+2. 页面引入 import NProgress from 'nprogress';
+3. NProgress.start();  // 开始
+4. NProgress.done();  // 结束

@@ -25,34 +25,47 @@
         </div>
         <!-- unique-opened 唯一展开某一菜单  collapse 开启菜单的折叠 collapse-transition 折叠动画 -->
         <el-menu
-          class="el-menu-vertical-demo"
+          class="menuContent"
           background-color="rgb(48, 65, 86)"
           text-color="#fff"
           active-text-color="#00b793"
-          unique-opened
+          unique-opened="true"
           :collapse="isCollapse"
           :collapse-transition="false"
           router
           :default-active="activePath"
         >
-          <el-submenu :index="'/'+item.path" v-for="item in menuList" :key="item.id">
+         <template v-for="item in menuList">
+            <el-submenu v-if="item.children&&item.children.length" :index="'/'+item.path" :key="item.id">
             <!-- 防止这里点击第一个菜单时，其他项菜单联动打开，这里的的 index 属性应该设置为不同的值  -->
-            <template slot="title">
-              <i :class="iconsList[item.id]"></i>
-              <span class="menuTxt">{{ item.authName }}</span>
-            </template>
-            <el-menu-item
-              :index="'/'+subItem.path"
-              v-for="subItem in item.children"
-              :key="subItem.id"
-              @click="saveNavStatus('/'+subItem.path)"
-            >
               <template slot="title">
-                <i class="el-icon-menu"></i>
-                <span>{{ subItem.authName }}</span>
+                <i :class="iconsList[item.id]"></i>
+                <span class="menuTxt">{{ item.authName }}</span>
               </template>
-            </el-menu-item>
+              <el-menu-item
+                :index="'/'+subItem.path"
+                v-for="subItem in item.children"
+                :key="subItem.id"
+                @click="saveNavStatus('/'+subItem.path)"
+              >
+                <template slot="title">
+                  <i class="el-icon-menu"></i>
+                  <span>{{ subItem.authName }}</span>
+                </template>
+              </el-menu-item>
           </el-submenu>
+          <el-menu-item
+            v-else
+            :index="'/'+item.path"
+            :key="item.id"
+            @click="saveNavStatus('/'+item.path)"
+          >
+            <template slot="title">
+              <i class="el-icon-menu"></i>
+              <span>{{ item.authName }}</span>
+            </template>
+          </el-menu-item>
+         </template>
         </el-menu>
       </el-aside>
       <!-- 主体部分 -->
@@ -95,15 +108,15 @@ export default {
      * @param {Objetc} event - 事件html对象
      */
     onclickFullScreen (event) {
-      if(!screenfull.isEnabled){
+      if (!screenfull.isEnabled) {
         this.$message({
-          message:'不支持全屏',
+          message: '不支持全屏',
           tyupe: 'warning'
         })
-        return false;
+        return false
       }
-      this.isFullScreen = !this.isFullScreen;
-      screenfull.toggle();
+      this.isFullScreen = !this.isFullScreen
+      screenfull.toggle()
     },
     loginout () {
       window.sessionStorage.clear()
@@ -177,15 +190,15 @@ export default {
         {
           id: 104,
           authName: '个人中心',
-          path: 'userCenter',
-          children: [
+          path: 'userCenter'
+          /* children: [
             {
               id: 105,
               authName: '个人中心',
               path: 'userCenter',
               children: []
             }
-          ]
+          ] */
         }
       ]
     },
@@ -231,24 +244,42 @@ export default {
   }
 }
 .el-aside {
-  background: rgb(48, 65, 86);
-  .el-menu {
-    border-right: none;
-  }
-  .toggle-btn {
-    color: #fff;
-    font-size: 18px;
-    text-align: center;
     background: rgb(48, 65, 86);
-    line-height: 24px;
-    cursor: pointer;
-    letter-spacing: 0.2px; // 字体间距
+    .el-menu {
+      border-right: none;
+    }
+    .toggle-btn {
+      color: #fff;
+      font-size: 18px;
+      text-align: center;
+      background: rgb(48, 65, 86);
+      line-height: 24px;
+      cursor: pointer;
+      letter-spacing: 0.2px; // 字体间距
+    }
+  }
+/deep/ .menuContent {
+  background: rgb(48, 65, 86);
+  .el-menu-item:hover {
+    background-image: linear-gradient(
+        to right,
+        rgba(20, 146, 255, 0.5),
+        rgba(0, 62, 120, 0.5)
+      );
+  }
+  .el-menu-item:active {
+    background-image: linear-gradient(
+        to right,
+        rgba(20, 146, 255, 0.5),
+        rgba(0, 62, 120, 0.5)
+      );
+  }
+  .menuTxt {
+    margin-left: 10px;
   }
 }
 .el-main {
   background: #eaedf1;
 }
-.menuTxt {
-  margin-left: 10px;
-}
+
 </style>

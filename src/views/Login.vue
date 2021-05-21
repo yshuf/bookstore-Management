@@ -35,12 +35,12 @@ export default {
     return {
       // 登录表单信息
       loginForm: {
-        username: "admin",
-        password: "123456",
+        username: 'admin',
+        password: '123456'
       },
       loginRules: {
         username: [{ required: true, message: '请输入用户名', trigger: 'blur' },
-        { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+          { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
         ],
         password: [
           { required: true, message: '请输入登录密码', trigger: 'blur' },
@@ -52,7 +52,7 @@ export default {
   methods: {
     // 重置按钮
     resetForm () {
-      this.$refs.loginValidateRef.resetFields();
+      this.$refs.loginValidateRef.resetFields()
     },
     // 登录操作
     login () {
@@ -61,7 +61,7 @@ export default {
         //   message: '恭喜你，这是一条成功消息',
         //   type: 'success'
         // });
-        if (!valid) return;
+        if (!valid) return
         // 如果一个方法返回promise 用 await 和async简化
         // let resules= await this.$http.post(url,this.loginForm);
 
@@ -69,12 +69,11 @@ export default {
         //  1.项目中出了登录之外的其他API接口，必须在登陆之后才能访问
         //  2.token 只应在当前网站打开期间生效,所以token保存在sessionStorage中
         // 通过编程式导航跳转到后台主页，路由地址为 /home
-        window.sessionStorage.setItem('token', '123456789');
-        this.$router.push('/home');
-
+        window.sessionStorage.setItem('token', '123456789')
+        this.$router.push('/home')
       })
     }
-  },
+  }
 }
 </script>
 
