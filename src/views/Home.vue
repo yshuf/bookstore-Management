@@ -94,16 +94,16 @@ export default {
      * @desc 全屏
      * @param {Objetc} event - 事件html对象
      */
-    onclickFullScreen (event) {
-      if(!screenfull.isEnabled){
+    onclickFullScreen () {
+      if (!screenfull.isEnabled) {
         this.$message({
-          message:'不支持全屏',
+          message: '不支持全屏',
           tyupe: 'warning'
         })
-        return false;
+        return false
       }
-      this.isFullScreen = !this.isFullScreen;
-      screenfull.toggle();
+      this.isFullScreen = !this.isFullScreen
+      screenfull.toggle()
     },
     loginout () {
       window.sessionStorage.clear()
