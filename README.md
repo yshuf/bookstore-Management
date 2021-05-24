@@ -20,6 +20,30 @@ npm run build
 npm run lint
 ```
 
+```
+  # Node >= 10 and Git >= 2.13.0
+  # [Husky](https://github.com/typicode/husky#readme)
+  # [validate-commit-msg](https://github.com/conventional-changelog-archived-repos/validate-commit-msg)
+  # [Commit message 和 Change log 编写指南](http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html)
+  # [Change log 示例1](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md)
+  # [Change log 示例2](https://github.com/btford/grunt-conventional-changelog/blob/master/CHANGELOG.md)
+
+  # feat 新增功能（feature）
+  # fix 修补bug
+  # docs 仅仅修改了文档，比如 README, CHANGELOG, CONTRIBUTE等等
+  # style 仅仅修改了空格、格式缩进、逗号等等，不改变代码逻辑
+  # refactor 重构（即不是新增功能，也不是修改bug的代码变动）
+  # perf 优化相关，比如提升性能、体验
+  # test 增加测试，包括单元测试、集成测试等
+  # build
+  # ci 自动化流程配置修改
+  # chore 构建过程或辅助工具的变动
+  # revert 回滚到上一个版本
+
+  # scope.required 用于定义是否所有提交消息都需要一个作用域
+  # scope.allowed 允许任何作用域名称
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 

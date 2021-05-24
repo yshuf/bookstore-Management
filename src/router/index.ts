@@ -22,36 +22,76 @@ const router = new VueRouter({
       component: Home,
       redirect: '/overview',
       children: [
-        { path: '/overview', name: 'Overview', component: Overview },
+        {
+          path: '/overview', name: 'Overview',
+          meta: {
+            title:'概览统计'
+          },
+          component: () =>
+          import('@/views/overview.vue')
+        },
         {
           path: '/userCenter',
           name: 'UserCenter',
-          component: UserCenter
+          meta: {
+            title:'个人中心'
+          },
+          component: () =>
+          import('@/views/userCenter.vue')
         },
         {
           path: '/userAccount',
           name: 'UserAccount',
-          component: UserAccount
+          meta: {
+            title:"用戶账号"
+          },
+          component:  () =>
+          import('@/views/userAccount.vue')
         },
         {
           path: '/adminAccount',
           name: 'AdminAccount',
-          component: AdminAccount
+          meta: {
+            title:"员工账号"
+          },
+          component:  () =>
+          import('@/views/adminAccount.vue')
         },
         {
           path: '/bookManagement',
           name: 'BookManagement',
-          component: BookManagement
+          meta: {
+            title:"书籍列表"
+          },
+          component:  () =>
+          import('@/views/bookManagement.vue')
         },
         {
           path: '/sortParams',
           name: 'SortParams',
-          component: SortParams
+          meta: {
+            title:"分类参数"
+          },
+          component: () =>
+          import('@/views/sortParams.vue')
         },
         {
           path: '/booksSort',
           name: 'BooksSort',
-          component: BooksSort
+          meta: {
+            title:"书籍分类"
+          },
+          component: () =>
+          import('@/views/booksSort.vue')
+        },
+        {
+          path: '/riskOverview',
+          name: 'RiskOverview',
+          meta: {
+            title: "风险概览"
+          },
+          component: () =>
+            import('@/views/riskOverview.vue')
         }
       ]
     }
@@ -65,6 +105,9 @@ const router = new VueRouter({
 
 // 挂载路由导航守卫
 router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title  // 要现实的title
+  }
   // to：将要访问的路径 from：代表从哪个路径调转而来 next：放行  next('/login') 强制调转到某路径
   if (to.path === '/login') return next()
   const tokenStr = window.sessionStorage.getItem('token')

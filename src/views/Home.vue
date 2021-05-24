@@ -18,43 +18,47 @@
     </el-header>
     <el-container class="left-container">
       <!-- 左侧菜单栏 -->
-      <el-aside :width="isCollapse ? '64px' : '200px'">
+      <el-aside class="aside-container" :width="isCollapse ? '64px' : '200px'">
         <div class="toggle-btn" @click="togglemenu()">
           <i class="el-icon-s-fold" v-if="!isCollapse"></i>
           <i class="el-icon-s-unfold" v-if="isCollapse"></i>
         </div>
         <!-- unique-opened 唯一展开某一菜单  collapse 开启菜单的折叠 collapse-transition 折叠动画 -->
-        <el-menu
-          class="el-menu-vertical-demo"
-          background-color="rgb(48, 65, 86)"
-          text-color="#fff"
-          active-text-color="#00b793"
-          unique-opened
-          :collapse="isCollapse"
-          :collapse-transition="false"
-          router
-          :default-active="activePath"
-        >
-          <el-submenu :index="'/'+item.path" v-for="item in menuList" :key="item.id">
-            <!-- 防止这里点击第一个菜单时，其他项菜单联动打开，这里的的 index 属性应该设置为不同的值  -->
-            <template slot="title">
-              <i :class="iconsList[item.id]"></i>
-              <span class="menuTxt">{{ item.authName }}</span>
-            </template>
-            <el-menu-item
-              :index="'/'+subItem.path"
-              v-for="subItem in item.children"
-              :key="subItem.id"
-              @click="saveNavStatus('/'+subItem.path)"
+
+          <el-scrollbar style="height:calc(100% - 24px)">
+            <el-menu
+            class="el-menu-vertical-demo"
+            background-color="rgb(48, 65, 86)"
+            text-color="#fff"
+            active-text-color="#00b793"
+            unique-opened
+            :collapse="isCollapse"
+            :collapse-transition="false"
+            router
+            :default-active="activePath"
             >
-              <template slot="title">
-                <i class="el-icon-menu"></i>
-                <span>{{ subItem.authName }}</span>
-              </template>
-            </el-menu-item>
-          </el-submenu>
-        </el-menu>
+              <el-submenu :index="'/'+item.path" v-for="item in menuList" :key="item.id">
+                <!-- 防止这里点击第一个菜单时，其他项菜单联动打开，这里的的 index 属性应该设置为不同的值  -->
+                <template slot="title">
+                  <i :class="iconsList[item.id]"></i>
+                  <span class="menuTxt">{{ item.authName }}</span>
+                </template>
+                <el-menu-item
+                  :index="'/'+subItem.path"
+                  v-for="subItem in item.children"
+                  :key="subItem.id"
+                  @click="saveNavStatus('/'+subItem.path)"
+                >
+                  <template slot="title">
+                    <i class="el-icon-menu"></i>
+                    <span>{{ subItem.authName }}</span>
+                  </template>
+                </el-menu-item>
+              </el-submenu>
+            </el-menu>
+        </el-scrollbar>
       </el-aside>
+
       <!-- 主体部分 -->
       <el-main>
         <router-view></router-view>
@@ -82,6 +86,7 @@ export default {
         99: 'icon iconfont icon-guanli',
         101: 'icon iconfont icon-yonghuguanli',
         104: 'icon iconfont icon-yonghu',
+        106: 'icon iconfont icon-yonghu',
         105: 'icon iconfont icon-icon-'
       },
       isCollapse: false,
@@ -173,6 +178,18 @@ export default {
               children: []
             }
           ]
+        }, {
+          id: 106,
+          authName: '风险预警',
+          path: 'riskOverview',
+          children: [
+            {
+              id: 107,
+              authName: '风险概览',
+              path: 'riskOverview',
+              children: []
+            }
+          ]
         },
         {
           id: 104,
@@ -204,15 +221,20 @@ export default {
 
 <style scoped lang="less">
 .home-container {
-  height: 100%;
+   height: 100%;
   .left-container {
     margin-top: 60px;
+    height: calc(100% - 60px);
+    .aside-container {
+      transition: .2s;
+    }
   }
 }
 .el-header {
   width: 100%;
   position: fixed;
   background: rgb(48, 65, 86);
+  padding: 0 18px!important;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -231,6 +253,8 @@ export default {
   }
 }
 .el-aside {
+  // overflow-y: auto;
+  height: 100%;
   background: rgb(48, 65, 86);
   .el-menu {
     border-right: none;
@@ -246,6 +270,8 @@ export default {
   }
 }
 .el-main {
+  width: 100%;
+  height: 100%;
   background: #eaedf1;
 }
 .menuTxt {
