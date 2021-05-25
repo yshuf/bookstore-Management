@@ -4,7 +4,8 @@
       <div class="count_item" v-for="(item,index) in options" :key="index">
         <div>{{item.label}}</div>
         <div>
-          <span class="num">{{item.value}}</span>
+          <!-- <span class="num">{{item.value}}</span> -->
+          <countTo class="num" :startVal='startValue' :endVal="item.value" :duration='2000'></countTo>
           <span class="unit">本</span>
         </div>
       </div>
@@ -80,8 +81,10 @@
 </template>
 
 <script>
+import countTo from 'vue-count-to'
 export default {
   name: 'BookManagement',
+  components: { countTo },
   data () {
     return {
       visible: false,
@@ -89,6 +92,7 @@ export default {
       time: '',
       key: '',
       currentPage: 6,
+      startValue: 0,
       options: [
         {
           value: '0',

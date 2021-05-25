@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import Vue from 'vue'
+
 export default {
   name: 'Overview',
   data () {
@@ -595,7 +597,6 @@ export default {
   mounted () {
     this.creditMap() // 地图初始化
     if (this.entList) {
-      console.log('有进来吗，不知道啊')
       this.addScatterPlot()
     }
   },
@@ -627,10 +628,10 @@ export default {
              * let fillColor = ['#02FBFC', '#FFEE72', '#1563EF', '#FCB750'];
              *
              * var centerlnglat = [
-             * 	[122.108496, 30.016423],
-             * 	[122.301953, 29.945614],
-             * 	[122.201132, 30.242865],
-             * 	[122.457809, 30.727166]
+             * [122.108496, 30.016423],
+             * [122.301953, 29.945614],
+             * [122.201132, 30.242865],
+             * [122.457809, 30.727166]
              * ];
              * 行政区查询服务，提供了根据名称关键字、citycode、adcode 来查询行政区信息的功能
              */
@@ -656,7 +657,10 @@ export default {
                     fillOpacity: 0.3,
                     path: bounds[i]
                   })
+                  // polygons.push(polygon)
                 }
+                // 地图自适应
+                // that.map.setFitView()
               }
             }
           })
@@ -680,17 +684,15 @@ export default {
           strokeColor: '#FFCCB9', // 边框线条颜色
           fillColor: '#FF6B34' // 填充颜色 */
 
+          // url: '/src/assets/images/circle.png',
           url: '//vdata.amap.com/icons/b18/1/2.png', // 图标地址
-          size: new AMap.Size(9, 9), // 图标大小
+          size: new AMap.Size(15, 15), // 图标大小
           anchor: new AMap.Pixel(5, 5) // 图标显示位置偏移量，基准点为图标左上角
-
-          /* url: '../assets/images/circle.png', */
         }
       })
 
-      /* // 为标记点添加点击事件
+      // 为标记点添加点击事件
       function clickHandler (e) {
-        that.isShowCount = true
         if (that.activeMarker) {
           that.map.remove(that.activeMarker)
         }
@@ -699,11 +701,73 @@ export default {
             that.addMarker(entItem)
           }
         })
-      } */
-      // massMarks.on('click', clickHandler)
+      }
+      massMarks.on('click', clickHandler)
 
       // 将 massMarks 添加到地图实例
       massMarks.setMap(that.map)
+    },
+    // 获取某个企业位置，标记
+    addMarker (data) {
+      const that = this
+      const entData = data
+      console.log('有进来吗，不知道啊')
+      if (that.activeMarker) {
+        that.map.remove(this.activeMarker)
+      }
+      // 创建一个 Marker 实例：
+      that.activeMarker = new AMap.Marker({
+        icon: new AMap.Icon({
+          image: '/src/assets/images/active.png',
+          size: new AMap.Size(64, 64), // 图标大小
+          imageSize: new AMap.Size(32, 32),
+          imageOffset: new AMap.Pixel(15, 28)
+        }),
+        // icon: '../../../static/images/gov/active.png', // 标记图片
+        offset: new AMap.Pixel(-30, -60), // 设置点标记偏移量，需要根据图片的大小设置，具体参考官网api
+        position: new AMap.LngLat(data.lngGd, data.latGd) // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+      })
+
+      // 将创建的点标记添加到已有的地图实例
+      that.map.add(this.activeMarker)
+
+      // 设置偏移，选中点在可视范围居中
+      that.map.setCenter([data.lngGd, data.latGd])
+
+      // 创建信息窗口对象
+      const infoWindow = new AMap.InfoWindow({
+        isCustom: true, // 使用自定义窗口
+        offset: new AMap.Pixel(14, -60)
+      })
+      const InfoContent = Vue.extend({
+        template: `<div class="info-title" style="min-width: 400px;padding: 24px;background:#292B3B;box-shadow: 0 8px 10px 0 rgba(0, 17, 48, 0.4);border: 1px solid rgba(28, 112, 255, 1);color:#fff"><div style="font-size:16px;display:flex;justify-content: space-between;"><div style="cursor: pointer;" @click="skip()">${data.entName}</div>
+					<div style="width: 78px;height: 24px;border-radius: 2px;background-color: rgba(33, 126, 255, 1);color: rgba(255, 255, 255, 100);font-size: 14px;text-align: center;line-height: 24px;margin-left: 15px;cursor:pointer" @click="viewDetail()" :style="{backgroundColor:infoloadEntDetail?'rgba(142, 142, 142, 1)':'rgba(33, 126, 255, 1)'}">{{infoloadEntDetail?'加载中..':'查看详情'}}</div></div>
+                    <br/><div style="font-size:14px"><span style="opacity:0.65">地址：</span>${data.address || '-'}</div></div>`,
+        data () {
+          return {
+            infoloadEntDetail: false
+          }
+        },
+        methods: {
+          viewDetail () {
+            if (!that.loadEntDetail) {
+              this.infoloadEntDetail = true
+              that.getWarningEntDetail(entData).then(res => {
+                this.infoloadEntDetail = false
+              }).catch(err => {
+                console.log(err)
+                this.infoloadEntDetail = false
+              })
+            }
+          },
+          skip () {
+            that.gotoUrl(entData.eid, entData.entName)
+          }
+        }
+      })
+      const component = new InfoContent().$mount() // 挂载实例
+      infoWindow.setContent(component.$el) // 动态更新信息窗体中的信息
+      infoWindow.open(that.map, [data.lngGd, data.latGd]) // 打开信息窗体
     }
   }
 }

@@ -47,7 +47,7 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-## 使用element-ui（全局注册elementui：https://element.eleme.cn/#/zh-CN）
+### 使用element-ui（全局注册elementui：https://element.eleme.cn/#/zh-CN）
 1.通过 npm i element-ui -S (安装)
 2.在 main.js 中引入 element-ui 的 js 文件和 css
     import ElementUI from 'element-ui'
@@ -56,13 +56,37 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     Vue.use(ElementUI)
 4.这样就可以在全局使用了
 
-## 使用 sreenfull 插件，执行命令安装
+### 使用 sreenfull 插件，执行命令安装
 1. npm install --save screenfull
 2. 使用页面引入 import screenfull from 'screenful'
 3. 调用 screenfull.togger() 方法
 
-## 使用 nprogress 插件
+### 使用 nprogress 插件
 1. npm install --save nprogess
 2. 页面引入 import NProgress from 'nprogress';
 3. NProgress.start();  // 开始
 4. NProgress.done();  // 结束
+
+### 使用 vue-count-to 插件
+1. npm install --save vue-count-to
+2. 页面引入 import countTo from 'vue-count-to'
+3. 常用属性
+  
+| Property   | Description    | type |  default |
+| ------ | --------------- |---------------|---------------- |
+| Property | Description |	type|	default |
+| startVal |	开始值                 |		Number |		0 |
+| endVal	 |  结束值                 |		Number |		2017 |
+| duration |	持续时间，以毫秒为单位   |		Number	3000 |
+| autoplay |	自动播放               |		Boolean  |		true |
+| decimals |	要显示的小数位数        |		Number |		0 |
+| decimal	 |  十进制分割              |		String |		. |
+| separator| 	分隔符                  |		String |		, |
+| prefix	 |  前缀                   |		String	 |	'' |
+| suffix	 |  后缀                   |		String |		'' |
+| useEasing|	使用缓和功能           |		Boolean |		true |
+| easingFn |	缓和回调               |		Function |		— |
+
+### 使用 vue-seamless-scroll 插件
+1. cnpm install vue-seamless-scroll --save
+2. 页面引入 import vueSeamlessScroll from 'vue-seamless-scroll'
