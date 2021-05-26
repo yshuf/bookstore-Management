@@ -2,14 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
-import Overview from '../views/overview.vue'
-import UserCenter from '../views/userCenter.vue'
-import UserAccount from '../views/userAccount.vue'
-import AdminAccount from '../views/adminAccount.vue'
-import BookManagement from '../views/bookManagement.vue'
-import SortParams from '../views/sortParams.vue'
-import BooksSort from '../views/booksSort.vue'
-
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -64,7 +56,7 @@ const router = new VueRouter({
             title:"书籍列表"
           },
           component:  () =>
-          import('@/views/bookManagement.vue')
+          import('@/views/book-management/bookManagement.vue')
         },
         {
           path: '/sortParams',
@@ -73,7 +65,7 @@ const router = new VueRouter({
             title:"分类参数"
           },
           component: () =>
-          import('@/views/sortParams.vue')
+          import('@/views/book-management/sortParams.vue')
         },
         {
           path: '/booksSort',
@@ -82,7 +74,7 @@ const router = new VueRouter({
             title:"书籍分类"
           },
           component: () =>
-          import('@/views/booksSort.vue')
+          import('@/views/book-management/booksSort.vue')
         },
         {
           path: '/riskOverview',

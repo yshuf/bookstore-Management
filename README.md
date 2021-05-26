@@ -20,14 +20,13 @@ npm run build
 npm run lint
 ```
 
-```
-  # Node >= 10 and Git >= 2.13.0
-  # [Husky](https://github.com/typicode/husky#readme)
-  # [validate-commit-msg](https://github.com/conventional-changelog-archived-repos/validate-commit-msg)
-  # [Commit message 和 Change log 编写指南](http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html)
-  # [Change log 示例1](https://github.com/karma-runner/karma/blob/master/CHANGELOG.md)
-  # [Change log 示例2](https://github.com/btford/grunt-conventional-changelog/blob/master/CHANGELOG.md)
+### cross-env 使用
+1. 什么是cross-env？ 通过js在平台设置不同的环境变量的工具
+2. 安装   npm install --save-dev cross-env
+3. 
 
+
+```
   # feat 新增功能（feature）
   # fix 修补bug
   # docs 仅仅修改了文档，比如 README, CHANGELOG, CONTRIBUTE等等

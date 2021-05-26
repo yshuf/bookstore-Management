@@ -7,6 +7,7 @@
 
 <script>
 import Vue from 'vue'
+import $ from 'jquery'
 
 export default {
   name: 'Overview',
@@ -599,6 +600,10 @@ export default {
     if (this.entList) {
       this.addScatterPlot()
     }
+    window.addEventListener('resize', () => {
+      this.screenSize()
+    })
+    this.screenSize()
   },
   methods: {
     // 地图初始化
@@ -768,6 +773,34 @@ export default {
       const component = new InfoContent().$mount() // 挂载实例
       infoWindow.setContent(component.$el) // 动态更新信息窗体中的信息
       infoWindow.open(that.map, [data.lngGd, data.latGd]) // 打开信息窗体
+    },
+    screenSize () {
+      const width = $(window).width()
+      const height = $(window).height()
+      const scaleX = 1920 / width // 设备默认宽度为100%
+      const scaleY = 1080 / height // 设备默认高度为100%
+      // 按设备比例缩放div的比例
+      const scaleFunc = 'scale(' + scaleX + ',' + scaleY + ')'
+      $('#commonMap').css({
+        transform: scaleFunc, // 缩放比例
+        'transform-origin': 'left top', // 缩放基点
+        '-ms-transform': scaleFunc /* IE 9 */,
+        '-ms-transform-origin': 'left top',
+
+        '-moz-transform': scaleFunc /* Firefox */,
+        '-moz-transform-origin': 'left top',
+
+        '-webkit-transform': scaleFunc /* Safari 和 Chrome */,
+        '-webkit-transform-origin': 'left top',
+
+        '-o-transform': scaleFunc /* Opera */,
+        '-o-transform-origin': 'left top'
+      })
+
+      $('#tags').css({
+        bottom: 1080 * 0.1 + (1080 - height),
+        left: width * 0.5
+      })
     }
   }
 }
@@ -784,7 +817,7 @@ export default {
   -o-transform: none;
   -ms-transform: none;
   transform: none;
-  min-width: 1500px;
-  min-height: 820px;
+  //min-width: 1500px;
+  //min-height: 820px;
 }
 </style>
