@@ -95,15 +95,15 @@ export default {
       startValue: 0,
       options: [
         {
-          value: '0',
+          value: 3,
           label: '全部'
         },
         {
-          value: '1',
+          value: 1,
           label: '上架'
         },
         {
-          value: '2',
+          value: 2,
           label: '下架'
         }
       ],

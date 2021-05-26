@@ -76,85 +76,6 @@
         </div>
       </div>
     </div>
-    <!-- 修改手机号模态框 -->
-    <Modal :visible.sync="modelData.isVisible" :modelWidth="modelData.width*1">
-      <div slot="title">
-        <p class="typeface">{{modelData.title}}</p>
-      </div>
-      <div slot="content">
-        <div class="content reset-content" v-if="modelData.modelType=='resetPhone'">
-          <div class="input-row">
-            <div class="input-label">手机号：</div>
-            <div class="input-text">
-              <input
-                class="text input-border"
-                type="tel"
-                placeholder="请输入11位新手机号"
-                v-model="modelData.data.phone"
-                maxlength="11"
-              />
-              <input class="codebtn" type="button" value="获取验证码" @click="getSetTime" />
-            </div>
-          </div>
-          <div class="text-tip">必须为11位的手机号（仅支持中国大陆）</div>
-          <div class="input-row">
-            <div class="input-label">手机验证码：</div>
-            <div class="input-text">
-              <input
-                type="number"
-                class="text input-border"
-                placeholder="请输入验证码"
-                v-model="modelData.data.smsCode"
-                oninput="if(value.length>6)value=value.slice(0,6)"
-              />
-            </div>
-          </div>
-          <div class="submitBtnBox align-r">
-            <ys-button class="btn btn-reset" @click="deleInfo">取消</ys-button>
-            <ys-button @click="editPhone" type="primary" useType="debounce">确定</ys-button>
-          </div>
-        </div>
-        <div class="content reset-content" v-if="modelData.modelType=='resetPass'">
-          <div class="input-row">
-            <div class="input-label">旧密码：</div>
-            <div class="input-text">
-              <input
-                type="text"
-                placeholder="请输入旧密码"
-                class="text input-border"
-                v-model="modelData.data.oldPassword"
-              />
-            </div>
-          </div>
-          <div class="input-row">
-            <div class="input-label">新密码：</div>
-            <div class="input-text">
-              <input
-                type="text"
-                placeholder="请输入新密码"
-                class="text input-border"
-                v-model="modelData.data.newPassword"
-              />
-            </div>
-          </div>
-          <div class="input-row">
-            <div class="input-label">再次输入：</div>
-            <div class="input-text">
-              <input
-                type="text"
-                placeholder="请再次输入密码"
-                class="text input-border"
-                v-model="modelData.data.newPasswordAgain"
-              />
-            </div>
-          </div>
-          <div class="submitBtnBox align-r">
-            <!-- <ys-button class="btn btn-reset" @click="deleInfo">取消</ys-button>
-            <ys-button @click="editPassword" type="primary" useType="debounce">确定</ys-button>-->
-          </div>
-        </div>
-      </div>
-    </Modal>
   </div>
 </template>
 
@@ -167,13 +88,15 @@ export default {
   name: 'userCenter',
   components: {
     // YsButton,
-    MessageBox
+    // MessageBox
   },
   data () {
     return {
       instructionList: [],
       // 用户信息
-      userInfo: {},
+      userInfo: {
+        realName: '管理员'
+      },
       // 用户名
       realName: '',
       // 模态框
@@ -194,9 +117,9 @@ export default {
     }
   },
   mounted () {
-    this.getUserInfo()
-    this.getList()
-    this.realName = JSON.parse(getStore('userInfo')).realName
+    // this.getUserInfo()
+    // this.getList()
+    this.realName = this.$store.state.realName
   },
   methods: {
     // 获取隐私政策列表

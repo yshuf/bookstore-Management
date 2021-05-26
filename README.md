@@ -53,7 +53,23 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     import 'element-ui/lib/theme-chalk/index.css'
 3.让 vue 引用 Element ui
     Vue.use(ElementUI)
-4.这样就可以在全局使用了
+4.这样就可以在全局使用了’
+
+```
+el-scrollbar 组件使用
+props: {
+ native: Boolean, // 是否使用本地，设为true则不会启用element-ui自定义的滚动条
+ wrapStyle: {}, // 包裹层自定义样式
+ wrapClass: {}, // 包裹层自定义样式类
+ viewClass: {}, // 可滚动部分自定义样式类
+ viewStyle: {}, // 可滚动部分自定义样式
+ noresize: Boolean, // 如果 container 尺寸不会发生变化，最好设置它可以优化性能
+ tag: { // 生成的标签类型，默认使用 `div`标签包裹
+  type: String,
+  default: 'div'
+ }
+}
+```
 
 ### 使用 sreenfull 插件，执行命令安装
 1. npm install --save screenfull

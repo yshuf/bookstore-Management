@@ -25,7 +25,7 @@
         </div>
         <!-- unique-opened 唯一展开某一菜单  collapse 开启菜单的折叠 collapse-transition 折叠动画 -->
 
-          <el-scrollbar style="height:calc(100% - 24px)">
+          <el-scrollbar wrapStyle="overflow-x: hidden;" style="height:calc(100% - 24px)">
             <el-menu
             class="el-menu-vertical-demo"
             background-color="rgb(48, 65, 86)"
@@ -61,7 +61,9 @@
 
       <!-- 主体部分 -->
       <el-main>
+        <el-scrollbar wrapStyle="overflow-x: hidden;"  style="height:100%">
         <router-view></router-view>
+        </el-scrollbar>
       </el-main>
     </el-container>
   </el-container>

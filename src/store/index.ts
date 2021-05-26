@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    realName:'管理员'
   },
   mutations: {
   },
