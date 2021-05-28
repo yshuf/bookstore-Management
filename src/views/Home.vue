@@ -61,8 +61,8 @@
 
       <!-- 主体部分 -->
       <el-main>
-        <el-scrollbar wrapStyle="overflow-x: hidden;"  style="height:100%">
-        <router-view></router-view>
+        <el-scrollbar wrapStyle="overflow-x: hidden;" viewStyle="height:100%"  style="height:100%">
+          <keep-alive><router-view></router-view></keep-alive>
         </el-scrollbar>
       </el-main>
     </el-container>

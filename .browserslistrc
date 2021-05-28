@@ -1,0 +1,11 @@
+# Browsers that we support
+# last 1 version : 即支持各类浏览器最近的一个版本，当然这里的 1 是可变的数字
+# 1% : 支持市场份额大于 1% 的浏览器
+# not dead: 这个 query 中 not 是逻辑非操作符，即对 dead取反，而浏览器被认为是 dead 条件是：最新的两个版本中发现其市场份额已经低于 0.5% 并且 24 个月内没有任务官方支持和更新了
+
+last 2 version 
+> 1%
+not ie < 8
+ios 7
+maintained node versions
+not dead

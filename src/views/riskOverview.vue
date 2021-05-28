@@ -807,9 +807,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
-#riskOverview,
+#riskOverview{
+  width: 100%;
+  height: 100%;
+}
+
 #mapContainer {
-  position: relative;
+  //position: relative;
   width: 100%;
   height: 100%;
   -moz-transform: none;
@@ -817,7 +821,7 @@ export default {
   -o-transform: none;
   -ms-transform: none;
   transform: none;
-  //min-width: 1500px;
-  //min-height: 820px;
+  // min-width: 1500px;
+  // min-height: 820px;
 }
 </style>

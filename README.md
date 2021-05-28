@@ -105,3 +105,27 @@ props: {
 ### 使用 vue-seamless-scroll 插件
 1. cnpm install vue-seamless-scroll --save
 2. 页面引入 import vueSeamlessScroll from 'vue-seamless-scroll'
+
+### PostCSS 相关插件使用（autoprefixer，postcss-pxtorem）
+  根目录下新建 postcss.config.js 文件
+  #### autoprefixer
+1. 下载  cnpm install autoprefixer --save-dev
+2. 在配置文件（postcss.config.js）中 配置 autoprefixer
+    (1).引入autoprefixer
+    ```
+      const autoprefixer = require('autoprefixer');
+    ```
+    (2). 文件导出改应用插件
+    ```
+    module.exports = {
+      plugins: [
+        autoprefixer
+      ]
+    }
+    ```
+
+
+#### px转rem    
+// 这里 postcss-pxtorem 版本需要主要，5.1.1 版本有用，刚开始安装的 6.0.0 的启动报错
+1. npm run postcss-loader postcss-pxtorem --save-dev
+2. 
