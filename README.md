@@ -71,18 +71,18 @@ props: {
 }
 ```
 
-### 使用 sreenfull 插件，执行命令安装
+### 使用 sreenfull 插件，执行命令安装 （实现全屏功能）
 1. npm install --save screenfull
 2. 使用页面引入 import screenfull from 'screenful'
 3. 调用 screenfull.togger() 方法
 
-### 使用 nprogress 插件
+### 使用 nprogress 插件 (加载进度条)
 1. npm install --save nprogess
 2. 页面引入 import NProgress from 'nprogress';
 3. NProgress.start();  // 开始
 4. NProgress.done();  // 结束
 
-### 使用 vue-count-to 插件
+### 使用 vue-count-to 插件 （数字滚动）
 1. npm install --save vue-count-to
 2. 页面引入 import countTo from 'vue-count-to'
 3. 常用属性
@@ -102,13 +102,19 @@ props: {
 | useEasing|	使用缓和功能           |		Boolean |		true |
 | easingFn |	缓和回调               |		Function |		— |
 
-### 使用 vue-seamless-scroll 插件
+### 使用 vue-seamless-scroll 插件（实现循环滚动列表）
 1. cnpm install vue-seamless-scroll --save
 2. 页面引入 import vueSeamlessScroll from 'vue-seamless-scroll'
+  
 
 ### PostCSS 相关插件使用（autoprefixer，postcss-pxtorem）
   根目录下新建 postcss.config.js 文件
-  #### autoprefixer
+  
+#### px转rem    
+// 这里 postcss-pxtorem 版本需要注意，5.1.1 版本有用，刚开始安装的 6.0.0 的启动报错
+1. npm run postcss-loader postcss-pxtorem --save-dev
+2. 配置相关需要的 postcss-pxtorem 参数
+ #### autoprefixer （自动添加浏览器厂商前缀）
 1. 下载  cnpm install autoprefixer --save-dev
 2. 在配置文件（postcss.config.js）中 配置 autoprefixer
     (1).引入autoprefixer
@@ -117,15 +123,13 @@ props: {
     ```
     (2). 文件导出改应用插件
     ```
+    需要在根目录下新建 browserslistrc 文件( Browsers that we support ),同时将 package.json 中的 browserslist 去掉，避免冲突
     module.exports = {
       plugins: [
-        autoprefixer
+        // 根据 .browserslistrc 自动添加浏览器厂商前缀（webkit、moz、ms）
+        autoprefixer 
       ]
     }
     ```
 
 
-#### px转rem    
-// 这里 postcss-pxtorem 版本需要主要，5.1.1 版本有用，刚开始安装的 6.0.0 的启动报错
-1. npm run postcss-loader postcss-pxtorem --save-dev
-2. 

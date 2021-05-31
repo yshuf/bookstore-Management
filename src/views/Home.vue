@@ -1,3 +1,10 @@
+/*
+ * @Author: mobai
+ * @Date: 2021-05-31 11:35:11
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2021-05-31 11:35:53
+ */
+
 <template>
   <el-container class="home-container">
     <el-header>
@@ -37,9 +44,12 @@
             router
             :default-active="activePath"
             >
-              <el-submenu :index="'/'+item.path" v-for="item in menuList" :key="item.id">
+            <template v-for="item in menuList">
+              <template v-if="item.children">
+                <el-submenu :index="'/'+item.path" :key="item.id">
                 <!-- 防止这里点击第一个菜单时，其他项菜单联动打开，这里的的 index 属性应该设置为不同的值  -->
-                <template slot="title">
+               <template>
+                  <template slot="title">
                   <i :class="iconsList[item.id]"></i>
                   <span class="menuTxt">{{ item.authName }}</span>
                 </template>
@@ -54,7 +64,19 @@
                     <span>{{ subItem.authName }}</span>
                   </template>
                 </el-menu-item>
+               </template>
               </el-submenu>
+              </template>
+               <template v-else>
+                <el-menu-item :index="'/'+item.path"@click="saveNavStatus('/'+item.path)" :key="item.id">
+                  <template slot="title">
+                    <i class="el-icon-menu"></i>
+                    <span>{{ item.authName }}</span>
+                  </template>
+                </el-menu-item>
+               </template>
+            </template>
+
             </el-menu>
         </el-scrollbar>
       </el-aside>
@@ -192,6 +214,11 @@ export default {
               children: []
             }
           ]
+        },
+        {
+          id: 108,
+          authName: '下载中心',
+          path: 'download'
         },
         {
           id: 104,

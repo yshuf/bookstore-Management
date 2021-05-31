@@ -1,17 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../views/Login.vue'
-import Home from '../views/Home.vue'
+import NProgress from 'nprogress'
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
   routes: [
     { path: '/', redirect: '/login' }, // 重定向
-    { path: '/login', name: 'Login', component: Login },
+    { path: '/login', name: 'Login', component: ()=>import ('@/views/Login.vue') },
     {
       path: '/home',
       name: 'Home',
-      component: Home,
+      component: ()=>import('@/views/Home.vue'),
       redirect: '/overview',
       children: [
         {
@@ -84,6 +84,15 @@ const router = new VueRouter({
           },
           component: () =>
             import('@/views/riskOverview.vue')
+        },
+        {
+          path: '/download',
+          name: 'DownLoad',
+          meta: {
+            title: "下载中心"
+          },
+          component: () =>
+          import('@/views/download.vue')
         }
       ]
     }
@@ -97,6 +106,7 @@ const router = new VueRouter({
 
 // 挂载路由导航守卫
 router.beforeEach((to, from, next) => {
+  NProgress.start();
   if (to.meta.title) {
     document.title = to.meta.title  // 要现实的title
   }
