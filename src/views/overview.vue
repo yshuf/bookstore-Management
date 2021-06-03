@@ -9,8 +9,9 @@
         <!-- <div>过去一周登录走势图</div> -->
       </div>
       <div style="height:350px;" id="dealAmount">
-        <div>过去一周成交总额情况</div>
+        <!-- <div>过去一周成交总额情况</div> -->
       </div>
+      <div style="height:350px;" id="rank_box_chart"></div>
     </div>
   </div>
 </template>
@@ -22,6 +23,10 @@ export default {
     return {
       id: '',
       myChart: null,
+      bookRankChart: null,
+      loginChart: null,
+      trendEchart: null,
+      rankEchart: null,
       dealTotalAmount: [
         { number: 1, unit: '家', name: '白夜行', num: '50' },
         { number: 2, unit: '家', name: '白夜行', num: '50' },
@@ -79,17 +84,24 @@ export default {
     this.$nextTick(function () {
       this.drawLine()
     })
+     window.addEventListener('resize',()=>{
+        console.log('缩放');
+        this.myChart.resize()
+        this.bookRankChart.resize()
+        this.loginChart.resize()
+        this.trendEchart.resize()
+      })
     this.dealData()
   },
   methods: {
     drawLine () {
-      const myChart = this.$echarts.init(document.getElementById('lineCharts'))
-      const bookRankChart = this.$echarts.init(document.getElementById('bookRank'))
-      const loginChart = this.$echarts.init(document.getElementById('loginChart'))
-      const dealAmount = this.$echarts.init(document.getElementById('dealAmount'))
+      this.myChart = this.$echarts.init(document.getElementById('lineCharts'))
+      this.bookRankChart = this.$echarts.init(document.getElementById('bookRank'))
+      this.loginChart = this.$echarts.init(document.getElementById('loginChart'))
+      this.trendEchart = this.$echarts.init(document.getElementById('dealAmount'))
+      this.rankEchart = this.$echarts.init(document.getElementById('rank_box_chart'))
       const max = Math.max.apply(Math, this.userAmount.concat(this.dealAmount))
-      console.log(max)
-      myChart.setOption({
+      this.myChart.setOption({
         color: ['#3398DB'],
         title: {
           text: '最近一周销售书籍排名情况'
@@ -139,7 +151,7 @@ export default {
           }
         ]
       })
-      bookRankChart.setOption({
+      this.bookRankChart.setOption({
         title: {
           text: '过去一周查询搜索书籍排名'
         },
@@ -190,7 +202,7 @@ export default {
           }
         ]
       })
-      loginChart.setOption({
+      this.loginChart.setOption({
         title: {
           text: '最近一周平太业务情况'
         },
@@ -257,7 +269,7 @@ export default {
           }
         ]
       })
-      dealAmount.setOption({
+      this.trendEchart.setOption({
         title: {
           text: '过去一周登录走势图'
         },
@@ -302,7 +314,25 @@ export default {
             show: false
           }
         },
-
+        dataZoom: [ {
+                type: 'slider',
+                show: true,
+                height: 4,
+                bottom: 10,
+                borderColor: 'transparent',
+                handleIcon: 'M512 512m-208 0a6.5 6.5 0 1 0 416 0 6.5 6.5 0 1 0-416 0Z M512 192C335.264 192 192 335.264 192 512c0 176.736 143.264 320 320 320s320-143.264 320-320C832 335.264 688.736 192 512 192zM512 800c-159.072 0-288-128.928-288-288 0-159.072 128.928-288 288-288s288 128.928 288 288C800 671.072 671.072 800 512 800z',
+                backgroundColor: '#E3EBE9', // 底层背景颜色
+                fillerColor: '#89D4C5', // 选中范围填充颜色
+                handleSize: 10, // 控制手柄的尺寸
+                handleStyle: { // 手柄样式配置
+                    color:'#fff',  // 图形的颜色
+                    borderColor: '#89D4C5', // 图形的描边颜色
+                    shadowBlur: 4,
+                    shadowOffsetX: 1,
+                    shadowOffsetY: 1,
+                    shadowColor: '#e5e5e5'
+                },
+            }],
         series: [
           {
             // name:'申请量',
@@ -363,7 +393,7 @@ export default {
     div {
       background: #fff;
       padding: 20px;
-      width: 47%;
+      width: 30%;
       margin-bottom: 20px;
     }
   }

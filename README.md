@@ -132,4 +132,5 @@ props: {
     }
     ```
 
-
+<!-- 配置eslintrc.js 报错提示 stylelint: Could not find "stylelint-config-standard". Do you need a `configBasedir`? 解决 -->
+npm i stylelint stylelint-webpack-plugin stylelint-config-standard --save-dev

@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import { MessageBox, setTime, checkPassword, checkPhone, getStore, removeStore, setStore } from '../utils/common'
+import { MessageBox, setTime, checkPassword, checkPhone, removeStore, setStore } from '../utils/common'
 // import YsButton from './common/YsButton'
 // import md5 from '../../../static/md5'
 

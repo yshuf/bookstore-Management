@@ -36,7 +36,7 @@ module.exports = {
       }
     } // 配置多个代理
   },
-  lintOnSave: false, // 开启保存自动校验eslinst
+  lintOnSave: true, // 开启保存自动校验eslinst
   configureWebpack: {
     // 全局 支持jquery 配置
     plugins: [
