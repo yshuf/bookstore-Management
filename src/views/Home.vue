@@ -1,9 +1,5 @@
-/*
- * @Author: mobai
- * @Date: 2021-05-31 11:35:11
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2021-05-31 11:35:53
- */
+/* * @Author: mobai * @Date: 2021-05-31 11:35:11 * @Last Modified by:
+mikey.zhaopeng * @Last Modified time: 2021-05-31 11:35:53 */
 
 <template>
   <el-container class="home-container">
@@ -14,11 +10,14 @@
       </div>
       <div class="right-info">
         <div @click="onclickFullScreen" title="全屏" class="pointer">
-          <i :class="isFullScreen?'el-icon-plus':'el-icon-full-screen'"></i>
+          <i :class="isFullScreen ? 'el-icon-plus' : 'el-icon-full-screen'"></i>
         </div>
         <div class="userName">你好，欢迎您！ admin</div>
-        <div  @click="loginout">
-          <i class="icon iconfont icon-guangji" style="font-size:18px; cursor:pointer;"></i>
+        <div @click="loginout">
+          <i
+            class="icon iconfont icon-guangji"
+            style="font-size:18px; cursor:pointer;"
+          ></i>
         </div>
       </div>
       <!-- <el-button type="info" @click="loginout">退出</el-button> -->
@@ -32,8 +31,11 @@
         </div>
         <!-- unique-opened 唯一展开某一菜单  collapse 开启菜单的折叠 collapse-transition 折叠动画 -->
 
-          <el-scrollbar wrapStyle="overflow-x: hidden;" style="height:calc(100% - 24px)">
-            <el-menu
+        <el-scrollbar
+          wrapStyle="overflow-x: hidden;"
+          style="height:calc(100% - 24px)"
+        >
+          <el-menu
             class="el-menu-vertical-demo"
             background-color="rgb(48, 65, 86)"
             text-color="#fff"
@@ -43,47 +45,54 @@
             :collapse-transition="false"
             router
             :default-active="activePath"
-            >
+          >
             <template v-for="item in menuList">
               <template v-if="item.children">
-                <el-submenu :index="'/'+item.path" :key="item.id">
-                <!-- 防止这里点击第一个菜单时，其他项菜单联动打开，这里的的 index 属性应该设置为不同的值  -->
-               <template>
-                  <template slot="title">
-                  <i :class="iconsList[item.id]"></i>
-                  <span class="menuTxt">{{ item.authName }}</span>
-                </template>
-                <el-menu-item
-                  :index="'/'+subItem.path"
-                  v-for="subItem in item.children"
-                  :key="subItem.id"
-                  @click="saveNavStatus('/'+subItem.path)"
-                >
-                  <template slot="title">
-                    <i class="el-icon-menu"></i>
-                    <span>{{ subItem.authName }}</span>
+                <el-submenu :index="'/' + item.path" :key="item.id">
+                  <!-- 防止这里点击第一个菜单时，其他项菜单联动打开，这里的的 index 属性应该设置为不同的值  -->
+                  <template>
+                    <template slot="title">
+                      <i :class="iconsList[item.id]"></i>
+                      <span class="menuTxt">{{ item.authName }}</span>
+                    </template>
+                    <el-menu-item
+                      :index="'/' + subItem.path"
+                      v-for="subItem in item.children"
+                      :key="subItem.id"
+                      @click="saveNavStatus('/' + subItem.path)"
+                    >
+                      <template slot="title">
+                        <i class="el-icon-menu"></i>
+                        <span>{{ subItem.authName }}</span>
+                      </template>
+                    </el-menu-item>
                   </template>
-                </el-menu-item>
-               </template>
-              </el-submenu>
+                </el-submenu>
               </template>
-               <template v-else>
-                <el-menu-item :index="'/'+item.path"@click="saveNavStatus('/'+item.path)" :key="item.id">
+              <template v-else>
+                <el-menu-item
+                  :index="'/' + item.path"
+                  @click="saveNavStatus('/' + item.path)"
+                  :key="item.id"
+                >
                   <template slot="title">
                     <i class="el-icon-menu"></i>
                     <span>{{ item.authName }}</span>
                   </template>
                 </el-menu-item>
-               </template>
+              </template>
             </template>
-
-            </el-menu>
+          </el-menu>
         </el-scrollbar>
       </el-aside>
 
       <!-- 主体部分 -->
       <el-main>
-        <el-scrollbar wrapStyle="overflow-x: hidden;" viewStyle="height:100%"  style="height:100%">
+        <el-scrollbar
+          wrapStyle="overflow-x: hidden;"
+          viewStyle="height:100%"
+          style="height:100%"
+        >
           <keep-alive><router-view></router-view></keep-alive>
         </el-scrollbar>
       </el-main>
@@ -92,14 +101,14 @@
 </template>
 
 <script>
-import screenfull from 'screenfull'
+import screenfull from 'screenfull';
 export default {
   name: 'Home',
-  created () {
-    this.getMenuList()
-    this.activePath = window.sessionStorage.getItem('active_path')
+  created() {
+    this.getMenuList();
+    this.activePath = window.sessionStorage.getItem('active_path');
   },
-  data () {
+  data() {
     return {
       // 是否全屏
       isFullScreen: false,
@@ -116,29 +125,29 @@ export default {
       isCollapse: false,
       // 默认激活菜单为空
       activePath: ''
-    }
+    };
   },
   methods: {
     /**
      * @desc 全屏
      * @param {Objetc} event - 事件html对象
      */
-    onclickFullScreen () {
+    onclickFullScreen() {
       if (!screenfull.isEnabled) {
         this.$message({
           message: '不支持全屏',
           tyupe: 'warning'
-        })
-        return false
+        });
+        return false;
       }
-      this.isFullScreen = !this.isFullScreen
-      screenfull.toggle()
+      this.isFullScreen = !this.isFullScreen;
+      screenfull.toggle();
     },
-    loginout () {
-      window.sessionStorage.clear()
-      this.$router.push('/login')
+    loginout() {
+      window.sessionStorage.clear();
+      this.$router.push('/login');
     },
-    async getMenuList () {
+    async getMenuList() {
       //   const { data: res } = await this.$http.get('menus')
       //   if (res.meta.status !== 200)
       //     return this.$message({
@@ -202,7 +211,8 @@ export default {
               children: []
             }
           ]
-        }, {
+        },
+        {
           id: 106,
           authName: '风险预警',
           path: 'riskOverview',
@@ -233,29 +243,29 @@ export default {
             }
           ]
         }
-      ]
+      ];
     },
     // 点击按钮，切换菜单的折叠与展开
-    togglemenu () {
-      this.isCollapse = !this.isCollapse
+    togglemenu() {
+      this.isCollapse = !this.isCollapse;
     },
     // 保存当前点击菜单的路由
-    saveNavStatus (url) {
-      window.sessionStorage.setItem('active_path', url)
-      this.activePath = url
+    saveNavStatus(url) {
+      window.sessionStorage.setItem('active_path', url);
+      this.activePath = url;
     }
   }
-}
+};
 </script>
 
 <style scoped lang="less">
 .home-container {
-   height: 100%;
+  height: 100%;
   .left-container {
     margin-top: 60px;
     height: calc(100% - 60px);
     .aside-container {
-      transition: .2s;
+      transition: 0.2s;
     }
   }
 }
@@ -263,7 +273,7 @@ export default {
   width: 100%;
   position: fixed;
   background: rgb(48, 65, 86);
-  padding: 0 18px!important;
+  padding: 0 18px !important;
   display: flex;
   justify-content: space-between;
   align-items: center;

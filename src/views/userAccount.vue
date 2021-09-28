@@ -28,22 +28,40 @@
       </div>
 
       <div class="select">
-        <el-input placeholder="请输入姓名/用户名/手机" v-model="key" class="input-with-select">
-          <el-button slot="append" icon="el-icon-search" @click="search()"></el-button>
+        <el-input
+          placeholder="请输入姓名/用户名/手机"
+          v-model="key"
+          class="input-with-select"
+        >
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="search()"
+          ></el-button>
         </el-input>
       </div>
 
       <div class="select addBtn">
-        <el-button type="primary" @click="addAndEdit('add')">添加账号</el-button>
+        <el-button type="primary" @click="addAndEdit('add')"
+          >添加账号</el-button
+        >
       </div>
     </div>
     <el-table :data="tableData" style="width: 100%">
       <el-table-column prop="id" label="序号" width="200"></el-table-column>
       <el-table-column prop="name" label="姓名" width="200"></el-table-column>
       <el-table-column prop="userName" label="用户名"></el-table-column>
-      <el-table-column prop="phone" label="手机号" width="200"></el-table-column>
+      <el-table-column
+        prop="phone"
+        label="手机号"
+        width="200"
+      ></el-table-column>
       <el-table-column prop="status" label="状态" width="200"></el-table-column>
-      <el-table-column prop="date" label="创建时间" width="200"></el-table-column>
+      <el-table-column
+        prop="date"
+        label="创建时间"
+        width="200"
+      ></el-table-column>
       <el-table-column fixed="right" label="操作" width="200">
         <template slot-scope="scope">
           <el-popconfirm
@@ -56,7 +74,9 @@
           >
             <el-button type="text" size="small">删除</el-button>
           </el-popconfirm>
-          <el-button type="text" size="small" @click="addAndEdit('edit')">编辑</el-button>
+          <el-button type="text" size="small" @click="addAndEdit('edit')"
+            >编辑</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -82,7 +102,9 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false"
+          >确 定</el-button
+        >
       </div>
     </el-dialog>
   </div>
@@ -91,13 +113,7 @@
 <script>
 export default {
   name: 'UserAccount',
-  created () {
-
-  },
-  mounted () {
-
-  },
-  data () {
+  data() {
     return {
       value: '',
       key: '',
@@ -162,28 +178,28 @@ export default {
         resource: '',
         desc: ''
       }
-    }
+    };
   },
   methods: {
-    addAndEdit (type) {
-      this.dialogFormVisible = true
-      this.titleName = type === 'add' ? '添加账号' : '编辑账号'
+    addAndEdit(type) {
+      this.dialogFormVisible = true;
+      this.titleName = type === 'add' ? '添加账号' : '编辑账号';
     },
     // 状态筛选
-    selectStatus (type) {
-      this.status = type
+    selectStatus(type) {
+      this.status = type;
     },
     // 时间筛选
-    selectTime (data) {
-      this.startTime = data[0]
-      this.endTime = data[1]
+    selectTime(data) {
+      this.startTime = data[0];
+      this.endTime = data[1];
     },
     // 点击筛选按钮
-    search () {
-      console.log(this.key)
+    search() {
+      console.log(this.key);
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>

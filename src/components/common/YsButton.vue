@@ -125,7 +125,7 @@
     :type="nativeType"
     :class="[
       type ? 'ys-button--' + type : '',
-      size ?'ys-button--' + size : '',
+      size ? 'ys-button--' + size : '',
       {
         'is-disabled': buttonDisabled || loading,
         'is-round': round,
@@ -133,7 +133,7 @@
         'is-circle': circle
       }
     ]"
-    :style="{width: isNumber(width)?width+'px':width}"
+    :style="{ width: isNumber(width) ? width + 'px' : width }"
   >
     <i class="iconfont icon-shuaxin ys-loading-icon" v-if="loading"></i>
     <!-- 给显示的内容增加个span，无内容时，则啥都不显示 -->
@@ -148,10 +148,8 @@ import { debounce, throttle } from '../../../static/lodash-1.8.3.min';
 
 export default {
   name: 'ys-button',
-  data () {
-    return {
-
-    }
+  data() {
+    return {};
   },
   /**
    * *	<ys-button @click="login()" type="primary" />登录</ys-button>
@@ -159,16 +157,19 @@ export default {
    *  按钮是否禁用 disabled:true / false
    **/
   props: {
-    type: {               // 按钮类型// 类型 primary / success / warning / danger / info / text
+    type: {
+      // 按钮类型// 类型 primary / success / warning / danger / info / text
       type: String,
       default: 'default'
     },
-    size: String,         // 按钮尺寸大小  // 尺寸 medium / small / mini
-    icon: {               // icon的class类
+    size: String, // 按钮尺寸大小  // 尺寸 medium / small / mini
+    icon: {
+      // icon的class类
       type: String,
       default: ''
     },
-    nativeType: {         // 原生 type 属性
+    nativeType: {
+      // 原生 type 属性
       type: String,
       default: 'button'
     },
@@ -176,75 +177,78 @@ export default {
       type: String,
       default: '60'
     },
-    loading: Boolean,     // 是否加载中状态
-    disabled: Boolean,    // 是否禁用状态
-    plain: Boolean,      // 是否朴素按钮
-    autofocus: Boolean,   // 是否默认聚焦
-    round: Boolean,       // 是否圆角按钮
-    circle: Boolean,       // 是否圆形按钮
-    useType: {       // 使用类型，debounce 防抖，throttle 节流，none 都不用
+    loading: Boolean, // 是否加载中状态
+    disabled: Boolean, // 是否禁用状态
+    plain: Boolean, // 是否朴素按钮
+    autofocus: Boolean, // 是否默认聚焦
+    round: Boolean, // 是否圆角按钮
+    circle: Boolean, // 是否圆形按钮
+    useType: {
+      // 使用类型，debounce 防抖，throttle 节流，none 都不用
       type: String,
       default: 'none',
-      validator: function (value) {
-        return ['debounce', 'throttle', 'none'].indexOf(value) !== -1
+      validator: function(value) {
+        return ['debounce', 'throttle', 'none'].indexOf(value) !== -1;
       }
     },
-    wait: {       // 防抖、节流周期
+    wait: {
+      // 防抖、节流周期
       type: Number,
       default: 500
     },
-    maxWait: {       // 防抖允许被延迟的最大值
+    maxWait: {
+      // 防抖允许被延迟的最大值
       type: Number,
       default: 5000
     },
-    atBegin: {       // 是否立即触发
+    atBegin: {
+      // 是否立即触发
       type: Boolean,
       default: true
     }
   },
   computed: {
     // 根据当前disabled状态确定button是否禁用
-    buttonDisabled () {
+    buttonDisabled() {
       return this.disabled || false;
     },
-    click () {
+    click() {
       if (this.useType == 'none') return this.handleClick;
       else if (this.useType == 'debounce') return this.handleClickDebounce;
       else if (this.useType === 'throttle') return this.handleClickThrottle;
     }
   },
-  created () {
+  created() {
     this.handleClickDebounce = debounce(
-      this.handleClick,	// 要防抖动的函数
-      this.wait, 		// 需要延迟的毫秒数
+      this.handleClick, // 要防抖动的函数
+      this.wait, // 需要延迟的毫秒数
       {
-        leading: this.atBegin,	// 指定在延迟开始前调用
-        maxWait: this.maxWait,	// 设置 func 允许被延迟的最大值
-        trailing: !this.atBegin	// 指定在延迟结束后调用
+        leading: this.atBegin, // 指定在延迟开始前调用
+        maxWait: this.maxWait, // 设置 func 允许被延迟的最大值
+        trailing: !this.atBegin // 指定在延迟结束后调用
       }
-    )
+    );
     this.handleClickThrottle = throttle(
-      this.handleClick, 	// 要防抖动的函数
-      this.wait,  		// 需要延迟的毫秒数
+      this.handleClick, // 要防抖动的函数
+      this.wait, // 需要延迟的毫秒数
       {
-        leading: this.atBegin,	// 指定在延迟开始前调用
-        trailing: !this.atBegin	// 指定在延迟结束后调用
+        leading: this.atBegin, // 指定在延迟开始前调用
+        trailing: !this.atBegin // 指定在延迟结束后调用
       }
-    )
+    );
   },
-  mounted () {
-  },
+  mounted() {},
   methods: {
-    isNumber (number) {
-      let numReg = /^[0-9]+$/;
-      let numRe = new RegExp(numReg);
-      return numRe.test(number)
+    isNumber(number) {
+      const numReg = /^[0-9]+$/;
+      const numRe = new RegExp(numReg);
+      return numRe.test(number);
     },
-    handleClick (evt) {
+    handleClick(evt) {
       // 触发当前实例上的click事件
       // 比如我们外部使用时，可以直接增加click方法
       this.$emit('click', evt);
-    },
+    }
   }
-}
+};
 </script>

@@ -1,4 +1,4 @@
-const webpack = require('webpack')
+const webpack = require('webpack');
 module.exports = {
   runtimeCompiler: true,
   /* 注意sass，scss，less的配置 */
@@ -47,4 +47,4 @@ module.exports = {
       })
     ]
   }
-}
+};

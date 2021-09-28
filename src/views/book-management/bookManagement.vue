@@ -1,11 +1,16 @@
 <template>
   <div>
     <div class="countNum">
-      <div class="count_item" v-for="(item,index) in options" :key="index">
-        <div>{{item.label}}</div>
+      <div class="count_item" v-for="(item, index) in options" :key="index">
+        <div>{{ item.label }}</div>
         <div>
           <!-- <span class="num">{{item.value}}</span> -->
-          <countTo class="num" :startVal='startValue' :endVal="item.value" :duration='2000'></countTo>
+          <countTo
+            class="num"
+            :startVal="startValue"
+            :endVal="item.value"
+            :duration="2000"
+          ></countTo>
           <span class="unit">本</span>
         </div>
       </div>
@@ -15,7 +20,11 @@
       <div class="search">
         <div class="select">
           <div class="title">状态 :</div>
-          <el-select v-model="value" @change="selectStatus" placeholder="请选择">
+          <el-select
+            v-model="value"
+            @change="selectStatus"
+            placeholder="请选择"
+          >
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -39,8 +48,16 @@
         </div>
 
         <div class="select">
-          <el-input placeholder="请输入书籍名称/书籍编号/作者" v-model="key" class="input-with-select">
-            <el-button slot="append" icon="el-icon-search" @click="search()"></el-button>
+          <el-input
+            placeholder="请输入书籍名称/书籍编号/作者"
+            v-model="key"
+            class="input-with-select"
+          >
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="search()"
+            ></el-button>
           </el-input>
         </div>
       </div>
@@ -48,17 +65,39 @@
       <el-table :data="tableData" style="width: 100%">
         <el-table-column prop="id" label="序号" width="100"></el-table-column>
         <el-table-column prop="code" label="编号" width="150"></el-table-column>
-        <el-table-column prop="name" label="书籍名称" width="150"></el-table-column>
+        <el-table-column
+          prop="name"
+          label="书籍名称"
+          width="150"
+        ></el-table-column>
         <el-table-column prop="auth" label="作者" width="200"></el-table-column>
-        <el-table-column prop="press" label="出版社" width="200"></el-table-column>
-        <el-table-column prop="price" label="书籍价格（元）" width="100"></el-table-column>
-        <el-table-column prop="num" label="现存数量" width="100"></el-table-column>
+        <el-table-column
+          prop="press"
+          label="出版社"
+          width="200"
+        ></el-table-column>
+        <el-table-column
+          prop="price"
+          label="书籍价格（元）"
+          width="100"
+        ></el-table-column>
+        <el-table-column
+          prop="num"
+          label="现存数量"
+          width="100"
+        ></el-table-column>
         <el-table-column prop="type" label="类别" width="200"></el-table-column>
-        <el-table-column prop="status" label="状态" width="100"></el-table-column>
+        <el-table-column
+          prop="status"
+          label="状态"
+          width="100"
+        ></el-table-column>
         <el-table-column prop="date" label="入库时间"></el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
-           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+          <template slot-scope="scope">
+            <el-button @click="handleClick(scope.row)" type="text" size="small"
+              >查看</el-button
+            >
             <el-button type="text" size="small">编辑</el-button>
           </template>
         </el-table-column>
@@ -81,11 +120,11 @@
 </template>
 
 <script>
-import countTo from 'vue-count-to'
+import countTo from 'vue-count-to';
 export default {
   name: 'BookManagement',
   components: { countTo },
-  data () {
+  data() {
     return {
       visible: false,
       value: '',
@@ -157,33 +196,32 @@ export default {
           status: '上架'
         }
       ]
-    }
+    };
   },
   methods: {
     // 状态筛选
-    selectStatus (type) {
-      this.status = type
+    selectStatus(type) {
+      this.status = type;
     },
     // 时间筛选
-    selectTime (data) {
-      this.startTime = data[0]
-      this.endTime = data[1]
+    selectTime(data) {
+      this.startTime = data[0];
+      this.endTime = data[1];
     },
     // 点击筛选按钮
-    search () {
-      console.log(this.key)
+    search() {
+      console.log(this.key);
     },
-    handleSizeChange (val) {
-      console.log(`每页 ${val} 条`)
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
     },
     //  点击页数
-    handleCurrentChange (val) {
-      this.currentPage = val
-      console.log(`当前页: ${val}`)
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      console.log(`当前页: ${val}`);
     }
   }
-
-}
+};
 </script>
 
 <style lang="less" scoped>
@@ -210,9 +248,9 @@ export default {
       margin-left: 10px;
     }
   }
-  .count_item:not(:last-child){
-      border-right: 1px solid rgb(227, 227, 227);
-    }
+  .count_item:not(:last-child) {
+    border-right: 1px solid rgb(227, 227, 227);
+  }
 }
 .page-pagination {
   text-align: right;

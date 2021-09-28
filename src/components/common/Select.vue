@@ -115,32 +115,55 @@
 <template>
   <div
     class="ys-select"
-    :style="{width: selectWidth+'px'}"
+    :style="{ width: selectWidth + 'px' }"
     v-clickoutside="hideOptionsList"
     @mouseenter="onMouseEnterHandler()"
     @mouseleave.stop="onMouseOutHandler()"
   >
-    <a href="javascript:void (0)" class="select-content" @click="showOptionsList()"></a>
-    <input type="text" class="select-input" v-model="selectText" disabled readonly />
+    <a
+      href="javascript:void (0)"
+      class="select-content"
+      @click="showOptionsList()"
+    ></a>
+    <input
+      type="text"
+      class="select-input"
+      v-model="selectText"
+      disabled
+      readonly
+    />
     <transition name="showList">
       <div
         class="select-options"
         v-show="isOptionsListShow"
-        :style="{width: selectWidth+'px', height: options.length>=7 ? '180px':''}"
+        :style="{
+          width: selectWidth + 'px',
+          height: options.length >= 7 ? '180px' : ''
+        }"
       >
         <vue-scroll :ops="ops">
           <ul>
             <li class="select-option" v-if="filterable">
-              <input type="text" v-model="content" class="filter-box" placeholder="请输入查询内容" />
+              <input
+                type="text"
+                v-model="content"
+                class="filter-box"
+                placeholder="请输入查询内容"
+              />
             </li>
-            <li class="select-option" v-for="(item,index) in options" :key="index">
+            <li
+              class="select-option"
+              v-for="(item, index) in options"
+              :key="index"
+            >
               <a
                 href="javascript:void (0)"
                 class="select-txt"
-                :class="{active:index==selectIndex}"
-                @click="selectOption(item.value,index,item)"
+                :class="{ active: index == selectIndex }"
+                @click="selectOption(item.value, index, item)"
                 :title="item.label"
-              >{{item.label}}</a>
+                >{{ item.label }}</a
+              >
             </li>
           </ul>
         </vue-scroll>
@@ -152,34 +175,33 @@
 <script>
 const clickoutside = {
   // 初始化指令
-  bind (el, binding, vnode) {
-    function documentHandler (e) {
+  bind(el, binding, vnode) {
+    function documentHandler(e) {
       // 这里判断点击的元素是否是本身，是本身，则返回
       if (el.contains(e.target)) {
-        return false
+        return false;
       }
       // 判断指令中是否绑定了函数
       if (binding.expression) {
         // 如果绑定了函数 则调用那个函数，此处binding.value就是handleClose方法
-        binding.value(e)
+        binding.value(e);
       }
     }
 
     // 给当前元素绑定个私有变量，方便在unbind中可以解除事件监听
-    el.__vueClickOutside__ = documentHandler
-    document.addEventListener('click', documentHandler)
+    el.__vueClickOutside__ = documentHandler;
+    document.addEventListener('click', documentHandler);
   },
-  update () {
-  },
-  unbind (el, binding) {
+  update() {},
+  unbind(el, binding) {
     // 解除事件监听
-    document.removeEventListener('click', el.__vueClickOutside__)
-    delete el.__vueClickOutside__
+    document.removeEventListener('click', el.__vueClickOutside__);
+    delete el.__vueClickOutside__;
   }
-}
+};
 export default {
   name: 'ys-select',
-  data () {
+  data() {
     return {
       isOptionsListShow: false,
       selectIndex: 0,
@@ -212,12 +234,12 @@ export default {
           hoverStyle: false
         }
       }
-    }
+    };
   },
   props: {
     defaultTxt: {
       type: String,
-      default: void (0),
+      default: void 0,
       required: false
     },
     selectList: {
@@ -249,7 +271,8 @@ export default {
       default: true,
       required: false
     },
-    value: { // 反显值
+    value: {
+      // 反显值
       required: false
     },
     filterable: {
@@ -258,90 +281,87 @@ export default {
   },
   directives: { clickoutside },
   computed: {
-    selectText () {
+    selectText() {
       if (this.options[this.selectIndex]) {
-        return this.options[this.selectIndex].label
+        return this.options[this.selectIndex].label;
       } else {
-        this.selectIndex = 0
-        return this.options[this.selectIndex].label || ''
+        this.selectIndex = 0;
+        return this.options[this.selectIndex].label || '';
       }
     },
-    options () {
-      let that = this
-      let options = []
+    options() {
+      const that = this;
+      const options = [];
       if (that.$props.defaultTxt) {
         options.push({
           value: '',
           label: that.$props.defaultTxt
-        })
+        });
       }
-      that.selectList.map(function (v, i) {
-        let option = {
+      that.selectList.map(function(v, i) {
+        const option = {
           value: v,
           label: that.textList ? that.textList[i] : v
-        }
-        options.push(option)
-      })
-      options.map(function (v, i) {
+        };
+        options.push(option);
+      });
+      options.map(function(v, i) {
         if (v.value == that.value) {
-          that.selectIndex = i
+          that.selectIndex = i;
         }
-      })
+      });
 
-      that.$nextTick(function () {
+      that.$nextTick(function() {
         if (that.value) {
-          $('.select-input').css('color', 'rgba(0, 0, 0, 0.65)')
+          $('.select-input').css('color', 'rgba(0, 0, 0, 0.65)');
         }
-      })
-      return options
+      });
+      return options;
     }
   },
   watch: {
-    value (curVal, oldVal) {
-      let that = this
-      that.options.map(function (v, i) {
+    value(curVal, oldVal) {
+      const that = this;
+      that.options.map(function(v, i) {
         if (v.value == curVal) {
-          that.selectIndex = i
+          that.selectIndex = i;
         }
-      })
+      });
     },
-    content (curVal, olcVal) {
-      this.$emit('changeContent', curVal)
+    content(curVal, olcVal) {
+      this.$emit('changeContent', curVal);
     }
   },
-  created () {
-
-  },
-  mounted () {
-  },
+  created() {},
+  mounted() {},
   methods: {
-    selectOption (data, index, item) {
-      let that = this
-      that.selectIndex = index
-      that.$emit('change', data)
-      that.$emit('changedata', item)
-      that.clickHideMode && that.hideOptionsList()
-      that.$nextTick(function () {
+    selectOption(data, index, item) {
+      const that = this;
+      that.selectIndex = index;
+      that.$emit('change', data);
+      that.$emit('changedata', item);
+      that.clickHideMode && that.hideOptionsList();
+      that.$nextTick(function() {
         if (that.$props.defaultTxt != item.label) {
-          $('.select-input').css('color', 'rgba(0, 0, 0, 0.65)')
+          $('.select-input').css('color', 'rgba(0, 0, 0, 0.65)');
         }
-      })
+      });
     },
-    onMouseEnterHandler () {
-      this.mouseenterShowMode && this.showOptionsList()
+    onMouseEnterHandler() {
+      this.mouseenterShowMode && this.showOptionsList();
     },
-    onMouseOutHandler () {
-      this.moveoutHideMode && this.hideOptionsList()
+    onMouseOutHandler() {
+      this.moveoutHideMode && this.hideOptionsList();
     },
-    showOptionsList () {
-      this.isOptionsListShow = true
+    showOptionsList() {
+      this.isOptionsListShow = true;
     },
-    hideOptionsList () {
-      let that = this
-      this.$nextTick(function () {
-        that.isOptionsListShow = false
-      })
+    hideOptionsList() {
+      const that = this;
+      this.$nextTick(function() {
+        that.isOptionsListShow = false;
+      });
     }
   }
-}
+};
 </script>

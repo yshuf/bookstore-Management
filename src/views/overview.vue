@@ -3,7 +3,7 @@
     <div class="title">统计概览</div>
     <!-- <div :id="id" style="width:100%" /> -->
     <div class="dataCharts">
-      <div class="chart" id="lineCharts" style="height:350px;" ></div>
+      <div class="chart" id="lineCharts" style="height:350px;"></div>
       <div id="bookRank" style="height:350px;"></div>
       <div style="height:350px;" id="loginChart">
         <!-- <div>过去一周登录走势图</div> -->
@@ -11,15 +11,30 @@
       <div style="height:350px;" id="dealAmount">
         <!-- <div>过去一周成交总额情况</div> -->
       </div>
-      <div style="height:350px;" id="rank_box_chart"></div>
+      <div id="roseCharts" class="rose-box"></div>
+      <div style="height:350px;" id="rank_box_chart">
+        <vueSeamlessScroll
+          :data="listData"
+          :class-option="defaultOption"
+          class="seamless-warp"
+        >
+          <ul class="item">
+            <li v-for="(item, index) in listData" :key="index">
+              <span>{{ item.bookName }}：</span><span>{{ item.num }}</span>
+            </li>
+          </ul>
+        </vueSeamlessScroll>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import vueSeamlessScroll from 'vue-seamless-scroll';
+import { rosePieOption } from '../plugins/index';
 export default {
   name: 'Overview',
-  data () {
+  data() {
     return {
       id: '',
       myChart: null,
@@ -27,6 +42,20 @@ export default {
       loginChart: null,
       trendEchart: null,
       rankEchart: null,
+      roseCharts: null,
+      listData: [
+        { number: 1, unit: '家', bookName: '秘密', num: '50' },
+        { number: 2, unit: '家', bookName: '白夜行', num: '50' },
+        { number: 3, unit: '家', bookName: '追风筝的人', num: '50' },
+        { number: 4, unit: '家', bookName: '白夜行', num: '50' },
+        { number: 5, unit: '家', bookName: '白夜行', num: '50' },
+        { number: 5, unit: '家', bookName: '白夜行', num: '50' },
+        { number: 5, unit: '家', bookName: '白夜行', num: '50' },
+        { number: 5, unit: '家', bookName: '白夜行', num: '50' },
+        { number: 5, unit: '家', bookName: '白夜行', num: '50' },
+        { number: 5, unit: '家', bookName: '白夜行', num: '50' },
+        { number: 5, unit: '家', bookName: '白夜行', num: '50' }
+      ],
       dealTotalAmount: [
         { number: 1, unit: '家', name: '白夜行', num: '50' },
         { number: 2, unit: '家', name: '白夜行', num: '50' },
@@ -37,70 +66,131 @@ export default {
       userAmount: [],
       time: [],
       dealAmount: [],
-      loginTrend: [{
-        sql: 3,
-        sxl: 3,
-        amount: 120.00,
-        date: '05.11'
-      }, {
-        sql: 3,
-        sxl: 3,
-        amount: 600.00,
-        date: '05.12'
-      }, {
-        sql: 1,
-        sxl: 2,
-        amount: 130.00,
-        date: '05.13'
-      }, {
-        sql: 2,
-        sxl: 2,
-        amount: 200.00,
-        date: '05.14'
-      }, {
-        sql: 1,
-        sxl: 0,
-        amount: 0,
-        date: '05.15'
-      }, {
-        sql: 0,
-        sxl: 0,
-        amount: 0,
-        date: '05.16'
-      }, {
-        sql: 0,
-        sxl: 0,
-        amount: 0,
-        date: '05.17'
-      }]
+      loginTrend: [
+        {
+          sql: 3,
+          sxl: 3,
+          amount: 120.0,
+          date: '05.11'
+        },
+        {
+          sql: 3,
+          sxl: 3,
+          amount: 600.0,
+          date: '05.12'
+        },
+        {
+          sql: 1,
+          sxl: 2,
+          amount: 130.0,
+          date: '05.13'
+        },
+        {
+          sql: 2,
+          sxl: 2,
+          amount: 200.0,
+          date: '05.14'
+        },
+        {
+          sql: 1,
+          sxl: 0,
+          amount: 0,
+          date: '05.15'
+        },
+        {
+          sql: 0,
+          sxl: 0,
+          amount: 0,
+          date: '05.16'
+        },
+        {
+          sql: 0,
+          sxl: 0,
+          amount: 0,
+          date: '05.17'
+        }
+      ],
+      roseData: [
+        {
+          name: '绍兴市',
+          value: 94
+        },
+        {
+          name: '新昌县',
+          value: 93.9
+        },
+        {
+          name: '越城区',
+          value: 86.3
+        },
+        {
+          name: '柯桥区',
+          value: 77.7
+        },
+        {
+          name: '嵊州市',
+          value: 77.4
+        },
+        {
+          name: '上虞区',
+          value: 72.6
+        },
+        {
+          name: '诸暨市',
+          value: 70.5
+        }
+      ]
+    };
+  },
+  components: { vueSeamlessScroll },
+  computed: {
+    // 公告滚动自定义
+    defaultOption() {
+      return {
+        step: 0.8, // 数值越大速度滚动越快
+        limitMoveNum: this.listData.length, // 开始无缝滚动的数据量 this.dataList.length
+        hoverStop: true, // 是否开启鼠标悬停stop
+        direction: 0, // 0向下 1向上 2向左 3向右
+        openWatch: true, // 开启数据实时监控刷新dom
+        singleHeight: 0, // 单步运动停止的高度(默认值0是无缝不停止的滚动) direction => 0/1
+        singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
+        waitTime: 1000 // 单步运动停止的时间(默认值1000ms)
+      };
     }
   },
-  created () {
+  created() {
     this.id = Math.random()
       .toString(36)
-      .substr(2)
+      .substr(2);
   },
-  mounted () {
-    this.$nextTick(function () {
-      this.drawLine()
-    })
-     window.addEventListener('resize',()=>{
-        console.log('缩放');
-        this.myChart.resize()
-        this.bookRankChart.resize()
-        this.loginChart.resize()
-        this.trendEchart.resize()
-      })
-    this.dealData()
+  mounted() {
+    this.$nextTick(function() {
+      this.drawLine();
+      this.initChart();
+    });
+    window.addEventListener('resize', () => {
+      console.log('缩放');
+      this.myChart.resize();
+      this.bookRankChart.resize();
+      this.loginChart.resize();
+      this.trendEchart.resize();
+    });
+    this.dealData();
   },
   methods: {
-    drawLine () {
-      this.myChart = this.$echarts.init(document.getElementById('lineCharts'))
-      this.bookRankChart = this.$echarts.init(document.getElementById('bookRank'))
-      this.loginChart = this.$echarts.init(document.getElementById('loginChart'))
-      this.trendEchart = this.$echarts.init(document.getElementById('dealAmount'))
-      this.rankEchart = this.$echarts.init(document.getElementById('rank_box_chart'))
-      const max = Math.max.apply(Math, this.userAmount.concat(this.dealAmount))
+    drawLine() {
+      this.myChart = this.$echarts.init(document.getElementById('lineCharts'));
+      this.bookRankChart = this.$echarts.init(
+        document.getElementById('bookRank')
+      );
+      this.loginChart = this.$echarts.init(
+        document.getElementById('loginChart')
+      );
+      this.trendEchart = this.$echarts.init(
+        document.getElementById('dealAmount')
+      );
+      // this.rankEchart = this.$echarts.init(document.getElementById('rank_box_chart'))
+      const max = Math.max.apply(Math, this.userAmount.concat(this.dealAmount));
       this.myChart.setOption({
         color: ['#3398DB'],
         title: {
@@ -142,15 +232,21 @@ export default {
             data: [200, 10, 52, 334, 390],
             itemStyle: {
               normal: {
-                color: function (params) {
-                  const colorList = ['#FBC103', 'rgba(0, 183, 147, 0.6)', '#FBC103', 'rgba(0, 183, 147, 0.6)', '#FBC103']
-                  return colorList[params.dataIndex]
+                color: function(params) {
+                  const colorList = [
+                    '#FBC103',
+                    'rgba(0, 183, 147, 0.6)',
+                    '#FBC103',
+                    'rgba(0, 183, 147, 0.6)',
+                    '#FBC103'
+                  ];
+                  return colorList[params.dataIndex];
                 }
               }
             }
           }
         ]
-      })
+      });
       this.bookRankChart.setOption({
         title: {
           text: '过去一周查询搜索书籍排名'
@@ -201,7 +297,7 @@ export default {
             ]
           }
         ]
-      })
+      });
       this.loginChart.setOption({
         title: {
           text: '最近一周平太业务情况'
@@ -268,7 +364,7 @@ export default {
             barWidth: 10
           }
         ]
-      })
+      });
       this.trendEchart.setOption({
         title: {
           text: '过去一周登录走势图'
@@ -314,25 +410,29 @@ export default {
             show: false
           }
         },
-        dataZoom: [ {
-                type: 'slider',
-                show: true,
-                height: 4,
-                bottom: 10,
-                borderColor: 'transparent',
-                handleIcon: 'M512 512m-208 0a6.5 6.5 0 1 0 416 0 6.5 6.5 0 1 0-416 0Z M512 192C335.264 192 192 335.264 192 512c0 176.736 143.264 320 320 320s320-143.264 320-320C832 335.264 688.736 192 512 192zM512 800c-159.072 0-288-128.928-288-288 0-159.072 128.928-288 288-288s288 128.928 288 288C800 671.072 671.072 800 512 800z',
-                backgroundColor: '#E3EBE9', // 底层背景颜色
-                fillerColor: '#89D4C5', // 选中范围填充颜色
-                handleSize: 10, // 控制手柄的尺寸
-                handleStyle: { // 手柄样式配置
-                    color:'#fff',  // 图形的颜色
-                    borderColor: '#89D4C5', // 图形的描边颜色
-                    shadowBlur: 4,
-                    shadowOffsetX: 1,
-                    shadowOffsetY: 1,
-                    shadowColor: '#e5e5e5'
-                },
-            }],
+        dataZoom: [
+          {
+            type: 'slider',
+            show: true,
+            height: 4,
+            bottom: 10,
+            borderColor: 'transparent',
+            handleIcon:
+              'M512 512m-208 0a6.5 6.5 0 1 0 416 0 6.5 6.5 0 1 0-416 0Z M512 192C335.264 192 192 335.264 192 512c0 176.736 143.264 320 320 320s320-143.264 320-320C832 335.264 688.736 192 512 192zM512 800c-159.072 0-288-128.928-288-288 0-159.072 128.928-288 288-288s288 128.928 288 288C800 671.072 671.072 800 512 800z',
+            backgroundColor: '#E3EBE9', // 底层背景颜色
+            fillerColor: '#89D4C5', // 选中范围填充颜色
+            handleSize: 10, // 控制手柄的尺寸
+            handleStyle: {
+              // 手柄样式配置
+              color: '#fff', // 图形的颜色
+              borderColor: '#89D4C5', // 图形的描边颜色
+              shadowBlur: 4,
+              shadowOffsetX: 1,
+              shadowOffsetY: 1,
+              shadowColor: '#e5e5e5'
+            }
+          }
+        ],
         series: [
           {
             // name:'申请量',
@@ -348,29 +448,83 @@ export default {
                   y: 0,
                   x2: 0,
                   y2: 1,
-                  colorStops: [{
-                    offset: 0, color: 'rgba(0, 183, 147, 0.3)' // 0% 处的颜色
-                  }, {
-                    offset: 1, color: '#fff' // 100% 处的颜色
-                  }],
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: 'rgba(0, 183, 147, 0.3)' // 0% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: '#fff' // 100% 处的颜色
+                    }
+                  ],
                   globalCoord: false // 缺省为 false
                 }
               }
             }
           }
         ]
-      })
+      });
     },
 
-    dealData () {
-      this.loginTrend.map((item) => {
-        this.userAmount.push(item.sql)
-        this.time.push(item.date)
-        this.dealAmount.push(item.sxl)
-      })
+    initChart() {
+      this.roseCharts = this.$echarts.init(
+        document.getElementById('roseCharts')
+      );
+      const colors = [
+        '#21ce9b',
+        '#34bbf1',
+        '#5bd0ff',
+        '#ffe36e',
+        '#ffc76e',
+        '#ff863b',
+        '#ff5858'
+      ];
+      const originDataLen = this.roseData.length;
+      const spanAngle = 180; // 需要显示的角度
+      const repeatedMultiple = 360 / spanAngle;
+      // 这里根据要显示的角度 计算了需要插入的数据量
+      const addDataLen = parseInt((repeatedMultiple - 1) * originDataLen);
+      const seriseData = this.roseData.map((v, index) => {
+        return {
+          value: v.value,
+          name: v.name,
+          itemStyle: {
+            normal: {
+              color: colors[index]
+            }
+          }
+        };
+      });
+      for (let index = 0; index < addDataLen; index++) {
+        seriseData.push({
+          name: null,
+          // 这里给数据置零，即在视觉上不显示
+          value: 0,
+          // 这里保证了异常情况下(数据都为0时)作为占位的数据在视觉上仍为不可见状态。
+          itemStyle: {
+            color: 'rgba(0,0,0,0)'
+          },
+          tooltip: {
+            show: false,
+            formatter: null
+          }
+        });
+      }
+      console.log(seriseData, rosePieOption);
+      const options = rosePieOption(seriseData);
+      this.roseCharts.setOption(options);
+    },
+
+    dealData() {
+      this.loginTrend.map(item => {
+        this.userAmount.push(item.sql);
+        this.time.push(item.date);
+        this.dealAmount.push(item.sxl);
+      });
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
@@ -396,8 +550,16 @@ export default {
       width: 30%;
       margin-bottom: 20px;
     }
+    .seamless-warp {
+      width: 100%;
+      height: 8.16rem;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    /* .rose-box {
+        width: 100%;
+        height: 100%;
+    } */
   }
-
 }
-
 </style>

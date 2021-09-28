@@ -1,7 +1,7 @@
-const autoprefixer = require('autoprefixer')
-const cssnano = require('cssnano')
-const px2rem = require('postcss-pxtorem')
-const isProd = process.env.NODE_ENV === 'production'
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
+const px2rem = require('postcss-pxtorem');
+const isProd = process.env.NODE_ENV === 'production';
 
 const px2remConfig = {
   // 设计图为750px，一份 root 对应着 rootWidth/10=75px（设计稿宽度的十分之一）
@@ -31,7 +31,7 @@ const px2remConfig = {
   // 默认false，可以（reg）利用正则表达式排除某些文件夹的方法，例如/(node_module)/
   // 如果想把前端UI框架内的px也转换成rem，请把此属性设为默认值
   exclude: /node_modules/i
-}
+};
 
 module.exports = {
   plugins: [
@@ -42,4 +42,4 @@ module.exports = {
     // px2rem
     px2rem(px2remConfig)
   ]
-}
+};

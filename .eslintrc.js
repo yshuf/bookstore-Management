@@ -12,7 +12,7 @@
 const configObj = {
   root: true,
   parserOptions: {
-    parser: 'babel-eslint',   // 解析器配置选项-定义ESLint的解析器
+    parser: 'babel-eslint', // 解析器配置选项-定义ESLint的解析器
     ecmaVersion: 2020
   },
   env: {
@@ -21,9 +21,10 @@ const configObj = {
   },
   // 定义文件继承的子规范-扩展
   extends: [
-    "plugin:vue/essential",
-    "standard",
-    "@vue/typescript/recommended"
+    'plugin:vue/essential',
+    'standard',
+    // '@vue/typescript/recommended'
+    '@vue/prettier'
   ],
   // required to lint *.vue files
   plugins: ['vue'], // 定义了该eslint文件所依赖的插件
@@ -46,15 +47,15 @@ const configObj = {
     'generator-star-spacing': 'off',
     // semi: 'off',
     quotes: ['error', 'single'],
-    'object-curly-spacing': ['error', 'always']
+    'object-curly-spacing': ['error', 'always'],
+    '@typescript-eslint/no-var-requires': 0
   },
   globals: {
     $: true,
     Vue: true,
     jQuery: true,
-    AMap: true,
+    AMap: true
   }
-}
-
+};
 
 module.exports = configObj;

@@ -8,11 +8,13 @@
         <div class="title">
           <p class="title_welcome">
             您好，
-            <span>{{realName||'admin'}}</span>，欢迎来到 xxx 书店管理系统！
+            <span>{{ realName || 'admin' }}</span
+            >，欢迎来到 xxx 书店管理系统！
           </p>
-          <p
-            class="title_introduce"
-          >平台介绍 &nbsp;&nbsp;|&nbsp;&nbsp; “一站式”解决中小企业“融资难，融资贵，融资慢”的问题，实现金融领域“最多跑一次”</p>
+          <p class="title_introduce">
+            平台介绍 &nbsp;&nbsp;|&nbsp;&nbsp;
+            “一站式”解决中小企业“融资难，融资贵，融资慢”的问题，实现金融领域“最多跑一次”
+          </p>
         </div>
       </div>
     </div>
@@ -22,41 +24,41 @@
         <div class="personalInfo-introduce">
           <div class="left-list">
             <span class="left-txt">姓名：</span>
-            <span class="right-txt">{{userInfo.realName}}</span>
+            <span class="right-txt">{{ userInfo.realName }}</span>
           </div>
           <div class="left-list">
             <span class="left-txt">手机号码：</span>
             <span class="right-txt">
-              {{userInfo.phone}}
+              {{ userInfo.phone }}
               <i
                 class="iconfont icon-bianjixiugai"
                 title="修改手机号"
-                @click="orgEdit('修改手机号','resetPhone',resetPhone)"
+                @click="orgEdit('修改手机号', 'resetPhone', resetPhone)"
               ></i>
             </span>
           </div>
           <div class="left-list">
             <span class="left-txt">登录密码：</span>
             <span class="right-txt">
-              {{userInfo.password}}
+              {{ userInfo.password }}
               <i
                 class="iconfont icon-bianjixiugai"
                 title="修改密码"
-                @click="orgEdit('修改密码','resetPass',resetPass)"
+                @click="orgEdit('修改密码', 'resetPass', resetPass)"
               ></i>
             </span>
           </div>
           <div class="left-list">
             <span class="left-txt">所属机构：</span>
-            <span class="right-txt">{{userInfo.bank}}</span>
+            <span class="right-txt">{{ userInfo.bank }}</span>
           </div>
-          <div class="left-list" v-if="userInfo.isBranch=='Y'">
+          <div class="left-list" v-if="userInfo.isBranch == 'Y'">
             <span class="left-txt">所属支行：</span>
-            <span class="right-txt">{{userInfo.branch}}</span>
+            <span class="right-txt">{{ userInfo.branch }}</span>
           </div>
           <div class="left-list">
             <span class="left-txt">岗位：</span>
-            <span class="right-txt">{{userInfo.position}}</span>
+            <span class="right-txt">{{ userInfo.position }}</span>
           </div>
         </div>
       </div>
@@ -70,8 +72,8 @@
             :key="i"
             @click="getInstruction(item.type, item.content)"
           >
-            <span class="order">{{i + 1}}</span>
-            <span class="article">{{item.title}}</span>
+            <span class="order">{{ i + 1 }}</span>
+            <span class="article">{{ item.title }}</span>
           </div>
         </div>
       </div>
@@ -80,7 +82,14 @@
 </template>
 
 <script>
-import { MessageBox, setTime, checkPassword, checkPhone, removeStore, setStore } from '../utils/common'
+import {
+  MessageBox,
+  setTime,
+  checkPassword,
+  checkPhone,
+  removeStore,
+  setStore
+} from '../utils/common';
 // import YsButton from './common/YsButton'
 // import md5 from '../../../static/md5'
 
@@ -90,7 +99,7 @@ export default {
     // YsButton,
     // MessageBox
   },
-  data () {
+  data() {
     return {
       instructionList: [],
       // 用户信息
@@ -114,87 +123,92 @@ export default {
         newPassword: '',
         newPasswordAgain: ''
       }
-    }
+    };
   },
-  mounted () {
+  mounted() {
     // this.getUserInfo()
     // this.getList()
-    this.realName = this.$store.state.realName
+    this.realName = this.$store.state.realName;
   },
   methods: {
     // 获取隐私政策列表
-    getList () {
+    getList() {
       this.ajaxRequest({
         type: 'get',
         url: '/useNotice/findList',
         param: {},
         dataType: 'json',
         successfn: res => {
-          console.log(res)
-          this.instructionList = res.data
+          console.log(res);
+          this.instructionList = res.data;
         },
         errorfn: e => {
-          console.log(e)
+          console.log(e);
         }
-      })
+      });
     },
     // 查看隐私政策
-    getInstruction (type, path) {
-      if (type === 4) window.open('/instruction.html?type=privacy', '_blank')
-      else if (type === 5) window.open('/instruction.html?type=userTCP', '_blank')
+    getInstruction(type) {
+      if (type === 4) window.open('/instruction.html?type=privacy', '_blank');
+      else if (type === 5)
+        window.open('/instruction.html?type=userTCP', '_blank');
     },
     // 获取用户个人信息
-    getUserInfo () {
-      const that = this
+    getUserInfo() {
+      const that = this;
       this.ajaxRequest({
         type: 'get',
         url: '/inst/user/userInfo',
         dataType: 'json',
-        successfn: function (res) {
-          console.log(res)
+        successfn: function(res) {
+          console.log(res);
           if (res.code === '0000') {
-            that.userInfo = res.data
-            console.log(that.userInfo)
+            that.userInfo = res.data;
+            console.log(that.userInfo);
           }
         },
-        errorfn (res) {
-          console.log(res.data)
+        errorfn(res) {
+          console.log(res.data);
         }
-      })
+      });
     },
     // 编辑框
-    orgEdit (title, modelType, data) {
-      const that = this
+    orgEdit(title, modelType, data) {
+      const that = this;
       const param = {
         isVisible: true,
         modelType: modelType,
         title: title,
         width: 560,
         data: data
-      }
-      that.modelData = param
-      console.log(that.modelData.data)
+      };
+      that.modelData = param;
+      console.log(that.modelData.data);
     },
     // 修改密码
-    editPassword () {
-      const that = this
-      let param2
-      const { oldPassword, newPassword, newPasswordAgain } = this.modelData.data
-      param2 = { oldPassword, newPassword, newPasswordAgain }
+    editPassword() {
+      const that = this;
+      let param2;
+      const {
+        oldPassword,
+        newPassword,
+        newPasswordAgain
+      } = this.modelData.data;
+      param2 = { oldPassword, newPassword, newPasswordAgain };
       if (param2.newPassword !== param2.newPasswordAgain) {
         MessageBox({
           content: '两次输入的密码不相同',
           autohide: true
-        })
-        return
+        });
+        return;
       }
       if (!checkPassword(param2.newPassword)) {
-        return false
+        return false;
       }
       // md5???????
       for (const key in param2) {
         if (param2[key]) {
-          param2[key] = $.md5(param2[key])
+          param2[key] = $.md5(param2[key]);
         }
       }
       // ^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$
@@ -203,72 +217,74 @@ export default {
         param: param2,
         url: '/inst/user/resetPasswordOfBank',
         dataType: 'json',
-        successfn: function (res) {
+        successfn: function(res) {
           if (res.code === '0000') {
             MessageBox({
-              content: '修改成功，请重新 <span onclick="pageJump(\'/login\')" class="txt-primary pointer" >登录</span>',
+              content:
+                '修改成功，请重新 <span onclick="pageJump(\'/login\')" class="txt-primary pointer" >登录</span>',
               autohide: false
-            })
-            that.modelData.isVisible = false
+            });
+            that.modelData.isVisible = false;
 
-            setTimeout(function () {
-              removeStore('userInfo')
-              removeStore('token')
-              setStore('loginType', 2)
-              that.pageJump('/login')
-            }, 3000)
+            setTimeout(function() {
+              removeStore('userInfo');
+              removeStore('token');
+              setStore('loginType', 2);
+              that.pageJump('/login');
+            }, 3000);
           }
         },
-        errorfn: function (error) {
+        errorfn: function(error) {
           MessageBox({
             content: error.msg,
             autohide: true
-          })
+          });
         }
-      })
+      });
     },
     // 修改手机号
-    editPhone () {
-      const that = this
-      if (!checkPhone(that.modelData.data.phone)) return
+    editPhone() {
+      const that = this;
+      if (!checkPhone(that.modelData.data.phone)) return;
       that.ajaxRequest({
         type: 'get',
         param: this.modelData.data,
         url: '/inst/user/updatePhoneValidSms',
         dataType: 'json',
-        successfn: function (res) {
+        successfn: function(res) {
           if (res.code === '0000') {
             that.resetPhone = {
               phone: '',
               smsCode: ''
-            }
+            };
             MessageBox({
-              content: '修改成功，请重新 <span onclick="pageJump(\'/login\')" class="txt-primary pointer" >登录</span>',
+              content:
+                '修改成功，请重新 <span onclick="pageJump(\'/login\')" class="txt-primary pointer" >登录</span>',
               autohide: false
-            })
-            that.modelData.isVisible = false
+            });
+            that.modelData.isVisible = false;
 
-            setTimeout(function () {
-              removeStore('userInfo')
-              removeStore('token')
-              setStore('loginType', 2)
-              that.pageJump('/login')
-            }, 3000)
+            setTimeout(function() {
+              removeStore('userInfo');
+              removeStore('token');
+              setStore('loginType', 2);
+              that.pageJump('/login');
+            }, 3000);
           }
         },
-        errorfn: function (error) {
+        errorfn: function(error) {
           MessageBox({
             content: error.msg,
             autohide: true
-          })
+          });
         }
-      })
+      });
     },
     // 获取验证码
-    getSetTime (e) {
-      const that = this
+    getSetTime(e) {
+      const that = this;
       if (!checkPhone(that.modelData.data.phone)) {
-        return false
+        return false;
       }
       that.ajaxRequest({
         type: 'get',
@@ -277,41 +293,40 @@ export default {
           phone: that.modelData.data.phone
         },
         dataType: 'json',
-        successfn: function (res) {
-          console.log(res)
+        successfn: function(res) {
+          console.log(res);
           MessageBox({
             content: res.msg,
             autohide: true
-          })
-          setTime(e.target)
+          });
+          setTime(e.target);
         },
-        errorfn: function (e) {
+        errorfn: function(e) {
           MessageBox({
             content: e.msg,
             autohide: true
-          })
+          });
           // that.message(e.msg)
         }
-      })
+      });
     },
     // 取消删除输入信息
-    deleInfo () {
-      const that = this
-      that.modelData.isVisible = false
+    deleInfo() {
+      const that = this;
+      that.modelData.isVisible = false;
       that.resetPhone = {
         phone: '',
         smsCode: ''
-      }
-      console.log('phone')
+      };
+      console.log('phone');
       that.resetPass = {
         oldPassword: '',
         newPassword: '',
         newPasswordAgain: ''
-      }
+      };
     }
   }
-
-}
+};
 </script>
 
 <style scoped lang="less">
