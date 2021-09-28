@@ -112,31 +112,31 @@ export default {
       ],
       roseData: [
         {
-          name: '绍兴市',
+          name: '追风筝的人',
           value: 94
         },
         {
-          name: '新昌县',
+          name: '白夜行',
           value: 93.9
         },
         {
-          name: '越城区',
+          name: '岛上书店',
           value: 86.3
         },
         {
-          name: '柯桥区',
+          name: '浮生物语',
           value: 77.7
         },
         {
-          name: '嵊州市',
+          name: '挪威的森林',
           value: 77.4
         },
         {
-          name: '上虞区',
+          name: '飘',
           value: 72.6
         },
         {
-          name: '诸暨市',
+          name: '活着',
           value: 70.5
         }
       ]
@@ -511,7 +511,6 @@ export default {
           }
         });
       }
-      console.log(seriseData, rosePieOption);
       const options = rosePieOption(seriseData);
       this.roseCharts.setOption(options);
     },
@@ -556,10 +555,6 @@ export default {
       margin: 0 auto;
       overflow: hidden;
     }
-    /* .rose-box {
-        width: 100%;
-        height: 100%;
-    } */
   }
 }
 </style>

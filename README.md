@@ -46,6 +46,14 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+目录结构
+
+```
+src
+  |-assets 静态资源
+    |-fontcss iconfont图标
+```
+
 ### 使用element-ui（全局注册elementui：https://element.eleme.cn/#/zh-CN）
 1.通过 npm i element-ui -S (安装)
 2.在 main.js 中引入 element-ui 的 js 文件和 css
