@@ -6,7 +6,12 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
   routes: [
-    { path: '/', redirect: '/login' }, // 重定向
+    { path: '/', redirect: '/index' }, // 重定向
+    {
+      path: '/index',
+      name: 'Index',
+      component:()=> import ('@/views/homePage/index.vue')
+    },
     {
       path: '/login',
       name: 'Login',
@@ -100,17 +105,27 @@ const router = new VueRouter({
 //   routers
 // });
 
+const whiteList = ['/index', '/login'];
+
 // 挂载路由导航守卫
 router.beforeEach((to, from, next) => {
   NProgress.start();
   if (to.meta.title) {
     document.title = to.meta.title; // 要现实的title
   }
-  // to：将要访问的路径 from：代表从哪个路径调转而来 next：放行  next('/login') 强制调转到某路径
-  if (to.path === '/login') return next();
+
   const tokenStr = window.sessionStorage.getItem('token');
-  if (!tokenStr) return next('/login');
-  next();
+  if (tokenStr) {
+    next()
+  }else {
+    // to：将要访问的路径 from：代表从哪个路径调转而来 next：放行  next('/login') 强制调转到某路径
+    if (whiteList.indexOf(to.path) !== -1) {
+      next()
+    } else {
+      next('/login')
+      NProgress.done()
+    };
+  }
 });
 
 export default router;

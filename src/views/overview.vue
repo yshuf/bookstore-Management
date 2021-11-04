@@ -3,26 +3,35 @@
     <div class="title">统计概览</div>
     <!-- <div :id="id" style="width:100%" /> -->
     <div class="dataCharts">
-      <div class="chart" id="lineCharts" style="height:350px;"></div>
-      <div id="bookRank" style="height:350px;"></div>
-      <div style="height:350px;" id="loginChart">
+      <div
+        class="chart module_item"
+        id="lineCharts"
+        style="height:350px;"
+      ></div>
+      <div id="bookRank" style="height:350px;" class="module_item"></div>
+      <div style="height:350px;" id="loginChart" class="module_item">
         <!-- <div>过去一周登录走势图</div> -->
       </div>
-      <div style="height:350px;" id="dealAmount">
+      <div style="height:350px;" id="dealAmount" class="module_item">
         <!-- <div>过去一周成交总额情况</div> -->
       </div>
-      <div id="roseCharts" class="rose-box"></div>
-      <div style="height:350px;" id="rank_box_chart">
+      <div id="roseCharts" class="rose-box module_item"></div>
+      <div style="height:350px;" id="rank_box_chart" class="module_item">
+        <div>上下滚动无缝轮播</div>
         <vueSeamlessScroll
           :data="listData"
           :class-option="defaultOption"
           class="seamless-warp"
         >
-          <ul class="item">
-            <li v-for="(item, index) in listData" :key="index">
+          <div class="item">
+            <p
+              class="seamless-warp-item"
+              v-for="(item, index) in listData"
+              :key="index"
+            >
               <span>{{ item.bookName }}：</span><span>{{ item.num }}</span>
-            </li>
-          </ul>
+            </p>
+          </div>
         </vueSeamlessScroll>
       </div>
     </div>
@@ -150,7 +159,7 @@ export default {
         step: 0.8, // 数值越大速度滚动越快
         limitMoveNum: this.listData.length, // 开始无缝滚动的数据量 this.dataList.length
         hoverStop: true, // 是否开启鼠标悬停stop
-        direction: 0, // 0向下 1向上 2向左 3向右
+        direction: 1, // 0向下 1向上 2向左 3向右
         openWatch: true, // 开启数据实时监控刷新dom
         singleHeight: 0, // 单步运动停止的高度(默认值0是无缝不停止的滚动) direction => 0/1
         singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
@@ -300,7 +309,7 @@ export default {
       });
       this.loginChart.setOption({
         title: {
-          text: '最近一周平太业务情况'
+          text: '最近一周平台业务情况'
         },
         color: ['#fbc200', '#00b793'],
         tooltip: {
@@ -543,7 +552,7 @@ export default {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    div {
+    .module_item {
       background: #fff;
       padding: 20px;
       width: 30%;
@@ -551,9 +560,13 @@ export default {
     }
     .seamless-warp {
       width: 100%;
-      height: 8.16rem;
-      margin: 0 auto;
+      height: 100%;
       overflow: hidden;
+      &-item {
+        width: 100%;
+        height: 32px;
+        margin: 0;
+      }
     }
   }
 }
