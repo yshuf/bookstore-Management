@@ -27,6 +27,7 @@
             v-model="loginForm.password"
           ></el-input>
         </el-form-item>
+        <base-verify></base-verify>
         <el-form-item class="btns">
           <el-button type="primary" @click="login">登录</el-button>
           <el-button type="info" @click="resetForm">重置</el-button>
@@ -37,15 +38,18 @@
 </template>
 
 <script>
+import BaseVerify from '@/components/common/BaseVerify'
 export default {
-  name: 'Login',
-  data() {
+  name: 'AppLogin',
+  components:{BaseVerify},
+  data () {
     return {
       // 登录表单信息
       loginForm: {
         username: 'admin',
         password: '123456'
       },
+      slideVerify: false, // 滑动验证
       loginRules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -58,13 +62,16 @@ export default {
       }
     };
   },
+  mounted(){
+    this.verify();
+  },
   methods: {
     // 重置按钮
-    resetForm() {
+    resetForm () {
       this.$refs.loginValidateRef.resetFields();
     },
     // 登录操作
-    login() {
+    login () {
       this.$refs.loginValidateRef.validate(async valid => {
         // this.$message({
         //   message: '恭喜你，这是一条成功消息',
@@ -81,7 +88,7 @@ export default {
         window.sessionStorage.setItem('token', '123456789');
         this.$router.push('/home');
       });
-    }
+    },
   }
 };
 </script>
@@ -89,8 +96,8 @@ export default {
 <style lang="less" scoped>
 .login_container {
   height: 100%;
-  background: url('../assets/images/index.png') no-repeat;
-  background-size: 100% 100%;
+  // background: url('../assets/images/index.png') no-repeat;
+  // background-size: 100% 100%;
 }
 .login_box {
   width: 450px;

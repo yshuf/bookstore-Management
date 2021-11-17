@@ -45,6 +45,11 @@ module.exports = {
         jQuery: 'jquery',
         'window.jQuery': 'jquery'
       })
-    ]
+    ],
+    // resolve: {
+    //   alias: {
+    //     "@": "/src"
+    //   }
+    // }
   }
 };

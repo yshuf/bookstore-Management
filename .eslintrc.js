@@ -24,7 +24,7 @@ const configObj = {
     'plugin:vue/essential',
     'standard',
     // '@vue/typescript/recommended'
-    '@vue/prettier'
+    // '@vue/prettier'
   ],
   // required to lint *.vue files
   plugins: ['vue'], // 定义了该eslint文件所依赖的插件
@@ -48,7 +48,8 @@ const configObj = {
     // semi: 'off',
     quotes: ['error', 'single'],
     'object-curly-spacing': ['error', 'always'],
-    '@typescript-eslint/no-var-requires': 0
+    '@typescript-eslint/no-var-requires': 0,
+    allowIndentationTabs: true
   },
   globals: {
     $: true,

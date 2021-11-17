@@ -142,3 +142,74 @@ props: {
 
 <!-- 配置eslintrc.js 报错提示 stylelint: Could not find "stylelint-config-standard". Do you need a `configBasedir`? 解决 -->
 npm i stylelint stylelint-webpack-plugin stylelint-config-standard --save-dev
+
+
+#### 风格指南
+##### 组件名为多个单词
+组件名应该始终由多个单词组成，除了根组件 App，以及 <transition>、<component> 之类的 Vue 内置组件。
+
+这样做可以避免与现有以及未来的 HTML 元素产生冲突，因为所有的 HTML 元素名称都是单个单词的。
+```
+export default {
+  name: 'TodoItem',
+  // ...
+}
+```
+##### Prop 定义应尽量详细
+在提交的代码中，prop 的定义应该尽量详细，至少指定其类型。
+```
+// 更好的例子
+props: {
+  status: {
+    type: String,
+    required: true,
+
+    validator: value => {
+      return [
+        'syncing',
+        'synced',
+        'version-conflict',
+        'error'
+      ].includes(value)
+    }
+  }
+}
+```
+##### 单文件组件文件的大小写
+单文件组件的文件名应该要么始终是单词大写开头 (PascalCase)，要么始终是横线连接 (kebab-case)。
+单词大写开头对于代码编辑器的自动补全最为友好，因为这使得我们在 JS(X) 和模板中引用组件的方式尽可能地一致。然而，混用大小写的文件命名方式，有时候会导致其在大小写不敏感的文件系统中出现问题，这也是横线连接命名同样完全可取的原因。
+```
+components/
+|- MyComponent.vue
+```
+
+##### 基础组件名称
+应用特定样式和约定的基础组件 (也就是展示类的、无逻辑的或无状态的组件) 应该全部以一个特定的前缀开头，比如 Base、App 或 V。
+```
+components/
+|- BaseButton.vue
+|- BaseTable.vue
+|- BaseIcon.vue
+```
+
+
+##### 模板中的组件名称大小写
+对于绝大多数项目来说，在单文件组件和字符串模板中，组件名称应该始终是 PascalCase 的——但是在 DOM 模板中是 kebab-case 的。
+
+PascalCase 相比 kebab-case 有一些优势：
+
+编辑器可以在模板里自动补全组件名称，因为 PascalCase 同样适用于 JavaScript。
+<MyComponent> 视觉上比 <my-component> 更能够和单个单词的 HTML 元素区别开来，因为前者的不同之处有两个大写字母，后者只有一个横线。
+如果你在模板中使用任何非 Vue 的自定义元素，比如一个 Web Component，PascalCase 确保了你的 Vue 组件在视觉上仍然是易识别的。
+不幸的是，由于 HTML 是大小写不敏感的，在 DOM 模板中必须仍使用 kebab-case。
+
+还请注意，如果你已经是 kebab-case 的重度用户，那么与 HTML 保持一致的命名约定，且在多个项目中保持相同的大小写规则，就可能比上述优势更为重要了。在这些情况下，在所有的地方都使用 kebab-case 同样是可以接受的。
+```
+<!-- 在单文件组件和字符串模板中 -->
+<MyComponent/>
+<!-- 在 DOM 模板中            -->
+<my-component></my-component
+
+<!-- 在所有地方 -->
+<my-component></my-component>
+```
