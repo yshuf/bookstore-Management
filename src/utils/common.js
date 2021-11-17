@@ -11,7 +11,7 @@ import $ from 'jquery';
  * @param isIncludeZero
  * @returns {number}
  */
-export function random(num, isIncludeZero) {
+export function random (num, isIncludeZero) {
   const result = Math.floor(Math.random() * 10) % 3;
   return isIncludeZero
     ? Math.floor(Math.random() * 10) % (num + 1)
@@ -25,7 +25,7 @@ export function random(num, isIncludeZero) {
  * @param fmt
  * @returns {*}
  */
-export function formatDate(date, fmt) {
+export function formatDate (date, fmt) {
   if (/(y+)/.test(fmt)) {
     fmt = fmt.replace(
       RegExp.$1,
@@ -50,7 +50,7 @@ export function formatDate(date, fmt) {
   }
   return fmt;
 
-  function padLeftZero(str) {
+  function padLeftZero (str) {
     return ('00' + str).substr(str.length);
   }
 }
@@ -60,7 +60,7 @@ export function formatDate(date, fmt) {
  *
  * @returns {*}
  */
-export function showCal(date) {
+export function showCal (date) {
   // 定义全局变量
   let CalendarData = new Array(100);
   const madd = new Array(12);
@@ -193,12 +193,12 @@ export function showCal(date) {
   if (yy < 100) yy = '19' + yy;
   return GetLunarDay(yy, mm, dd);
 
-  function GetBit(m, n) {
+  function GetBit (m, n) {
     return (m >> n) & 1;
   }
 
   // 农历转换
-  function e2c() {
+  function e2c () {
     TheDate =
       arguments.length != 3
         ? new Date()
@@ -243,7 +243,7 @@ export function showCal(date) {
     }
   }
 
-  function GetcDateString() {
+  function GetcDateString () {
     let tmp = '';
     /* 显示农历年：（ 如：甲午(马)年 ） */
     /* tmp+=tgString.charAt((cYear-4)%10);
@@ -265,7 +265,7 @@ export function showCal(date) {
     return tmp;
   }
 
-  function GetLunarDay(solarYear, solarMonth, solarDay) {
+  function GetLunarDay (solarYear, solarMonth, solarDay) {
     // solarYear = solarYear<1900?(1900+solarYear):solarYear;
     if (solarYear < 1921 || solarYear > 2020) {
       return '';
@@ -310,7 +310,7 @@ export const removeStore = name => {
  * @param key
  * @returns {string}
  */
-export function getUrlParam(key) {
+export function getUrlParam (key) {
   // 获取参数
   const url = window.location.search;
   // 正则筛选地址栏
@@ -327,7 +327,7 @@ export function getUrlParam(key) {
  * @param obj
  * @returns {Boolean}
  */
-export function isObj(obj) {
+export function isObj (obj) {
   for (const key in obj) {
     return true;
   }
@@ -342,7 +342,7 @@ export function isObj(obj) {
  *
  * @param pageSize pageNum listdata
  */
-export function staticpage(pageSize, pageNum, listdata) {
+export function staticpage (pageSize, pageNum, listdata) {
   const min = pageSize * (pageNum - 1);
   const max = pageSize * pageNum;
   const len = listdata.length;
@@ -359,7 +359,7 @@ export function staticpage(pageSize, pageNum, listdata) {
  * 提示模态框
  * opt ： 配置项
  */
-export function ConfirmBox(opt) {
+export function ConfirmBox (opt) {
   const textTemplate = {
     title: opt.title || '提示',
     content: opt.content || '',
@@ -404,9 +404,9 @@ export function ConfirmBox(opt) {
   const $ConfirmBoxdialog = $('.ConfirmBox-dialog');
   $ConfirmBoxdialog.fadeIn();
   // 确定
-  $('.surebtn').on('click', function() {
+  $('.surebtn').on('click', function () {
     $(this).attr('disabled', true);
-    setTimeout(function() {
+    setTimeout(function () {
       $(this).attr('disabled', false);
     }, 500);
     if (textTemplate.onOkbtn) {
@@ -416,20 +416,20 @@ export function ConfirmBox(opt) {
   });
 
   // 取消
-  $('.canclebtn,.ConfirmBox-dialog').on('click', function() {
+  $('.canclebtn,.ConfirmBox-dialog').on('click', function () {
     if (textTemplate.oncancelBtn) {
       textTemplate.oncancelBtn();
     }
     removemodaldialog();
   });
 
-  $('.ConfirmBox-dialog .modal-content').click(function(e) {
+  $('.ConfirmBox-dialog .modal-content').click(function (e) {
     e.stopPropagation();
   });
 
-  function removemodaldialog() {
+  function removemodaldialog () {
     $ConfirmBoxdialog.fadeOut();
-    setTimeout(function() {
+    setTimeout(function () {
       $ConfirmBoxdialog.remove();
     }, 500);
   }
@@ -439,7 +439,7 @@ export function ConfirmBox(opt) {
  * 简单消息模态框
  * opt ： 配置项
  */
-export function MessageBox(opt) {
+export function MessageBox (opt) {
   if ($('.MessageBox-dialog').length > 0) {
     $('.MessageBox-dialog').remove();
   }
@@ -522,23 +522,23 @@ export function MessageBox(opt) {
   // 取消
   $('.MessageBox-dialog .messageclosed,.MessageBox-dialog').on(
     'click',
-    function() {
+    function () {
       removemodalmessage();
     }
   );
-  $('.MessageBox-dialog .modal-content').click(function(e) {
+  $('.MessageBox-dialog .modal-content').click(function (e) {
     e.stopPropagation();
   });
 
-  function removemodalmessage() {
+  function removemodalmessage () {
     $MessageBoxdialog.fadeOut();
-    setTimeout(function() {
+    setTimeout(function () {
       $MessageBoxdialog.remove();
     }, 500);
   }
 
   if (textTemplate.autohide) {
-    setTimeout(function() {
+    setTimeout(function () {
       removemodalmessage();
     }, 3000);
   }
@@ -548,7 +548,7 @@ export function MessageBox(opt) {
  * 简单消息条
  * opt ： 配置项
  */
-export function MessageHint(opt) {
+export function MessageHint (opt) {
   const textTemplate = {
     // title: opt.title || '提示',
     content: opt.content || '',
@@ -600,22 +600,22 @@ export function MessageHint(opt) {
   $MessageBoxhint.fadeIn();
 
   // 取消
-  $('.MessageBox-hint .messageclosed,.MessageBox-hint').on('click', function() {
+  $('.MessageBox-hint .messageclosed,.MessageBox-hint').on('click', function () {
     removemodalmessage();
   });
-  $('.MessageBox-hint .modal-content').click(function(e) {
+  $('.MessageBox-hint .modal-content').click(function (e) {
     e.stopPropagation();
   });
 
-  function removemodalmessage() {
+  function removemodalmessage () {
     $MessageBoxhint.fadeOut();
-    setTimeout(function() {
+    setTimeout(function () {
       $MessageBoxhint.remove();
     }, 500);
   }
 
   if (textTemplate.autohide) {
-    setTimeout(function() {
+    setTimeout(function () {
       removemodalmessage();
     }, 3000);
   }
@@ -625,7 +625,7 @@ export function MessageHint(opt) {
  * 滚动到目标位置
  * opt ： e
  */
-export function totarget(e) {
+export function totarget (e) {
   const $id = e;
   let tempheight;
   if ($('#basicinfo .topbox').height() > 100) {
@@ -649,7 +649,7 @@ export function totarget(e) {
  * 阻止默认浏览器动作
  * opt ： e
  */
-export function stopDefault(e) {
+export function stopDefault (e) {
   // 如果提供了事件对象，则这是一个非IE浏览器
   if (e && e.preventDefault) {
     // 阻止默认浏览器动作(W3C)
@@ -665,7 +665,7 @@ export function stopDefault(e) {
  * 获取router url
  * opt ： key
  */
-export function getRouterUrl(key) {
+export function getRouterUrl (key) {
   const routerUrl = {
     /** 一级菜单 **/
     '360view': '/search',
@@ -710,7 +710,7 @@ export function getRouterUrl(key) {
  * 获取浏览器版本
  * opt ： ''
  */
-export function IEVersion() {
+export function IEVersion () {
   const userAgent = navigator.userAgent; // 取得浏览器的userAgent字符串
   const isIE =
     userAgent.indexOf('compatible') > -1 && userAgent.indexOf('MSIE') > -1; // 判断是否IE<11浏览器
@@ -735,9 +735,9 @@ export function IEVersion() {
   } else if (isEdge) {
     return 0; // edge
   } else if (isIE11) {
-    function addie11mr() {
+    function addie11mr () {
       const _panel = $('.__panel.__native');
-      _panel.each(function() {
+      _panel.each(function () {
         if ($(this).attr('style')) {
           $(this).addClass('ie11mr');
         } else {
@@ -747,7 +747,7 @@ export function IEVersion() {
     }
 
     addie11mr();
-    window.addEventListener('resize', function(e) {
+    window.addEventListener('resize', function (e) {
       addie11mr();
     });
     return 11; // IE11
@@ -760,11 +760,11 @@ export function IEVersion() {
  * 获取验证码倒计时
  * opt ： ''
  */
-export function setTime(obj) {
+export function setTime (obj) {
   let countdown = 60;
   timer(obj);
 
-  function timer(obj) {
+  function timer (obj) {
     if (countdown == 0) {
       obj.removeAttribute('disabled');
       obj.value = '获取验证码';
@@ -775,7 +775,7 @@ export function setTime(obj) {
       obj.value = '重新发送(' + countdown + ')';
       countdown--;
     }
-    setTimeout(function() {
+    setTimeout(function () {
       timer(obj);
     }, 1000);
   }
@@ -785,7 +785,7 @@ export function setTime(obj) {
  * 密码格式验证   密码为6到16位数字、字母和特殊字符任意组合
  * opt ： ''
  */
-export function checkPassword(password) {
+export function checkPassword (password) {
   let msg;
   if (password) {
     if (password.length > 5 && password.length < 17) {
@@ -818,7 +818,7 @@ export function checkPassword(password) {
  * 手机号码验证
  * opt ： phone
  */
-export function checkPhone(phone) {
+export function checkPhone (phone) {
   if (!phone) {
     MessageBox({
       title: '提示',
@@ -850,11 +850,11 @@ export function checkPhone(phone) {
  * opt ： url
  * opt ： 函数
  */
-export function newWindowDownLoad(url, fn) {
+export function newWindowDownLoad (url, fn) {
   const newWindow = window.open(url, '_blank');
   newWindow.focus();
 
-  var loop = setInterval(function() {
+  var loop = setInterval(function () {
     if (newWindow.closed) {
       clearInterval(loop);
       if (fn) fn();
@@ -865,7 +865,7 @@ export function newWindowDownLoad(url, fn) {
 /*
  * 狐火兼容输入框
  * */
-export function compaNumber(obj) {
+export function compaNumber (obj) {
   let loanNumber = obj.target.value.replace(/[^\d.]/g, '');
   // 通过正则过滤小数点后两位
   if (loanNumber.toString() !== loanNumber.match(/^\d*(\.?\d{0,2})/g)[0]) {

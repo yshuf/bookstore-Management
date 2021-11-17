@@ -13,73 +13,59 @@
 
 <script>
 export default {
-  name: 'commonTop',
-  props: {
-    dataArry: {
-      type: Array,
-      default: []
-    },
-    hasBorder: {
-      type: Boolean,
-      default: false
-    },
-    type: {
-      type: String,
-      default: ''
-    }
-  },
-  data() {
+  name: 'BaseVerify',
+  data () {
     return {
       slideVerify: false
     };
   },
-  mounted() {
+  mounted () {
     this.verify();
   },
   methods: {
     // 滑块验证
     verify () {
-      let that = this;
-      var box = document.getElementById("slide_verify");
-      var xbox = document.getElementById("slide_box");
-      var btn = document.getElementById("slide_btn");
+      const that = this;
+      var box = document.getElementById('slide_verify');
+      var xbox = document.getElementById('slide_box');
+      var btn = document.getElementById('slide_btn');
       var b = box.offsetWidth;
       var o = btn.offsetWidth;
       btn.ondragstart = function () {
-          return false;
+        return false;
       };
       btn.onselectstart = function () {
-          return false;
+        return false;
       };
       btn.onmousedown = function (e) {
-          if (xbox.clientWidth >= box.clientWidth) {
-              return;
+        if (xbox.clientWidth >= box.clientWidth) {
+          return;
+        }
+        var disX = e.clientX - btn.offsetLeft;
+        document.onmousemove = function (e) {
+          var l = e.clientX - disX + o;
+          if (l < o) {
+            l = o;
           }
-          var disX = e.clientX - btn.offsetLeft;
-          document.onmousemove = function (e) {
-              var l = e.clientX - disX + o;
-              if (l < o) {
-                  l = o;
-              }
-              if (l > b) {
-                  l = b;
-              }
-              xbox.style.width = l + "px";
-          };
-          document.onmouseup = function (e) {
-              var l = e.clientX - disX + o;
-              if (l < b) {
-                  l = o;
-              } else {
-                  l = b;
-                  // $("#slide_box").append("验证通过");
-                  // btn.innerHTML ="<i class=\"iconfont icon-sure\" style=\"font-size: 12px; color: #7BBB55\"></i>";
-                  that.slideVerify = true;
-              }
-              xbox.style.width = l + "px";
-              document.onmousemove = null;
-              document.onmouseup = null;
-          };
+          if (l > b) {
+            l = b;
+          }
+          xbox.style.width = l + 'px';
+        };
+        document.onmouseup = function (e) {
+          var l = e.clientX - disX + o;
+          if (l < b) {
+            l = o;
+          } else {
+            l = b;
+            // $("#slide_box").append("验证通过");
+            // btn.innerHTML ="<i class=\"iconfont icon-sure\" style=\"font-size: 12px; color: #7BBB55\"></i>";
+            that.slideVerify = true;
+          }
+          xbox.style.width = l + 'px';
+          document.onmousemove = null;
+          document.onmouseup = null;
+        };
       };
     }
   }

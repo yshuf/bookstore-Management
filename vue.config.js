@@ -48,7 +48,8 @@ module.exports = {
     ],
     // resolve: {
     //   alias: {
-    //     "@": "/src"
+    //     "@": "/src",
+    //     "@utils" : "/src/utils"
     //   }
     // }
   }

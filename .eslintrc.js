@@ -49,7 +49,7 @@ const configObj = {
     quotes: ['error', 'single'],
     'object-curly-spacing': ['error', 'always'],
     '@typescript-eslint/no-var-requires': 0,
-    allowIndentationTabs: true
+    allowIndentationTabs: 0
   },
   globals: {
     $: true,
