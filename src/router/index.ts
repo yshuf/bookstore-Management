@@ -1,21 +1,37 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import NProgress from 'nprogress';
+import Layout from '@/layout/index.vue';
 
 Vue.use(VueRouter);
 
 const router = new VueRouter({
   routes: [
-    { path: '/', redirect: '/index' }, // 重定向
     {
-      path: '/index',
-      name: 'Index',
-      component:()=> import ('@/views/homePage/index.vue')
-    },
+      path: '/',
+      redirect: '/homePage',
+      component: Layout,
+      children: [
+        {
+          path: 'homePage',
+          name: 'homePage',
+          component: () => import('@/views/homePage/index.vue'),
+          meta: { title: '首页', icon: 'dashboard', affix: true }
+        },
+      ]
+    }, // 重定向
+
     {
       path: '/login',
       name: 'Login',
-      component: () => import('@/views/Login.vue')
+      component: () => import('@/views/login/Login.vue'),
+      meta: { title: '登录', icon: 'dashboard', affix: true }
+    },
+    {
+      path: '/login/forgetPwd',
+      name: 'forgetPwd',
+      component: () => import('@/views/login/forgetPwd/index.vue'),
+      meta: { title: '登录', icon: 'dashboard', affix: true }
     },
     {
       path: '/home',
@@ -105,7 +121,7 @@ const router = new VueRouter({
 //   routers
 // });
 
-const whiteList = ['/index', '/login'];
+const whiteList = ['/homePage', '/login'];
 
 // 挂载路由导航守卫
 router.beforeEach((to, from, next) => {

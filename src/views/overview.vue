@@ -43,7 +43,7 @@ import vueSeamlessScroll from 'vue-seamless-scroll';
 import { rosePieOption } from '../plugins/index';
 export default {
   name: 'Overview',
-  data() {
+  data () {
     return {
       id: '',
       myChart: null,
@@ -154,7 +154,7 @@ export default {
   components: { vueSeamlessScroll },
   computed: {
     // 公告滚动自定义
-    defaultOption() {
+    defaultOption () {
       return {
         step: 0.8, // 数值越大速度滚动越快
         limitMoveNum: this.listData.length, // 开始无缝滚动的数据量 this.dataList.length
@@ -167,13 +167,13 @@ export default {
       };
     }
   },
-  created() {
+  created () {
     this.id = Math.random()
       .toString(36)
       .substr(2);
   },
-  mounted() {
-    this.$nextTick(function() {
+  mounted () {
+    this.$nextTick(function () {
       this.drawLine();
       this.initChart();
     });
@@ -187,7 +187,7 @@ export default {
     this.dealData();
   },
   methods: {
-    drawLine() {
+    drawLine () {
       this.myChart = this.$echarts.init(document.getElementById('lineCharts'));
       this.bookRankChart = this.$echarts.init(
         document.getElementById('bookRank')
@@ -241,7 +241,7 @@ export default {
             data: [200, 10, 52, 334, 390],
             itemStyle: {
               normal: {
-                color: function(params) {
+                color: function (params) {
                   const colorList = [
                     '#FBC103',
                     'rgba(0, 183, 147, 0.6)',
@@ -476,7 +476,7 @@ export default {
       });
     },
 
-    initChart() {
+    initChart () {
       this.roseCharts = this.$echarts.init(
         document.getElementById('roseCharts')
       );
@@ -524,7 +524,7 @@ export default {
       this.roseCharts.setOption(options);
     },
 
-    dealData() {
+    dealData () {
       this.loginTrend.map(item => {
         this.userAmount.push(item.sql);
         this.time.push(item.date);

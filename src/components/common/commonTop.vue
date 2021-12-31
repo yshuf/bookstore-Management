@@ -50,24 +50,24 @@ export default {
       default: ''
     }
   },
-  data() {
+  data () {
     return {
       line: this.hasBorder,
       fileType: this.type
     };
   },
-  mounted() {},
+  mounted () {},
   methods: {
-    circleFunc(index) {
-      this.$nextTick(function() {
+    circleFunc (index) {
+      this.$nextTick(function () {
         if (index == 1) this.$refs.circles[index].style.background = '#FBC53F';
         if (index == 2) this.$refs.circles[index].style.background = '#336CEF';
         if (index == 3) this.$refs.circles[index].style.background = '#435188';
         if (index == 4) this.$refs.circles[index].style.background = '#E84939';
       });
     },
-    financingCircleFunc(index) {
-      this.$nextTick(function() {
+    financingCircleFunc (index) {
+      this.$nextTick(function () {
         if (index == 1) this.$refs.circles[index].style.background = '#FBC53F';
         if (index == 2) this.$refs.circles[index].style.background = '#FBC53F';
         if (index == 3) this.$refs.circles[index].style.background = '#FBC53F';
@@ -81,14 +81,14 @@ export default {
         if (index == 11) this.$refs.circles[index].style.background = '#A7A7A7';
       });
     },
-    specialFun(index) {
+    specialFun (index) {
       if (this.fileType == 'financingNeeds' && index == 0) {
-        this.$nextTick(function() {
+        this.$nextTick(function () {
           this.$refs.specialDiv[index].style.marginRight = '8rem';
         });
       }
       if (this.fileType == 'productManage' && (index == 0 || index == 1)) {
-        this.$nextTick(function() {
+        this.$nextTick(function () {
           this.$refs.specialDiv[index].style.marginRight = '6rem';
         });
       }

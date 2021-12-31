@@ -12,7 +12,7 @@ import $ from 'jquery';
 
 export default {
   name: 'Overview',
-  data() {
+  data () {
     return {
       key: '',
       map: null,
@@ -599,8 +599,8 @@ export default {
       ] // 所有企业信息
     };
   },
-  created() {},
-  mounted() {
+  created () {},
+  mounted () {
     this.creditMap(); // 地图初始化
     if (this.entList) {
       this.addScatterPlot();
@@ -612,7 +612,7 @@ export default {
   },
   methods: {
     // 地图初始化
-    creditMap() {
+    creditMap () {
       const that = this;
       const center = [122.119751, 30.009931]; // 中心点坐标
       that.map = new AMap.Map('mapContainer', {
@@ -678,7 +678,7 @@ export default {
       });
     },
     // 海量散点标记
-    addScatterPlot() {
+    addScatterPlot () {
       const that = this;
       that.entList.forEach((item, index) => {
         item.lnglat = [item.lngGd, item.latGd];
@@ -701,7 +701,7 @@ export default {
       });
 
       // 为标记点添加点击事件
-      function clickHandler(e) {
+      function clickHandler (e) {
         if (that.activeMarker) {
           that.map.remove(that.activeMarker);
         }
@@ -720,7 +720,7 @@ export default {
       massMarks.setMap(that.map);
     },
     // 获取某个企业位置，标记
-    addMarker(data) {
+    addMarker (data) {
       const that = this;
       const entData = data;
       console.log('有进来吗，不知道啊');
@@ -758,13 +758,13 @@ export default {
 					<div style="width: 78px;height: 24px;border-radius: 2px;background-color: rgba(33, 126, 255, 1);color: rgba(255, 255, 255, 100);font-size: 14px;text-align: center;line-height: 24px;margin-left: 15px;cursor:pointer" @click="viewDetail()" :style="{backgroundColor:infoloadEntDetail?'rgba(142, 142, 142, 1)':'rgba(33, 126, 255, 1)'}">{{infoloadEntDetail?'加载中..':'查看详情'}}</div></div>
                     <br/><div style="font-size:14px"><span style="opacity:0.65">地址：</span>${data.address ||
                       '-'}</div></div>`,
-        data() {
+        data () {
           return {
             infoloadEntDetail: false
           };
         },
         methods: {
-          viewDetail() {
+          viewDetail () {
             if (!that.loadEntDetail) {
               this.infoloadEntDetail = true;
               that
@@ -778,7 +778,7 @@ export default {
                 });
             }
           },
-          skip() {
+          skip () {
             that.gotoUrl(entData.eid, entData.entName);
           }
         }
@@ -786,8 +786,38 @@ export default {
       const component = new InfoContent().$mount(); // 挂载实例
       infoWindow.setContent(component.$el); // 动态更新信息窗体中的信息
       infoWindow.open(that.map, [data.lngGd, data.latGd]); // 打开信息窗体
+      /**
+       * 如果不想用模板写，需挂在 window 上，使得全局都能访问
+       */
+      // window.viewDetail = () => {
+      //   // 挂在在 window ，使得全局都能访问，否则会报错
+      //   const data = this.currentMarker;
+      //   if (!this.loadEntDetail) {
+      //     this.infoloadEntDetail = true;
+      //     this.getWarningEntDetail(data);
+      //   }
+      // };
+      // window.skip = () => {
+      //   const data = this.currentMarker;
+      //   this.$api[
+      //     'operational-monitor/operational-warning-analyse/getFkDetail'
+      //   ]({
+      //     params: {
+      //       eid: data.eid,
+      //       entName: data.entName
+      //     }
+      //   })
+      //     .then(res => {
+      //       if (res.code === this.$constant.apiServeCode.SUCCESS_CODE) {
+      //         window.open(res.data, '_bank');
+      //       }
+      //     })
+      //     .catch(err => {
+      //       console.log(err);
+      //     });
+      // };
     },
-    screenSize() {
+    screenSize () {
       const width = $(window).width();
       const height = $(window).height();
       const scaleX = 1920 / width; // 设备默认宽度为100%

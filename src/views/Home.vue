@@ -104,11 +104,11 @@ mikey.zhaopeng * @Last Modified time: 2021-05-31 11:35:53 */
 import screenfull from 'screenfull';
 export default {
   name: 'Home',
-  created() {
+  created () {
     this.getMenuList();
     this.activePath = window.sessionStorage.getItem('active_path');
   },
-  data() {
+  data () {
     return {
       // 是否全屏
       isFullScreen: false,
@@ -132,7 +132,7 @@ export default {
      * @desc 全屏
      * @param {Objetc} event - 事件html对象
      */
-    onclickFullScreen() {
+    onclickFullScreen () {
       if (!screenfull.isEnabled) {
         this.$message({
           message: '不支持全屏',
@@ -143,11 +143,11 @@ export default {
       this.isFullScreen = !this.isFullScreen;
       screenfull.toggle();
     },
-    loginout() {
+    loginout () {
       window.sessionStorage.clear();
       this.$router.push('/login');
     },
-    async getMenuList() {
+    async getMenuList () {
       //   const { data: res } = await this.$http.get('menus')
       //   if (res.meta.status !== 200)
       //     return this.$message({
@@ -246,11 +246,11 @@ export default {
       ];
     },
     // 点击按钮，切换菜单的折叠与展开
-    togglemenu() {
+    togglemenu () {
       this.isCollapse = !this.isCollapse;
     },
     // 保存当前点击菜单的路由
-    saveNavStatus(url) {
+    saveNavStatus (url) {
       window.sessionStorage.setItem('active_path', url);
       this.activePath = url;
     }

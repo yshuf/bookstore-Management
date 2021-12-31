@@ -148,7 +148,7 @@ import { debounce, throttle } from '../../../static/lodash-1.8.3.min';
 
 export default {
   name: 'ys-button',
-  data() {
+  data () {
     return {};
   },
   /**
@@ -187,7 +187,7 @@ export default {
       // 使用类型，debounce 防抖，throttle 节流，none 都不用
       type: String,
       default: 'none',
-      validator: function(value) {
+      validator: function (value) {
         return ['debounce', 'throttle', 'none'].indexOf(value) !== -1;
       }
     },
@@ -209,16 +209,16 @@ export default {
   },
   computed: {
     // 根据当前disabled状态确定button是否禁用
-    buttonDisabled() {
+    buttonDisabled () {
       return this.disabled || false;
     },
-    click() {
+    click () {
       if (this.useType == 'none') return this.handleClick;
       else if (this.useType == 'debounce') return this.handleClickDebounce;
       else if (this.useType === 'throttle') return this.handleClickThrottle;
     }
   },
-  created() {
+  created () {
     this.handleClickDebounce = debounce(
       this.handleClick, // 要防抖动的函数
       this.wait, // 需要延迟的毫秒数
@@ -237,14 +237,14 @@ export default {
       }
     );
   },
-  mounted() {},
+  mounted () {},
   methods: {
-    isNumber(number) {
+    isNumber (number) {
       const numReg = /^[0-9]+$/;
       const numRe = new RegExp(numReg);
       return numRe.test(number);
     },
-    handleClick(evt) {
+    handleClick (evt) {
       // 触发当前实例上的click事件
       // 比如我们外部使用时，可以直接增加click方法
       this.$emit('click', evt);

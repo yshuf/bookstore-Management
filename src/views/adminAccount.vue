@@ -115,7 +115,7 @@
 <script>
 export default {
   name: 'AdminAccount',
-  data() {
+  data () {
     return {
       value: '',
       key: '',
@@ -191,21 +191,21 @@ export default {
     };
   },
   methods: {
-    addAndEdit(type) {
+    addAndEdit (type) {
       this.dialogFormVisible = true;
       this.titleName = type === 'add' ? '添加账号' : '编辑账号';
     },
     // 状态筛选
-    selectStatus(type) {
+    selectStatus (type) {
       this.status = type;
     },
     // 时间筛选
-    selectTime(data) {
+    selectTime (data) {
       this.startTime = data[0];
       this.endTime = data[1];
     },
     // 点击筛选按钮
-    search() {
+    search () {
       console.log(this.key);
     }
   }

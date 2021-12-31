@@ -99,7 +99,7 @@ export default {
     // YsButton,
     // MessageBox
   },
-  data() {
+  data () {
     return {
       instructionList: [],
       // 用户信息
@@ -125,14 +125,14 @@ export default {
       }
     };
   },
-  mounted() {
+  mounted () {
     // this.getUserInfo()
     // this.getList()
     this.realName = this.$store.state.realName;
   },
   methods: {
     // 获取隐私政策列表
-    getList() {
+    getList () {
       this.ajaxRequest({
         type: 'get',
         url: '/useNotice/findList',
@@ -148,32 +148,31 @@ export default {
       });
     },
     // 查看隐私政策
-    getInstruction(type, path) {
+    getInstruction (type, path) {
       if (type === 4) window.open('/instruction.html?type=privacy', '_blank');
-      else if (type === 5)
-        window.open('/instruction.html?type=userTCP', '_blank');
+      else if (type === 5) { window.open('/instruction.html?type=userTCP', '_blank'); }
     },
     // 获取用户个人信息
-    getUserInfo() {
+    getUserInfo () {
       const that = this;
       this.ajaxRequest({
         type: 'get',
         url: '/inst/user/userInfo',
         dataType: 'json',
-        successfn: function(res) {
+        successfn: function (res) {
           console.log(res);
           if (res.code === '0000') {
             that.userInfo = res.data;
             console.log(that.userInfo);
           }
         },
-        errorfn(res) {
+        errorfn (res) {
           console.log(res.data);
         }
       });
     },
     // 编辑框
-    orgEdit(title, modelType, data) {
+    orgEdit (title, modelType, data) {
       const that = this;
       const param = {
         isVisible: true,
@@ -186,7 +185,7 @@ export default {
       console.log(that.modelData.data);
     },
     // 修改密码
-    editPassword() {
+    editPassword () {
       const that = this;
       let param2;
       const {
@@ -217,7 +216,7 @@ export default {
         param: param2,
         url: '/inst/user/resetPasswordOfBank',
         dataType: 'json',
-        successfn: function(res) {
+        successfn: function (res) {
           if (res.code === '0000') {
             MessageBox({
               content:
@@ -226,7 +225,7 @@ export default {
             });
             that.modelData.isVisible = false;
 
-            setTimeout(function() {
+            setTimeout(function () {
               removeStore('userInfo');
               removeStore('token');
               setStore('loginType', 2);
@@ -234,7 +233,7 @@ export default {
             }, 3000);
           }
         },
-        errorfn: function(error) {
+        errorfn: function (error) {
           MessageBox({
             content: error.msg,
             autohide: true
@@ -243,7 +242,7 @@ export default {
       });
     },
     // 修改手机号
-    editPhone() {
+    editPhone () {
       const that = this;
       if (!checkPhone(that.modelData.data.phone)) return;
       that.ajaxRequest({
@@ -251,7 +250,7 @@ export default {
         param: this.modelData.data,
         url: '/inst/user/updatePhoneValidSms',
         dataType: 'json',
-        successfn: function(res) {
+        successfn: function (res) {
           if (res.code === '0000') {
             that.resetPhone = {
               phone: '',
@@ -264,7 +263,7 @@ export default {
             });
             that.modelData.isVisible = false;
 
-            setTimeout(function() {
+            setTimeout(function () {
               removeStore('userInfo');
               removeStore('token');
               setStore('loginType', 2);
@@ -272,7 +271,7 @@ export default {
             }, 3000);
           }
         },
-        errorfn: function(error) {
+        errorfn: function (error) {
           MessageBox({
             content: error.msg,
             autohide: true
@@ -281,7 +280,7 @@ export default {
       });
     },
     // 获取验证码
-    getSetTime(e) {
+    getSetTime (e) {
       const that = this;
       if (!checkPhone(that.modelData.data.phone)) {
         return false;
@@ -293,7 +292,7 @@ export default {
           phone: that.modelData.data.phone
         },
         dataType: 'json',
-        successfn: function(res) {
+        successfn: function (res) {
           console.log(res);
           MessageBox({
             content: res.msg,
@@ -301,7 +300,7 @@ export default {
           });
           setTime(e.target);
         },
-        errorfn: function(e) {
+        errorfn: function (e) {
           MessageBox({
             content: e.msg,
             autohide: true
@@ -311,7 +310,7 @@ export default {
       });
     },
     // 取消删除输入信息
-    deleInfo() {
+    deleInfo () {
       const that = this;
       that.modelData.isVisible = false;
       that.resetPhone = {

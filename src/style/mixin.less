@@ -1,0 +1,79 @@
+@import './variables.less';
+
+.navbg_color(@color) {
+    background-color: @color;
+}
+
+.navli_color(@color) {
+    color: @color;
+}
+
+.mainbg_color(@color) {
+    background-color: @color;
+}
+
+
+.footer_color(@color) { 
+    color: @color; 
+} 
+
+.nav_color(@color) { 
+    color: @color;
+}
+
+.top_color(@color) {
+    color: @color;
+
+    [data-theme="red"] & {
+        color: $redNavCoolr; 
+    }
+}
+
+.bg_header_Img() {
+    width: 214px !important;
+    height: 32px !important;
+    background: none;
+    background-position: center;
+    background-size: 100% auto;
+}
+
+.bg_footer_Img() {
+    background: none;
+    background-position: center;
+    background-size: 100% auto;
+}
+
+.scrollBar {
+    &::-webkit-scrollbar-track-piece {
+        background: #d3dce6;
+    }
+
+    &::-webkit-scrollbar {
+        width: 15px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #99a9bf;
+        border-radius: 20px;
+    }
+}
+
+.cardBoxShadow {
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.widthMiddle {
+    width: 1200px;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.textStyleHover {
+  &:hover {
+    color: @mainColor;
+  }
+}

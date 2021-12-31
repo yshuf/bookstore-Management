@@ -175,8 +175,8 @@
 <script>
 const clickoutside = {
   // 初始化指令
-  bind(el, binding, vnode) {
-    function documentHandler(e) {
+  bind (el, binding, vnode) {
+    function documentHandler (e) {
       // 这里判断点击的元素是否是本身，是本身，则返回
       if (el.contains(e.target)) {
         return false;
@@ -192,8 +192,8 @@ const clickoutside = {
     el.__vueClickOutside__ = documentHandler;
     document.addEventListener('click', documentHandler);
   },
-  update() {},
-  unbind(el, binding) {
+  update () {},
+  unbind (el, binding) {
     // 解除事件监听
     document.removeEventListener('click', el.__vueClickOutside__);
     delete el.__vueClickOutside__;
@@ -201,7 +201,7 @@ const clickoutside = {
 };
 export default {
   name: 'ys-select',
-  data() {
+  data () {
     return {
       isOptionsListShow: false,
       selectIndex: 0,
@@ -281,7 +281,7 @@ export default {
   },
   directives: { clickoutside },
   computed: {
-    selectText() {
+    selectText () {
       if (this.options[this.selectIndex]) {
         return this.options[this.selectIndex].label;
       } else {
@@ -289,7 +289,7 @@ export default {
         return this.options[this.selectIndex].label || '';
       }
     },
-    options() {
+    options () {
       const that = this;
       const options = [];
       if (that.$props.defaultTxt) {
@@ -298,20 +298,20 @@ export default {
           label: that.$props.defaultTxt
         });
       }
-      that.selectList.map(function(v, i) {
+      that.selectList.map(function (v, i) {
         const option = {
           value: v,
           label: that.textList ? that.textList[i] : v
         };
         options.push(option);
       });
-      options.map(function(v, i) {
+      options.map(function (v, i) {
         if (v.value == that.value) {
           that.selectIndex = i;
         }
       });
 
-      that.$nextTick(function() {
+      that.$nextTick(function () {
         if (that.value) {
           $('.select-input').css('color', 'rgba(0, 0, 0, 0.65)');
         }
@@ -320,45 +320,45 @@ export default {
     }
   },
   watch: {
-    value(curVal, oldVal) {
+    value (curVal, oldVal) {
       const that = this;
-      that.options.map(function(v, i) {
+      that.options.map(function (v, i) {
         if (v.value == curVal) {
           that.selectIndex = i;
         }
       });
     },
-    content(curVal, olcVal) {
+    content (curVal, olcVal) {
       this.$emit('changeContent', curVal);
     }
   },
-  created() {},
-  mounted() {},
+  created () {},
+  mounted () {},
   methods: {
-    selectOption(data, index, item) {
+    selectOption (data, index, item) {
       const that = this;
       that.selectIndex = index;
       that.$emit('change', data);
       that.$emit('changedata', item);
       that.clickHideMode && that.hideOptionsList();
-      that.$nextTick(function() {
+      that.$nextTick(function () {
         if (that.$props.defaultTxt != item.label) {
           $('.select-input').css('color', 'rgba(0, 0, 0, 0.65)');
         }
       });
     },
-    onMouseEnterHandler() {
+    onMouseEnterHandler () {
       this.mouseenterShowMode && this.showOptionsList();
     },
-    onMouseOutHandler() {
+    onMouseOutHandler () {
       this.moveoutHideMode && this.hideOptionsList();
     },
-    showOptionsList() {
+    showOptionsList () {
       this.isOptionsListShow = true;
     },
-    hideOptionsList() {
+    hideOptionsList () {
       const that = this;
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         that.isOptionsListShow = false;
       });
     }

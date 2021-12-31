@@ -1,5 +1,5 @@
 module.exports = {
-  title: '萧山区中小企业综合服务平台',
+  title: '书店中小企业综合服务平台',
 
   /**
    * @type {boolean} true | false

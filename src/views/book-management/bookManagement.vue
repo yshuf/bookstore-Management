@@ -124,7 +124,7 @@ import countTo from 'vue-count-to';
 export default {
   name: 'BookManagement',
   components: { countTo },
-  data() {
+  data () {
     return {
       visible: false,
       value: '',
@@ -200,23 +200,23 @@ export default {
   },
   methods: {
     // 状态筛选
-    selectStatus(type) {
+    selectStatus (type) {
       this.status = type;
     },
     // 时间筛选
-    selectTime(data) {
+    selectTime (data) {
       this.startTime = data[0];
       this.endTime = data[1];
     },
     // 点击筛选按钮
-    search() {
+    search () {
       console.log(this.key);
     },
-    handleSizeChange(val) {
+    handleSizeChange (val) {
       console.log(`每页 ${val} 条`);
     },
     //  点击页数
-    handleCurrentChange(val) {
+    handleCurrentChange (val) {
       this.currentPage = val;
       console.log(`当前页: ${val}`);
     }
