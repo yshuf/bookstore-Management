@@ -20,7 +20,18 @@ const router = new VueRouter({
         },
       ]
     }, // 重定向
-
+    {
+      path: '/homePage',
+      name: 'homePage',
+      component: () => import('@/views/homePage/index.vue'),
+      meta: { title: '门户首页', icon: 'dashboard', affix: true }
+    },
+    {
+      path: '/echartsPage',
+      name: 'echartsPage',
+      component: () => import('@/views/echartsPage/index.vue'),
+      meta: { title: '图表首页', icon: 'dashboard', affix: true }
+    },
     {
       path: '/login',
       name: 'Login',
@@ -32,6 +43,12 @@ const router = new VueRouter({
       name: 'forgetPwd',
       component: () => import('@/views/login/forgetPwd/index.vue'),
       meta: { title: '登录', icon: 'dashboard', affix: true }
+    },
+    {
+      path: '/map_build',
+      name: 'map_build',
+      component: () => import('@/views/mapBuild/index.vue'),
+      meta: { title: '地图建设', icon: 'dashboard', affix: true }
     },
     {
       path: '/home',
@@ -121,7 +138,7 @@ const router = new VueRouter({
 //   routers
 // });
 
-const whiteList = ['/homePage', '/login'];
+const whiteList = ['/homePage', '/login','/echartsPage','/map_build'];
 
 // 挂载路由导航守卫
 router.beforeEach((to, from, next) => {
