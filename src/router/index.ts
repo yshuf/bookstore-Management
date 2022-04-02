@@ -46,9 +46,17 @@ const router = new VueRouter({
     },
     {
       path: '/map_build',
-      name: 'map_build',
+      redirect: 'mapOverview',
       component: () => import('@/views/mapBuild/index.vue'),
-      meta: { title: '地图建设', icon: 'dashboard', affix: true }
+      meta: { title: '地图建设', icon: 'dashboard', affix: true },
+      children: [{
+        path: '/mapOverview',
+        name: 'mapOverview',
+        meta: {
+          title: '地图概览'
+        },
+        component: () => import('@/views/mapBuild/overview.vue')
+      }]
     },
     {
       path: '/home',
@@ -138,7 +146,7 @@ const router = new VueRouter({
 //   routers
 // });
 
-const whiteList = ['/homePage', '/login','/echartsPage','/map_build'];
+const whiteList = ['/homePage', '/login','/echartsPage','/map_build','/mapOverview'];
 
 // 挂载路由导航守卫
 router.beforeEach((to, from, next) => {

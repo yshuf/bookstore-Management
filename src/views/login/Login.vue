@@ -58,8 +58,8 @@ export default {
     return {
       // 登录表单信息
       loginForm: {
-        username: '',
-        password: ''
+        username: 'admin',
+        password: '123456'
       },
       slideVerify: false, // 滑动验证
       loginRules: {
