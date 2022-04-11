@@ -3,35 +3,40 @@
  * @Author: MoBai
  * @Date: 2022-04-01 10:15:39
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-01 16:41:47
+ * @LastEditTime: 2022-04-08 13:58:59
  * @FilePath: \bookstore-Management\src\views\mapBuild\overview.vue
 -->
 <template>
   <div class="mapBuild">
     <div class="selectListBox">
-      <div :class="['select-item',activeIndex===index?'active':'']"  @click="selectShow(index)" v-for="(item,index) in selectList" :key="index">{{item.name}}</div>
+      <div :class="['select-item',activeIndex===index?'active':'']"  @click="selectShow(item,index)" v-for="(item,index) in selectList" :key="index">{{item.name}}</div>
     </div>
-    <Map></Map>
+    <Map v-if="componentsId=='map'"></Map>
+    <echarts-map v-if="componentsId=='echartsMap'"></echarts-map>
   </div>
 </template>
 
 <script>
+import EchartsMap from './components/echartsMap.vue';
 import Map from './components/map.vue';
 export default {
   name: 'Overview',
-  components: { Map },
+  components: { Map, EchartsMap },
   data () {
     return {
+      componentsId: 'map',
       activeIndex: 0,
       selectList: [
-        { name: '行政区域图层移入悬浮' },
-        { name: '气泡下钻' }
+        { name: '行政区域图层移入悬浮', componentId: 'map' },
+        { name: '气泡下钻', componentId: '' },
+        { name: 'echarts地图', componentId: 'echartsMap' }
       ]
     };
   },
   methods: {
-    selectShow (i) {
+    selectShow (item, i) {
       this.activeIndex = i;
+      this.componentsId = item.componentId;
     }
   }
 };
