@@ -3,7 +3,7 @@
  * @Author: MoBai
  * @Date: 2022-04-01 10:15:39
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-08 13:58:59
+ * @LastEditTime: 2022-04-22 11:42:07
  * @FilePath: \bookstore-Management\src\views\mapBuild\overview.vue
 -->
 <template>
@@ -13,23 +13,28 @@
     </div>
     <Map v-if="componentsId=='map'"></Map>
     <echarts-map v-if="componentsId=='echartsMap'"></echarts-map>
+    <bubble-brick v-if="componentsId=='bubbleBrick'"></bubble-brick>
+
+    <!-- <component v-for="(item,index) in selectList" :key="index" :is='item.componentId'></component> -->
   </div>
 </template>
 
 <script>
 import EchartsMap from './components/echartsMap.vue';
 import Map from './components/map.vue';
+import BubbleBrick from './components/bubbleBrick.vue';
 export default {
   name: 'Overview',
-  components: { Map, EchartsMap },
+  components: { Map, EchartsMap, BubbleBrick },
   data () {
     return {
-      componentsId: 'map',
-      activeIndex: 0,
+      componentsId: 'bubbleBrick',
+      activeIndex: 2,
       selectList: [
+        { name: 'echarts地图', componentId: 'echartsMap' },
         { name: '行政区域图层移入悬浮', componentId: 'map' },
-        { name: '气泡下钻', componentId: '' },
-        { name: 'echarts地图', componentId: 'echartsMap' }
+        { name: '气泡下钻', componentId: 'bubbleBrick' }
+
       ]
     };
   },

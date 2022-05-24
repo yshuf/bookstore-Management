@@ -1,7 +1,7 @@
 <!--
  * @Author: mobai
  * @Date: 2022-04-08 13:51:59
- * @LastEditors: Please set LastEditors
+ * @LastEditors: mobai
  * @LastEditTime: 2022-04-08 17:17:54
  * @FilePath: \bookstore-Management\src\views\mapBuild\components\echartsMap.vue
 -->
@@ -98,7 +98,7 @@ export default {
             // // type: 'piecewise',
             bottom: 0,
             min: 0,
-            max: 100,
+            max: 1000,
             text: ['High', 'Low'],
             realtime: false,
             calculable: true,
@@ -106,11 +106,11 @@ export default {
               color: ['#00FCFF', '#00ACFB', '#005BF6']
             }
           },
-          /* geo: {
+          geo: {
             map: '浙江省',
             roam: false,
-            layoutCenter: ['50%', '50%'], 　　　　　　// 地图中心在屏幕中的位置
-            // layoutSize: 330,
+            layoutCenter: ['50%', '50%'], // 地图中心在屏幕中的位置
+            layoutSize: '65%',
             zoom: 1, // 当前视角的缩放比例
             label: {
               textStyle: {
@@ -132,7 +132,7 @@ export default {
                 areaColor: 'transparent'
               }
             }
-          }, */
+          },
           series: [{
             type: 'map',
             map: '浙江省',
@@ -141,10 +141,10 @@ export default {
             zlevel: 0,
             // roam: false,
             zoom: 1,
-            layoutCenter: ['50%', '50%'], 　　　　　　// 地图中心在屏幕中的位置
-            layoutSize: 330, // 相对于屏幕匡高的百分比或者绝对像素大小
+            layoutCenter: ['50%', '50%'], // 地图中心在屏幕中的位置
+            layoutSize: '65%', // 相对于屏幕匡高的百分比或者绝对像素大小
             label: {
-              show: false,
+              show: true, // 图形上的文本标签，可用于说明图形的一些数据信息（这里展示对应的地市名称）
               emphasis: {
                 show: false
               }
@@ -152,7 +152,7 @@ export default {
             itemStyle: {
               normal: {
                 // areaColor: 'rgba(32, 76, 131, 1)',
-                borderColor: '#fff'
+                borderColor: 'rgba(0, 0, 0, 0.2)'
               }
               // emphasis: {
               //     areaColor: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
@@ -168,26 +168,6 @@ export default {
               // }
             },
             data: data
-            /* nameMap: {
-              'Central and Western': '中西区',
-              Eastern: '东区',
-              Islands: '离岛',
-              'Kowloon City': '九龙城',
-              'Kwai Tsing': '葵青',
-              'Kwun Tong': '观塘',
-              North: '北区',
-              'Sai Kung': '西贡',
-              'Sha Tin': '沙田',
-              'Sham Shui Po': '深水埗',
-              Southern: '南区',
-              'Tai Po': '大埔',
-              'Tsuen Wan': '荃湾',
-              'Tuen Mun': '屯门',
-              'Wan Chai': '湾仔',
-              'Wong Tai Sin': '黄大仙',
-              'Yau Tsim Mong': '油尖旺',
-              'Yuen Long': '元朗'
-            } */
           }]
         };
       };

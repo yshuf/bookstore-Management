@@ -30,6 +30,18 @@
 				<h3>玫瑰饼图 / 环图</h3>
 				<div id="chart10" class="chart"></div>
 			</div>
+      <div class="list_item">
+				<h3>特殊环形</h3>
+				<Ring></Ring>
+			</div>
+      <div class="list_item">
+				<h3>半圆环</h3>
+				<Semicircle :policyPayFunnelPlot="policyPayFunnelPlot"></Semicircle>
+			</div>
+      <div class="list_item">
+				<h3>漏斗图</h3>
+				<funnel-diagram :policyPayFunnelPlot="policyPayFunnelPlot"></funnel-diagram>
+			</div>
 			<div class="list_item">
 				<h3>单个数据环形统计</h3>
 				<div id="chartA" class="chart"></div>
@@ -54,12 +66,21 @@
 import echarts from 'echarts';
 
 import BarEcharts from './components/bar-echarts/index';
+import Ring from './components/pie-echarts/ring.vue';
+import Semicircle from './components/pie-echarts/semicircle.vue';
+import FunnelDiagram from './components/funnel-echarts/funnel-diagram.vue';
 export default {
   name: 'echartsAll',
-  components: { BarEcharts },
+  components: { BarEcharts, Ring, Semicircle, FunnelDiagram },
   data () {
     return {
-
+      policyPayFunnelPlot: {
+        applyNum: 8,
+        endNum: 7,
+        endRate: 0.875,
+        payNum: 4,
+        payRate: 0.5
+      }
     };
   },
   mounted () {
