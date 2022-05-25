@@ -129,15 +129,15 @@ export default {
         legend: {
           // selectedMode: false, // 取消图例上的点击事件
           type: 'plain',
-          itemGap: 8,
-          itemWidth: 8, // 设置宽度
-          itemHeight: 8, // 设置高度
+          itemGap: 10,
+          itemWidth: 10, // 设置宽度
+          itemHeight: 10, // 设置高度
           symbolKeepAspect: false,
           show: true,
           orient: 'vertical',
           icon: 'react',
-          right: '5%',
-          bottom: '10%',
+          right: '8%',
+          bottom: '35%',
           data: dataList.map((item) => {
             if (item.show) {
               return item.name;
@@ -160,18 +160,18 @@ export default {
             }
           },
           textStyle: {
-            color: '#D8DDE3',
+            color: '#000',
             lineHeight: 10,
             rich: {
               name: {
                 verticalAlign: 'right',
                 align: 'left',
                 padding: [0, 0, 0, 0],
-                fontSize: 12
+                fontSize: 14
               },
               value: {
                 align: 'left',
-                fontSize: 12
+                fontSize: 14
               }
             }
           }

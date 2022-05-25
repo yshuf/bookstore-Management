@@ -65,7 +65,7 @@ export default {
           icon: 'rect',
           itemWidth: 20,
           itemHeight: 20,
-          itemGap: 12,
+          itemGap: 25,
           textStyle: {
             fontSize: 20,
             color: 'rgba(0, 0, 0, 100)'
@@ -88,7 +88,7 @@ export default {
             label: {
               show: true,
               position: 'inside',
-              fontSize: 20,
+              fontSize: 16,
               formatter: function (params) {
                 let text = '';
                 switch (params.dataIndex) {

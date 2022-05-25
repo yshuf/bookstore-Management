@@ -32,6 +32,10 @@
 			</div>
       <div class="list_item">
 				<h3>特殊环形</h3>
+				<all-circle></all-circle>
+			</div>
+      <div class="list_item">
+				<h3>特殊环形</h3>
 				<Ring></Ring>
 			</div>
       <div class="list_item">
@@ -41,6 +45,10 @@
       <div class="list_item">
 				<h3>漏斗图</h3>
 				<funnel-diagram :policyPayFunnelPlot="policyPayFunnelPlot"></funnel-diagram>
+			</div>
+      <div class="list_item">
+				<h3>半玫瑰图</h3>
+				<half-rose :policyPayFunnelPlot="policyPayFunnelPlot"></half-rose>
 			</div>
 			<div class="list_item">
 				<h3>单个数据环形统计</h3>
@@ -66,12 +74,14 @@
 import echarts from 'echarts';
 
 import BarEcharts from './components/bar-echarts/index';
+import AllCircle from './components/pie-echarts/all-circle.vue';
 import Ring from './components/pie-echarts/ring.vue';
 import Semicircle from './components/pie-echarts/semicircle.vue';
 import FunnelDiagram from './components/funnel-echarts/funnel-diagram.vue';
+import HalfRose from './components/pie-echarts/half-rose.vue';
 export default {
   name: 'echartsAll',
-  components: { BarEcharts, Ring, Semicircle, FunnelDiagram },
+  components: { BarEcharts, Ring, Semicircle, FunnelDiagram, HalfRose, AllCircle },
   data () {
     return {
       policyPayFunnelPlot: {
