@@ -238,7 +238,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .map-container {
   height: 100%;
   flex: 1;
@@ -293,7 +293,7 @@ export default {
 }
 </style>
 
-<style lang="scss">
+<style lang="less">
 .risk-infowindow {
   position: relative;
   padding: 0.1rem 0.1rem 0.05rem;

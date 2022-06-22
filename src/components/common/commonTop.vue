@@ -97,7 +97,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="less">
 #commonTop {
   width: 100%;
   margin: 20px auto 0;

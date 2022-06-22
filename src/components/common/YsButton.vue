@@ -1,4 +1,4 @@
-<style lang="scss">
+<style lang="less">
 .ys-button {
   display: inline-block;
   -webkit-appearence: none;

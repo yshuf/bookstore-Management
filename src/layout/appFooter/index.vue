@@ -19,17 +19,17 @@
             </div>
             <div class="telephone">
               <div>热线电话</div>
-              <div class="phone">0571-12345687</div>
+              <div class="phone">xxxxxxxx</div>
             </div>
           </div>
           <div class="footer_des">
               <div class="footer_center">
                 <div>
                       主办单位：书店经济与信息化局
-                    <span>技术支持：杭州有数金融信息服务有限公司 </span><span>备案编号 浙ICP备17003364号-3</span>
+                    <span>技术支持：xxxxxxxx </span><span>备案编号 浙ICP备17003364号-3</span>
                 </div>
                 <div>
-                  Copyright ©2019-2021  |  浙ICP备05000054号-1  |  公安部备案号：33082502000300
+                  Copyright ©2019-2021  |  xxxxxxxx  |  公安部备案号：xxxxxxxx
                 </div>
               </div>
           </div>

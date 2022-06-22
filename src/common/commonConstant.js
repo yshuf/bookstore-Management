@@ -197,7 +197,7 @@ export const leftNavTree = [
     label: '政策资讯',
     name: 'xqk',
     icon: '',
-    active: false
+    active: true
   },
   {
     id: 'xqb',

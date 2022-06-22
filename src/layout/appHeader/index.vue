@@ -2,7 +2,7 @@
   <section :class="isHome ? 'home_head_layout' : 'home_header'">
     <div class="home_login_box">
       <div class="login_box_top">
-        <div class="login_box_item">热线电话：0571-83518901</div>
+        <div class="login_box_item">热线电话：xxxxxxxx</div>
         <div class="login_box">
           <div class="login_box_item" @click="$router.push({name: 'helpCenter'})">帮助中心</div>
           <div class="login_box_item erweima">
@@ -36,7 +36,7 @@
     <div class="header_top">
       <div class="header_nav">
         <div class="headlogo">
-          <img :src="logoUrl" alt="" @click="$router.push('/home')" />
+          <!-- <img :src="logoUrl" alt="" @click="$router.push('/home')" /> -->
         </div>
         <div class="search_publish">
           <div class="search_nav">

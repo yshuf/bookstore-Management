@@ -1,4 +1,4 @@
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .ys-select {
   display: inline-block;
   width: 160px;

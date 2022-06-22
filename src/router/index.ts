@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
   routes: [
-    {
+    /* {
       path: '/',
       redirect: 'mapOverview',
       component: () => import('@/views/mapBuild/index.vue'),
@@ -20,8 +20,8 @@ const router = new VueRouter({
         },
         component: () => import('@/views/mapBuild/overview.vue')
       }]
-    },
-   /*  {
+    }, */
+    {
       path: '/',
       redirect: '/homePage',
       component: Layout,
@@ -33,13 +33,13 @@ const router = new VueRouter({
           meta: { title: '首页', icon: 'dashboard', affix: true }
         },
       ]
-    }, // 重定向 */
-    {
+    }, // 重定向
+   /*  {
       path: '/homePage',
       name: 'homePage',
       component: () => import('@/views/homePage/index.vue'),
       meta: { title: '门户首页', icon: 'dashboard', affix: true }
-    },
+    }, */
     {
       path: '/echartsPage',
       name: 'echartsPage',
