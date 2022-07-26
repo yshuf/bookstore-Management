@@ -3,13 +3,14 @@
   <div class="list_box">
     <div class="list_item" v-for="(item,index) in contentList" :key="index">
 				<h3>{{item.title}}</h3>
-				<div :id='`chart${index+1}`' class="chart"></div>
+				<div :id='`chartLineAndBar${index+1}`' class="chart"></div>
 			</div>
   </div>
 </template>
 
 <script>
 import echarts from 'echarts';
+import { pictorialBarOption } from '@/views/echartsPage/chart/index';
 
 export default {
   name: 'echartsAll',
@@ -23,14 +24,18 @@ export default {
         },
         {
           title: '圆角横向柱图'
+        },
+        {
+          title: '特殊柱状图'
         }
-      ]
+      ],
+      colors: ['#EF4E4A', '#3BE49E']
     };
   },
   mounted () {
-    const myChart1 = echarts.init(document.getElementById('chart1'));
-    const myChart2 = echarts.init(document.getElementById('chart2'));
-    const myChart3 = echarts.init(document.getElementById('chart3'));
+    const myChart1 = echarts.init(document.getElementById('chartLineAndBar1'));
+    const myChart2 = echarts.init(document.getElementById('chartLineAndBar2'));
+    const myChart3 = echarts.init(document.getElementById('chartLineAndBar3'));
     myChart1.setOption({
       // 图例
       legend: {
@@ -334,8 +339,127 @@ export default {
         }
       ]
     });
+
+    this.getTargetData();
   },
   methods: {
+    getTargetData () {
+      const industryInfo = [
+        {
+          indexName: '前十大行业工业增加值增速',
+          name: '机械',
+          value: '4.1'
+        },
+        {
+          indexName: '前十大行业工业增加值增速',
+          name: '电子',
+          value: '19.2'
+        },
+        {
+          indexName: '前十大行业工业增加值增速',
+          name: '设备',
+          value: '-2.2'
+        },
+        {
+          indexName: '前十大行业工业增加值增速',
+          name: '制造',
+          value: '2'
+        },
+        {
+          indexName: '前十大行业工业增加值增速',
+          name: '制品',
+          value: '11.1'
+        },
+        {
+          indexName: '前十大行业工业增加值增速',
+          name: '纺织',
+          value: '-2.3'
+        },
+        {
+          indexName: '前十大行业工业增加值增速',
+          name: '非金属',
+          value: '-3.6'
+        },
+        {
+          indexName: '前十大行业工业增加值增速',
+          name: '金属',
+          value: '4.9'
+        },
+        {
+          indexName: '前十大行业工业增加值增速',
+          name: '医药',
+          value: '3.6'
+        },
+        {
+          indexName: '前十大行业工业增加值增速',
+          name: '可专业设备',
+          value: '5.8'
+        }
+      ];
+      const averageInfo = [
+        {
+          name: '美加净增加值平均增速',
+          value: '4.4'
+        },
+        {
+          name: '定制增加值增速',
+          value: '7.5'
+        }
+      ];
+      const markData = [];
+      const xData = [];
+      let yData = [];
+      averageInfo.map((item, index) => {
+        const obj = {
+          name: item.name,
+          yAxis: item.value,
+          color: this.colors[index]
+        };
+        markData.push(obj);
+      });
+      industryInfo.map(item => {
+        xData.push(item.name);
+      });
+      yData = industryInfo.map(item => {
+        return {
+          value: parseFloat(item.value),
+          symbolOffset: parseFloat(item.value) > 0 ? [0, -5] : [0, 5]
+        };
+      });
+      this.initCharts(markData, xData, yData);
+    },
+    // 图标初始化
+    initCharts (markData, xData, yData) {
+      this.charts = echarts.init(document.getElementById('chartLineAndBar4'));
+      const seriesData = {
+        value: yData,
+        markData: markData,
+        xAxis: xData
+      };
+      const options = pictorialBarOption(seriesData, {
+        unit: '%',
+        barWidth: this.isShowSeriesValue ? this.barWidth : '22'
+      });
+      this.charts.setOption(options);
+      this.isShowSeriesValue &&
+        this.charts.setOption({
+          xAxis: {
+            axisLabel: {
+              interval: 0,
+              rotate: 0,
+              fontSize: this.transitionFontSize
+            }
+          },
+          yAxis: {
+            nameTextStyle: {
+              fontSize: this.transitionFontSize
+            },
+            axisLabel: {
+              fontSize: this.transitionFontSize
+            }
+          }
+        });
+    }
   }
 };
 </script>

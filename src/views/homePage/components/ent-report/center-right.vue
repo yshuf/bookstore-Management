@@ -108,11 +108,11 @@ export default {
         type: 3
       };
 
-      getImgList(params).then(res => {
-        if (res.code == '000000') {
-          this.imgList = res.data;
-        }
-      });
+      // getImgList(params).then(res => {
+      //   if (res.code == '000000') {
+      //     this.imgList = res.data;
+      //   }
+      // });
     },
     /**
      * @description 获取
