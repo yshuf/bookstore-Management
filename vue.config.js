@@ -55,6 +55,7 @@ module.exports = {
     resolve: {
       alias: {
         "@": resolve('src'),
+        "@static": resolve('static'),
         /* "@utils" : "/src/utils" */
       }
     }

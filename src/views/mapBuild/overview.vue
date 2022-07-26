@@ -11,27 +11,29 @@
     <div class="selectListBox">
       <div :class="['select-item',activeIndex===index?'active':'']"  @click="selectShow(item,index)" v-for="(item,index) in selectList" :key="index">{{item.name}}</div>
     </div>
-    <Map v-if="componentsId=='map'"></Map>
+   <!--  <Map v-if="componentsId=='map'"></Map>
     <echarts-map v-if="componentsId=='echartsMap'"></echarts-map>
-    <bubble-brick v-if="componentsId=='bubbleBrick'"></bubble-brick>
+    <bubble-brick v-if="componentsId=='bubbleBrick'"></bubble-brick> -->
 
-    <!-- <component v-for="(item,index) in selectList" :key="index" :is='item.componentId'></component> -->
+    <component :is='componentsId'></component>
   </div>
 </template>
 
 <script>
 import EchartsMap from './components/echartsMap.vue';
+import Echarts3DMap from './components/echarts3DMap.vue';
 import Map from './components/map.vue';
 import BubbleBrick from './components/bubbleBrick.vue';
 export default {
   name: 'Overview',
-  components: { Map, EchartsMap, BubbleBrick },
+  components: { Map, EchartsMap, BubbleBrick, Echarts3DMap },
   data () {
     return {
-      componentsId: 'bubbleBrick',
-      activeIndex: 2,
+      componentsId: 'echarts3DMap',
+      activeIndex: 1,
       selectList: [
         { name: 'echarts地图', componentId: 'echartsMap' },
+        { name: 'echarts3D地图', componentId: 'echarts3DMap' },
         { name: '行政区域图层移入悬浮', componentId: 'map' },
         { name: '气泡下钻', componentId: 'bubbleBrick' }
 

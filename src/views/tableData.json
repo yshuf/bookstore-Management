@@ -1,0 +1,117 @@
+{
+  "header_labels": {
+      "header1_label": {
+          "label": "用电分类",
+          "children": {
+              "header1_col1": "",
+              "header1_col2": "",
+              "header1_col3": ""
+          }
+      },
+      "header2_label": {
+          "label": "合计（含税）",
+          "children": {
+              "header2_col1": ""
+          }
+      }
+  },
+  "col_values": [
+      {
+          "header1_col1": "电度电价",
+          "header1_col2": "基本电价",
+          "header1_col3": "变压器容量",
+          "header2_col1": "100"
+      },
+      {
+          "header1_col1": "电度电价",
+          "header1_col2": "基本电价",
+          "header1_col3": "最大需量",
+          "header2_col1": "200"
+      },
+      {
+          "header1_col1": "电度电价",
+          "header1_col2": "电度电价",
+          "header1_col3": "1-10千伏",
+          "header2_col1": "300"
+      },
+      {
+          "header1_col1": "电度电价",
+          "header1_col2": "电度电价",
+          "header1_col3": "20千伏",
+          "header2_col1": "2022.02.01",
+          "header2_col2": "20",
+          "header2_col3": "300",
+          "header3_col1": "2022.02.01",
+          "header3_col2": "40",
+          "header3_col3": "30"
+      },
+      {
+          "header1_col1": "电度电价",
+          "header1_col2": "电度电价",
+          "header1_col3": "35-110千伏",
+          "header2_col1": "2022.02.02",
+          "header2_col2": "30",
+          "header2_col3": "800",
+          "header3_col1": "2022.02.02",
+          "header3_col2": "70",
+          "header3_col3": "80"
+      },
+      {
+          "header1_col1": "2022.02.03",
+          "header1_col2": "900",
+          "header1_col3": "1000",
+          "header2_col1": "2022.02.03",
+          "header2_col2": "40",
+          "header2_col3": "1000",
+          "header3_col1": "2022.02.03",
+          "header3_col2": "90",
+          "header3_col3": "100"
+      },
+      {
+          "header1_col1": "2022.02.041",
+          "header1_col2": "1100",
+          "header1_col3": "1100",
+          "header2_col1": "2022.02.04",
+          "header2_col2": "50",
+          "header2_col3": "1100",
+          "header3_col1": "2022.02.04",
+          "header3_col2": "110",
+          "header3_col3": "110"
+      },
+      {
+          "header1_col1": "2022.02.05",
+          "header1_col2": "1300",
+          "header1_col3": "1200",
+          "header2_col1": "2022.02.05",
+          "header2_col2": "60",
+          "header2_col3": "1200",
+          "header3_col1": "2022.02.05",
+          "header3_col2": "130",
+          "header3_col3": "120"
+      },
+      {
+          "header1_col1": "2022.02.06",
+          "header1_col2": "1400",
+          "header1_col3": "1500",
+          "header2_col1": "2022.02.06",
+          "header2_col2": "70",
+          "header2_col3": "1500",
+          "header3_col1": "2022.02.06",
+          "header3_col2": "140",
+          "header3_col3": "150"
+      },
+      {
+          "header1_col1": "2022.02.07",
+          "header1_col2": "1700",
+          "header1_col3": "1600",
+          "header2_col1": "2022.02.07",
+          "header2_col2": "80",
+          "header2_col3": "1600",
+          "header3_col1": "2022.02.07",
+          "header3_col2": "170",
+          "header3_col3": "160"
+      }
+  ]
+}
+
+

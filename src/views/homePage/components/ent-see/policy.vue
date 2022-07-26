@@ -107,11 +107,11 @@ export default {
         type: 1
       };
 
-      getImgList(params).then(res => {
-        if (res.code == '000000') {
-          this.imgList = _slice(res.data, 0, 3);
-        }
-      });
+      // getImgList(params).then(res => {
+      //   if (res.code == '000000') {
+      //     this.imgList = _slice(res.data, 0, 3);
+      //   }
+      // });
     },
     /**
      * @description 获取

@@ -1,9 +1,9 @@
 <!--
  * @Author: mobai
  * @Date: 2021-08-25 14:58:23
- * @LastEditors: mobai
- * @LastEditTime: 2022-04-29 11:12:36
- * @FilePath: \sc-xsqyfw-ent-web\src\views\home\components\banner.vue
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-07-25 10:42:34
+ * @FilePath: \bookstore-Management\src\views\homePage\components\banner.vue
 -->
 <template>
   <div class="banner">
@@ -18,38 +18,38 @@
 </template>
 <script>
 // import { getImgList } from '@api/homePage/homePage.js'
-import { IndexModuleSkipList } from '@/common/commonConstant'
+import { IndexModuleSkipList } from '@/common/commonConstant';
 export default {
-  data() {
+  data () {
     return {
       bannerList: [],
-      IndexSkipUrl: IndexModuleSkipList,
-    }
+      IndexSkipUrl: IndexModuleSkipList
+    };
   },
-  created() {
-    this.getBannerDataList()
+  created () {
+    this.getBannerDataList();
   },
   methods: {
     /**
      * @description 获取banner的数据
      */
-    getBannerDataList() {
+    getBannerDataList () {
       const params = {
         type: 0,
-        status: 1,
-      }
+        status: 1
+      };
 
-      getImgList(params).then((res) => {
-        if (res.code == '000000') {
-          this.bannerList = res.data
-        }
-      })
+      // getImgList(params).then((res) => {
+      //   if (res.code == '000000') {
+      //     this.bannerList = res.data
+      //   }
+      // })
     },
     /**
      *  linkType: 0 内链 1 外联
      *  dataType：
      */
-    gotoBannerDetail(data) {
+    gotoBannerDetail (data) {
       if (data.linkType === 0) {
         // 内链
         this.IndexSkipUrl.map((item) => {
@@ -57,18 +57,18 @@ export default {
             this.$router.push({
               name: item.detailUrl,
               query: {
-                id: data.dataId,
-              },
-            })
+                id: data.dataId
+              }
+            });
           }
-        })
+        });
       } else {
         // 外链
-        window.open(data.externalUrl)
+        window.open(data.externalUrl);
       }
-    },
-  },
-}
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
 .banner {
