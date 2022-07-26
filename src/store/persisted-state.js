@@ -3,20 +3,8 @@
  */
 import persistedState from 'vuex-persistedstate';
 
-const sStorageKey = 'data-center';
-const paths = [
-  'menus',
-  'selectMenu',
-  'token',
-  'userInfo',
-  'currentChain',
-  'currentEnt',
-  'mapColorConfig',
-  'colonyList',
-  'colonyClassifyList',
-  'menusMap',
-  'currentMenu'
-];
+const sStorageKey = 'ysh-books';
+const paths = [];
 const isClearCache = false;
 const createPersistedState = persistedState({
   key: sStorageKey,

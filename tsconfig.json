@@ -7,7 +7,9 @@
     "importHelpers": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "allowJs": true,                                      // 允许js
     "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,                               // 不进行any语法检查
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
@@ -33,7 +35,8 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "src/store/root.js"  
   ],
   "exclude": [
     "node_modules"
