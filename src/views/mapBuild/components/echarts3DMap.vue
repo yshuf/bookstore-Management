@@ -2,24 +2,27 @@
  * @Author: mobai
  * @Date: 2022-07-21 10:01:40
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-07-25 10:53:03
+ * @LastEditTime: 2022-07-29 09:51:55
  * @FilePath: \bookstore-Management\src\views\mapBuild\components\echarts3DMap.vue
 -->
 <template>
   <div class="echartsBox">
     <div class="map" id="mapContainer"></div>
+    <div class="backInit" @click="backInitMap()" v-if="isShowBack">返回</div>
   </div>
 </template>
 
 <script>
 import * as echarts from 'echarts';
 import 'echarts-gl';
-import LiShui from '@static/map/lishui.json';
+import LiShui from '@static/map/jiangXi.json';
 export default {
   name: 'Echarts3DMap',
   data () {
     return {
       chartObj: null,
+      cityName: '',
+      isShowBack: false, // 是否显示返回按钮
       option: {
         tooltip: {
           position: 'top',
@@ -58,8 +61,8 @@ export default {
           // symbol: 'image:///static/images/map.png',
           itemStyle: {
             // 三维地理坐标系组件 中三维图形的视觉属性，包括颜色，透明度，描边等。
-            // areaColor: 'rgba(95,158,160,0.5)', // 地图板块的颜色
-            color: 'rgba(10,108,200,1)', // 地图板块的颜色
+            // areaColor: 'rgba(10,108,200,1)', // 地图板块的颜色
+            color: '#0A7CF1', // 地图板块的颜色
             borderWidth: 1, // (地图板块间的分隔线)图形描边的宽度。加上描边后可以更清晰的区分每个区域 [ default: 0 ]
             borderColor: 'rgba(106, 235, 245, 1)', // 图形描边的颜色。[ default: #333 ]
             shadowColor: 'rgba(0,228,242,0.5)',
@@ -69,10 +72,31 @@ export default {
           emphasis: {
             itemStyle: {
               // 三维地理坐标系组件 中三维图形的视觉属性，包括颜色，透明度，描边等。
-              // areaColor: 'rgba(95,158,160,0.5)', // 地图板块的颜色
-              color: 'rgba(10,108,200,1)', // 地图板块的颜色
+              // areaColor: 'rgba(10,108,200,1)', // 地图板块的颜色
+              color: '#0A7CF1', // 地图板块的颜色
               borderWidth: 1, // (地图板块间的分隔线)图形描边的宽度。加上描边后可以更清晰的区分每个区域 [ default: 0 ]
               borderColor: 'rgba(106, 235, 245, 1)' // 图形描边的颜色。[ default: #333 ]
+            },
+            label: { // 解决点击无法拿到城市名问题，在高亮实践中获取高亮区域的城市名称，保存到全局使用
+              formatter: params => {
+                this.cityName = params.name;
+                return params.name;
+              }
+
+            }
+          },
+          light: { // 光照相关的设置。在 shading 为 'color' 的时候无效。
+          // 光照的设置会影响到组件以及组件所在坐标系上的所有图表。合理的光照设置能够让整个场景的明暗变得更丰富，更有层次。
+            main: { // 场景主光源的设置，在 globe 组件中就是太阳光。
+              intensity: 1, // 主光源的强度。[ default: 1 ]
+              shadow: true, // 主光源是否投射阴影。默认关闭。 开启阴影可以给场景带来更真实和有层次的光照效果。但是同时也会增加程序的运行开销。
+              shadowQuality: 'ultra',
+              alpha: 10, // 主光源绕 x 轴，即上下旋转的角度。配合 beta 控制光源的方向。[ default: 40 ]
+              beta: 10 // 主光源绕 y 轴，即左右旋转的角度。[ default: 40 ]
+            },
+            ambient: { // 全局的环境光设置。
+              color: '#fff', // 环境光的颜色。[ default: #fff ]
+              intensity: 0.6 // 环境光的强度。[ default: 0.2 ]
             }
           },
           viewControl: {
@@ -144,9 +168,52 @@ export default {
   },
   methods: {
     initMap () {
+      if (this.chartObj) {
+        this.chartObj.clear();
+      }
       this.chartObj = echarts.init(document.getElementById('mapContainer'));
       echarts.registerMap('丽水', LiShui);
       this.chartObj.setOption(this.option);
+      // 2d地图点击
+      // this.chartObj.on('click', (params) => {
+      // params存有一系列参数可供使用
+      // });
+      // 3d地图点击
+      this.chartObj.getZr().on('click', (e) => {
+        // e 只有跟鼠标点击位置相关的坐标,offsetX和offsetY相对画布的坐标
+        // 无法获取其他关于地图数据的参数
+        console.log(e, this.cityName);
+        // 通过获取的名字查找相应的城市code，利用code请求城市地理数据，然后下钻
+        // bug：发现不管是点击地图上还是地图外 ，都会进行下钻，因为点击时获取的是整个画布
+        // 解决方法：通过鼠标的状态进行判断，cursor为pointer时在地图上，default时在地图外
+        // 获取鼠标样式 id为画布id
+        this.isShowBack = true; // 点击成功，显示返回按钮
+        const mouseStyle = document.getElementById('mapContainer').children[0].style
+          .cursor;
+        // 根据鼠标样式,城市名称,鼠标点击的位置下钻
+        // TODO:需要根据点击的市名字查找点击的市code,发送请求,获取市的相关地理数据
+        if (this.cityName !== '' && mouseStyle === 'pointer'
+        ) {
+          this.initSecondMap();
+        }
+      });
+    },
+    // 下砖级图层显示
+    initSecondMap () {
+      if (this.chartObj) {
+        this.chartObj.dispose();
+      }
+      this.chartObj = echarts.init(document.getElementById('mapContainer'));
+      const mapJson = {
+        features: LiShui.features.filter((v) => {
+          return v.properties.name === this.cityName;
+        })
+      };
+      echarts.registerMap('丽水', mapJson);
+      this.chartObj.setOption(this.option);
+    },
+    backInitMap () {
+      this.initMap();
     }
   }
 };
@@ -165,6 +232,12 @@ export default {
     /deep/ .amap-copyright {
       opacity: 0 !important;
     }
+  }
+  .backInit {
+    position: absolute;
+    right: 10%;
+    bottom: 10%;
+    cursor: pointer;
   }
 }
 
