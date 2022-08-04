@@ -1,22 +1,28 @@
 <template>
   <div id="overview_container">
     <div class="title">统计概览</div>
-    <!-- <div :id="id" style="width:100%" /> -->
     <div class="dataCharts">
-      <div
-        class="chart module_item"
+      <div class="module_item" ref="topLeft" @click="handleShowAll('topLeft')">
+        <div
+        ref="myChart"
+        class="lineCharts"
         id="lineCharts"
-        style="height:350px;"
       ></div>
-      <div id="bookRank" style="height:350px;" class="module_item"></div>
-      <div style="height:350px;" id="loginChart" class="module_item">
-        <!-- <div>过去一周登录走势图</div> -->
       </div>
-      <div style="height:350px;" id="dealAmount" class="module_item">
-        <!-- <div>过去一周成交总额情况</div> -->
+      <div class="module_item" ref="topCenter" @click="handleShowAll('topCenter')">
+        <div id="bookRank"  ref="bookRankChart" class="bookRankChart"></div>
       </div>
-      <div id="roseCharts" class="rose-box module_item"></div>
-      <div style="height:350px;" id="rank_box_chart" class="module_item">
+      <div class="module_item" ref="topRight" @click="handleShowAll('topRight')">
+        <div  id="loginChart" ref="loginChart" class="loginChart"></div>
+      </div>
+      <div class="module_item" ref="bottomLeft" @click="handleShowAll('bottomLeft')">
+        <div  id="dealAmount"  ref="trendEchart" class="trendEchart">
+      </div>
+      </div>
+      <div class="module_item"  ref="bottomCenter" @click="handleShowAll('bottomCenter')">
+        <div class="rose-box" ref="roseCharts"></div>
+      </div>
+      <div class="module_item" ref="bottomRight" @click="handleShowAll('bottomRight')">
         <div>上下滚动无缝轮播</div>
         <vueSeamlessScroll
           :data="listData"
@@ -39,10 +45,13 @@
 </template>
 
 <script>
+import * as echarts from 'echarts';
 import vueSeamlessScroll from 'vue-seamless-scroll';
 import { rosePieOption } from '../plugins/index';
+import { mixins } from './common/dialogMinxin.js';
 export default {
   name: 'Overview',
+  mixins: [mixins],
   data () {
     return {
       id: '',
@@ -50,7 +59,6 @@ export default {
       bookRankChart: null,
       loginChart: null,
       trendEchart: null,
-      rankEchart: null,
       roseCharts: null,
       listData: [
         { number: 1, unit: '家', bookName: '秘密', num: '50' },
@@ -175,30 +183,23 @@ export default {
   mounted () {
     this.$nextTick(function () {
       this.drawLine();
-      this.initChart();
+      // this.initChart();
     });
-    window.addEventListener('resize', () => {
-      console.log('缩放');
-      this.myChart.resize();
-      this.bookRankChart.resize();
-      this.loginChart.resize();
-      this.trendEchart.resize();
-    });
+
     this.dealData();
   },
   methods: {
     drawLine () {
-      this.myChart = this.$echarts.init(document.getElementById('lineCharts'));
-      this.bookRankChart = this.$echarts.init(
+      this.myChart = echarts.init(document.getElementById('lineCharts'));
+      this.bookRankChart = echarts.init(
         document.getElementById('bookRank')
       );
-      this.loginChart = this.$echarts.init(
+      this.loginChart = echarts.init(
         document.getElementById('loginChart')
       );
-      this.trendEchart = this.$echarts.init(
-        document.getElementById('dealAmount')
-      );
-      // this.rankEchart = this.$echarts.init(document.getElementById('rank_box_chart'))
+      this.trendEchart = echarts.init(this.$refs.trendEchart);
+      this.roseCharts = echarts.init(this.$refs.roseCharts);
+      this.chartResize();
       const max = Math.max.apply(Math, this.userAmount.concat(this.dealAmount));
       this.myChart.setOption({
         color: ['#3398DB'],
@@ -474,12 +475,53 @@ export default {
           }
         ]
       });
+
+      const colors = [
+        '#21ce9b',
+        '#34bbf1',
+        '#5bd0ff',
+        '#ffe36e',
+        '#ffc76e',
+        '#ff863b',
+        '#ff5858'
+      ];
+      const originDataLen = this.roseData.length;
+      const spanAngle = 180; // 需要显示的角度
+      const repeatedMultiple = 360 / spanAngle;
+      // 这里根据要显示的角度 计算了需要插入的数据量
+      const addDataLen = parseInt((repeatedMultiple - 1) * originDataLen);
+      const seriseData = this.roseData.map((v, index) => {
+        return {
+          value: v.value,
+          name: v.name,
+          itemStyle: {
+            normal: {
+              color: colors[index]
+            }
+          }
+        };
+      });
+      for (let index = 0; index < addDataLen; index++) {
+        seriseData.push({
+          name: null,
+          // 这里给数据置零，即在视觉上不显示
+          value: 0,
+          // 这里保证了异常情况下(数据都为0时)作为占位的数据在视觉上仍为不可见状态。
+          itemStyle: {
+            color: 'rgba(0,0,0,0)'
+          },
+          tooltip: {
+            show: false,
+            formatter: null
+          }
+        });
+      }
+      const options = rosePieOption(seriseData);
+      this.roseCharts.setOption(options);
     },
 
     initChart () {
-      this.roseCharts = this.$echarts.init(
-        document.getElementById('roseCharts')
-      );
+      this.roseCharts = echarts.init(this.$refs.roseCharts);
       const colors = [
         '#21ce9b',
         '#34bbf1',
@@ -530,12 +572,32 @@ export default {
         this.time.push(item.date);
         this.dealAmount.push(item.sxl);
       });
+    },
+    /**
+     * @desc 图表自适应
+     */
+    chartResize () {
+      const chartList = [
+        'myChart',
+        'bookRankChart',
+        'loginChart',
+        'trendEchart',
+        'roseCharts'
+      ];
+      chartList.forEach(item => {
+        // 使用window.addEventListener监听只会在窗口大小改变的时候重新绘制图表，可通过ResizeObserver来监听图表容器的大小变化实现图表自适应
+        const ro = new ResizeObserver(e => {
+          this[item].resize();
+        });
+        ro.observe(this.$refs[item]);
+      });
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
+@import url('./common/dialogMinxin.less');
 #overview_container {
   width: 100%;
   height: 100%;
@@ -552,11 +614,18 @@ export default {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    height: calc(100% - 105px);
     .module_item {
       background: #fff;
       padding: 20px;
-      width: 30%;
+      width: 32.5%;
+      height:50%;
       margin-bottom: 20px;
+      box-sizing: border-box;
+      .lineCharts,.bookRankChart,.loginChart,.trendEchart,.rose-box {
+        width: 100%;
+        height: 100%;
+      }
     }
     .seamless-warp {
       width: 100%;

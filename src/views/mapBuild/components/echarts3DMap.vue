@@ -2,7 +2,7 @@
  * @Author: mobai
  * @Date: 2022-07-21 10:01:40
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-07-29 09:51:55
+ * @LastEditTime: 2022-08-04 15:36:30
  * @FilePath: \bookstore-Management\src\views\mapBuild\components\echarts3DMap.vue
 -->
 <template>
@@ -15,7 +15,7 @@
 <script>
 import * as echarts from 'echarts';
 import 'echarts-gl';
-import LiShui from '@static/map/jiangXi.json';
+import JiangXi from '@static/map/jiangXi.json';
 export default {
   name: 'Echarts3DMap',
   data () {
@@ -23,7 +23,50 @@ export default {
       chartObj: null,
       cityName: '',
       isShowBack: false, // 是否显示返回按钮
-      option: {
+      geoCoordMap: {}
+    };
+  },
+  mounted () {
+    this.$nextTick(() => {
+      this.initMap();
+    });
+  },
+  methods: {
+    convertData (data) {
+      const res = [];
+      for (var i = 0; i < data.length; i++) {
+        const geoCoord = this.geoCoordMap[data[i].name];
+        if (geoCoord) {
+          res.push({
+            name: data[i].name,
+            value: data[i].value,
+            cityCode: data[i].cityCode // 行政区划代码
+          });
+        }
+      }
+      return res;
+    },
+    initMapOptions () {
+      // 获取当前显示地图下方地市的坐标点数据；用于气泡显示
+      var mapFeature = JiangXi.features;
+      mapFeature.forEach((v, i) => {
+        var name = v.properties.name;
+        this.geoCoordMap[name] = v.properties.centroid;
+      });
+      const data = [
+        { value: [115.858197, 28.682892], name: '南昌市', cityCode: '360100', lng: '115.858197', lat: '28.682892' },
+        { value: [117.178419, 29.268835], name: '景德镇市', cityCode: '360200', lng: '117.178419', lat: '29.268835' },
+        { value: [113.854556, 27.622768], name: '萍乡市', cityCode: '360300', lng: '113.854556', lat: '27.622768' },
+        { value: [116.001930, 29.705077], name: '九江市', cityCode: '360400', lng: '116.001930', lat: '29.705077' },
+        { value: [114.917346, 27.817808], name: '新余市', cityCode: '360500', lng: '114.917346', lat: '27.817808' },
+        { value: [117.069202, 28.260189], name: '鹰潭市', cityCode: '360600', lng: '117.069202', lat: '28.260189' },
+        { value: [114.935029, 25.831829], name: '赣州市', cityCode: '360700', lng: '114.935029', lat: '25.831829' },
+        { value: [114.992509, 27.113443], name: '吉安市', cityCode: '360800', lng: '114.992509', lat: '27.113443' },
+        { value: [114.416778, 27.815619], name: '宜春市', cityCode: '360900', lng: '114.416778', lat: '27.815619' },
+        { value: [116.358181, 27.949217], name: '抚州市', cityCode: '361000', lng: '116.358181', lat: '27.949217' },
+        { value: [117.943433, 28.454862], name: '上饶市', cityCode: '361100', lng: '117.943433', lat: '28.454862' }
+      ];
+      return {
         tooltip: {
           position: 'top',
           textStyle: {
@@ -32,17 +75,17 @@ export default {
           backgroundColor: '#2E7AEC', // 修改背景颜色
           borderColor: 'rgba(151, 151, 151, 1)', // 修改字体颜色
           trigger: 'item',
-          formatter: function (params) {
-            return params.name;
+          formatter: function (data) {
+            return data.name;
           }
         },
         geo3D: {
-          name: '丽水',
+          name: '江西',
           type: 'map3D',
-          map: '丽水',
+          map: '江西',
           roam: true,
           boxDepth: 120, // 地图倾斜度
-          boxHeight: 5,
+          boxHeight: 100,
           shading: 'lambert',
           regionHeight: 4, // 地图厚度
           label: {
@@ -108,7 +151,7 @@ export default {
             alpha: 65, // 视角绕 x 轴，即上下旋转的角度。配合 beta 可以控制视角的方向。[ default: 40 ]
             beta: 15 // 视角绕 y 轴，即左右旋转的角度。[ default: 0 ]
           },
-          data: [{ name: '丽水市' }]
+          data: [{ name: '江西省' }]
         },
         series: [
           {
@@ -116,12 +159,13 @@ export default {
             type: 'scatter3D',
             coordinateSystem: 'geo3D',
             shading: 'lambert',
+            opacity: 1,
             itemStyle: {
               color: '#00FFFE'
             },
             geo3DIndex: 0,
-            symbolSize: [24, 24],
-            // symbol: 'pin',
+            symbolSize: [48, 48],
+            symbol: 'circle',
             // symbol: 'path://static/images/map.png',
             // symbol: function(params) {
             //   console.log(params)
@@ -131,18 +175,16 @@ export default {
             //     return 'diamond'
             //   }
             // },
-            symbol:
-              'path://M14.4230769,22.3547009 C11.939956,25.5525731 10.6841618,27.6266472 10.6556945,28.5769231 C10.6556945,27.647352 9.34738604,25.5732779 6.73076923,22.3547009 L6.73076923,22.3547009 Z M10.5769231,0 C16.4198321,0 21.1538462,4.78661419 21.1538462,10.6880342 C21.1538462,16.5894542 16.4198321,21.3760684 10.5769231,21.3760684 C4.73401403,21.3760684 0,16.5894542 0,10.6880342 C0,4.78661419 4.73401403,0 10.5769231,0 Z M10.5769231,1.15384615 C5.37413712,1.15384615 1.15384615,5.42102925 1.15384615,10.6880342 C1.15384615,15.9550391 5.37413712,20.2222222 10.5769231,20.2222222 C15.779709,20.2222222 20,15.9550391 20,10.6880342 C20,5.42102925 15.779709,1.15384615 10.5769231,1.15384615 Z M11.3461526,5.24358974 C11.5619297,5.24358974 11.7428332,5.40336982 11.78037,5.61246531 L11.7875141,5.69297202 L11.7875141,7.49050605 L15.9804569,7.49050605 C16.1962339,7.49050605 16.3771374,7.65028613 16.4146742,7.85938162 L16.4218184,7.93988833 L16.4218159,14.4559351 L16.7307692,14.4559351 L16.7307692,15.3547009 L5.96153846,15.3547009 L5.96153846,14.4559351 L6.27049175,14.4559351 L6.27049175,5.69297202 C6.27049175,5.47327369 6.42742,5.28908269 6.63278346,5.25086368 L6.71185326,5.24358974 L11.3461526,5.24358974 Z M9.91172595,11.8719876 L8.14627512,11.8719876 L8.14627512,12.7707534 L9.91172595,12.7707534 L9.91172595,11.8719876 Z M14.5460253,11.8719876 L12.7805745,11.8719876 L12.7805745,12.7707534 L14.5460253,12.7707534 L14.5460253,11.8719876 Z M9.91172595,9.98458053 L8.14627512,9.98458053 L8.14627512,10.8833463 L9.91172595,10.8833463 L9.91172595,9.98458053 Z M14.5460253,9.98458053 L12.7805745,9.98458053 L12.7805745,10.8833463 L14.5460253,10.8833463 L14.5460253,9.98458053 Z M9.91172595,8.11964788 L8.14627512,8.11964788 L8.14627512,9.01841367 L9.91172595,9.01841367 L9.91172595,8.11964788 Z',
+            // symbol:
+            //   'path://M14.4230769,22.3547009 C11.939956,25.5525731 10.6841618,27.6266472 10.6556945,28.5769231 C10.6556945,27.647352 9.34738604,25.5732779 6.73076923,22.3547009 L6.73076923,22.3547009 Z M10.5769231,0 C16.4198321,0 21.1538462,4.78661419 21.1538462,10.6880342 C21.1538462,16.5894542 16.4198321,21.3760684 10.5769231,21.3760684 C4.73401403,21.3760684 0,16.5894542 0,10.6880342 C0,4.78661419 4.73401403,0 10.5769231,0 Z M10.5769231,1.15384615 C5.37413712,1.15384615 1.15384615,5.42102925 1.15384615,10.6880342 C1.15384615,15.9550391 5.37413712,20.2222222 10.5769231,20.2222222 C15.779709,20.2222222 20,15.9550391 20,10.6880342 C20,5.42102925 15.779709,1.15384615 10.5769231,1.15384615 Z M11.3461526,5.24358974 C11.5619297,5.24358974 11.7428332,5.40336982 11.78037,5.61246531 L11.7875141,5.69297202 L11.7875141,7.49050605 L15.9804569,7.49050605 C16.1962339,7.49050605 16.3771374,7.65028613 16.4146742,7.85938162 L16.4218184,7.93988833 L16.4218159,14.4559351 L16.7307692,14.4559351 L16.7307692,15.3547009 L5.96153846,15.3547009 L5.96153846,14.4559351 L6.27049175,14.4559351 L6.27049175,5.69297202 C6.27049175,5.47327369 6.42742,5.28908269 6.63278346,5.25086368 L6.71185326,5.24358974 L11.3461526,5.24358974 Z M9.91172595,11.8719876 L8.14627512,11.8719876 L8.14627512,12.7707534 L9.91172595,12.7707534 L9.91172595,11.8719876 Z M14.5460253,11.8719876 L12.7805745,11.8719876 L12.7805745,12.7707534 L14.5460253,12.7707534 L14.5460253,11.8719876 Z M9.91172595,9.98458053 L8.14627512,9.98458053 L8.14627512,10.8833463 L9.91172595,10.8833463 L9.91172595,9.98458053 Z M14.5460253,9.98458053 L12.7805745,9.98458053 L12.7805745,10.8833463 L14.5460253,10.8833463 L14.5460253,9.98458053 Z M9.91172595,8.11964788 L8.14627512,8.11964788 L8.14627512,9.01841367 L9.91172595,9.01841367 L9.91172595,8.11964788 Z',
             zlevel: 9999,
             label: {
-              normal: {
-                show: false,
-                textStyle: {
-                  color: '#ffffff',
-                  fontSize: 12
-                },
-                position: 'top'
+              show: false,
+              textStyle: {
+                color: '#ffffff',
+                fontSize: 12
               },
+              position: 'top',
               emphasis: {
                 show: false,
                 color: '#fff',
@@ -155,25 +197,18 @@ export default {
                 }
               }
             },
-            data: []
+            data: data // 需要带上经纬度才能显示出气泡
           }
         ]
-      }
-    };
-  },
-  mounted () {
-    this.$nextTick(() => {
-      this.initMap();
-    });
-  },
-  methods: {
+      };
+    },
     initMap () {
       if (this.chartObj) {
         this.chartObj.clear();
       }
       this.chartObj = echarts.init(document.getElementById('mapContainer'));
-      echarts.registerMap('丽水', LiShui);
-      this.chartObj.setOption(this.option);
+      echarts.registerMap('江西', JiangXi);
+      this.chartObj.setOption(this.initMapOptions());
       // 2d地图点击
       // this.chartObj.on('click', (params) => {
       // params存有一系列参数可供使用
@@ -205,14 +240,15 @@ export default {
       }
       this.chartObj = echarts.init(document.getElementById('mapContainer'));
       const mapJson = {
-        features: LiShui.features.filter((v) => {
+        features: JiangXi.features.filter((v) => {
           return v.properties.name === this.cityName;
         })
-      };
-      echarts.registerMap('丽水', mapJson);
-      this.chartObj.setOption(this.option);
+      }; // 获取选中的市的信息
+      echarts.registerMap('江西', mapJson); // 下砖到当前选中的市
+      this.chartObj.setOption(this.initMapOptions());
     },
     backInitMap () {
+      this.isShowBack = false;
       this.initMap();
     }
   }
@@ -226,6 +262,7 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 99;
+    background-color: #033468;
   #mapContainer {
     width: 100%;
     height: 100%;
@@ -238,6 +275,7 @@ export default {
     right: 10%;
     bottom: 10%;
     cursor: pointer;
+    color: #fff;
   }
 }
 
