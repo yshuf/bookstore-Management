@@ -1,6 +1,6 @@
 <template>
   <div id="overview_container">
-    <div class="title" ref="title" v-show="handleHideOther('title')" @click="htmlToCanvas()">统计概览</div>
+    <div class="title" ref="title" v-show="handleHideOther('title')" @click="downloadReport()">统计概览</div>
     <div class="dataCharts">
       <div class="module_item" ref="topLeft" @click="handleShowAll('topLeft')" v-show="handleHideOther('topLeft')">
         <div
@@ -49,8 +49,6 @@ import * as echarts from 'echarts';
 import vueSeamlessScroll from 'vue-seamless-scroll';
 import { rosePieOption } from '../plugins/index';
 import { mixins } from './common/dialogMinxin.js';
-import html2Canvas from 'html2canvas';
-import JsPDF from 'jspdf';
 export default {
   name: 'Overview',
   mixins: [mixins],
@@ -195,28 +193,85 @@ export default {
     exportPDf () {
 
     },
-    htmlToCanvas () {
-      html2Canvas(document.querySelector('#overview_container'), {
-        logging: true,
-        width: 1595 * 1.35,
-        height: 1842 * 1.35,
-        scale: 2,
-        scrollX: 0,
-        useCORS: true,
-        scrollY: 0,
-        background: '#ffffff'
-      }).then((canvas) => {
-      // console.log(canvas.toDataURL());
-        this.canvasToPdf(canvas.toDataURL());
-      });
-    },
-
-    canvasToPdf (imgUrl) {
-      const img = new Image();
-      img.src = imgUrl;
-      const pdf = new JsPDF();
-      pdf.addImage(img, 'png', 0, 0, 595.28, 841.89);
-      pdf.save('交货单.pdf');
+    downloadReport () {
+      this.isImport = true;
+      this.$message.info('正在导出中...');
+      console.log('开始导出');
+      const DomName = document.getElementById('overview_container');
+      var shareContent = DomName; // 需要截图的包裹的（原生的）DOM 对象
+      console.log(shareContent, '打印看有没有获取到dom');
+      // 打印看有没有获取到dom
+      var width = shareContent.offsetWidth; // 获取dom 宽度
+      var height = shareContent.offsetHeight; // 获取dom 高度
+      var canvas = document.createElement('canvas'); // 创建一个canvas节点
+      var scale = 1.5; // 定义任意放大倍数 支持小数
+      canvas.width = width * scale; // 定义canvas 宽度 * 缩放，在此我是把canvas放大了2倍
+      canvas.height = height * scale; // 定义canvas高度 *缩放
+      canvas.getContext('2d').scale(scale, scale); // 获取context,设置scale
+      // window.pageYoffset = 0; // 滚动置顶
+      // document.documentElement.scrollTop = 0;
+      // document.body.scrollTop = 0;
+      const context = canvas.getContext('2d');
+      context.translate(
+        `-${shareContent.offsetLeft + 150}`,
+        `-${shareContent.offsetTop + 50}`
+      );
+      const opts = {
+        scale, // 添加的scale 参数
+        canvas, // 自定义 canvas
+        logging: false, // 日志开关，便于查看html2canvas的内部执行流程
+        width: width, // dom 原始宽度
+        height: height,
+        useCORS: true // 【重要】开启跨域配置
+      };
+      // eslint-disable-next-line no-undef
+      html2canvas(DomName, opts)
+        .then(function (canvas) {
+          var context = canvas.getContext('2d');
+          // 【重要】关闭抗锯齿
+          context.mozImageSmoothingEnabled = false;
+          context.webkitImageSmoothingEnabled = false;
+          context.msImageSmoothingEnabled = false;
+          context.imageSmoothingEnabled = false;
+          var imgData = canvas.toDataURL('image/', 1.0); // 转化成base64格式,可上网了解此格式
+          var img = new Image();
+          img.src = imgData;
+          img.onload = function () {
+            img.width = img.width / 1.5; // 因为在上面放大了2倍，生成image之后要/2
+            img.height = img.height / 1.5;
+            img.style.transform = 'scale(0.5)';
+            if (this.width > this.height) {
+              // 此可以根据打印的大小进行自动调节
+              // eslint-disable-next-line
+              var doc = new jsPDF('l', 'mm', [
+                this.width * 0.555,
+                this.height * 0.555
+              ]);
+            } else {
+              // eslint-disable-next-line
+              var doc = new jsPDF('p', 'mm', [
+                this.width * 0.555,
+                this.height * 0.555
+              ]);
+            }
+            doc.addImage(
+              imgData,
+              'jpeg',
+              10,
+              0,
+              this.width * 0.505,
+              this.height * 0.545
+            );
+            doc.save('test.pdf');
+          };
+        })
+        .finally(() => {
+          this.isImport = false;
+          this.$message.success('导出成功');
+        })
+        .catch(() => {
+          this.$message.error('导出失败');
+        });
     },
     drawLine () {
       this.myChart = echarts.init(document.getElementById('lineCharts'));
