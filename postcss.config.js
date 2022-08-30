@@ -1,8 +1,18 @@
+
+const path = require('path');
+const _isEmpty = require('lodash/isEmpty');
+const _findIndex = require('lodash/findIndex');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const px2rem = require('postcss-pxtorem');
-const isProd = process.env.NODE_ENV === 'production';
+const frameConfig = require('./frame.config.js');
 
+const isProd = process.env.NODE_ENV === 'production';
+function resolve (dir) {
+  return path.join(__dirname, '.', dir);
+}
+
+// 大屏布局用百分比，间距用px, 字体和小块用px转rem
 const px2remConfig = {
   // 设计图为750px，一份 root 对应着 rootWidth/10=75px（设计稿宽度的十分之一）
   // width: 16px;->width: 1rem; 1rem=html.font-size
@@ -30,7 +40,21 @@ const px2remConfig = {
   mediaQuery: false, // 允许在媒体查询中转换px
   // 默认false，可以（reg）利用正则表达式排除某些文件夹的方法，例如/(node_module)/
   // 如果想把前端UI框架内的px也转换成rem，请把此属性设为默认值
-  exclude: /node_modules/i
+  exclude: function (file) {
+    if (_isEmpty(frameConfig.px2RemModule)) {
+      return true; // 未配置转换的模块，则直接忽略
+    }
+    const ignoreIndex = _findIndex(frameConfig.px2RemModule, o => {
+      const resolvePath = resolve(o);
+      return file.indexOf(resolvePath) !== -1;
+    });
+    if (ignoreIndex !== -1) {
+      // console.log('\npx2rem：', file);
+      return false; // 返回 false 进行 px2rem 的转换
+    }
+    return true; // 如果exclude是function，则可以使用exclude function返回true，该文件将被忽略 https://www.npmjs.com/package/postcss-pxtorem
+  }
+  // exclude: /node_modules/i
 };
 
 module.exports = {

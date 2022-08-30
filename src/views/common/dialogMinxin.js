@@ -19,7 +19,6 @@ export const mixins = {
     handleShowAll (refName) {
       this.isShowAll = this.refName = refName;
       // 添加类
-      console.log(this.$refs[refName].classList, this, '获取当前页面的类');
       this.$refs[refName].classList.add('bigger');
     },
     /**
@@ -27,7 +26,7 @@ export const mixins = {
      */
     handleHide () {
       // 删除类
-      this.$refs[this.refName].classList.remove(this.$style.bigger);
+      this.$refs[this.refName].classList.remove('bigger');
       // 清空存储的元素ref名
       this.refName = '';
       this.isShowAll = '';

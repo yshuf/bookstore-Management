@@ -1,28 +1,28 @@
 <template>
   <div id="overview_container">
-    <div class="title">统计概览</div>
+    <div class="title" ref="title" v-show="handleHideOther('title')" @click="htmlToCanvas()">统计概览</div>
     <div class="dataCharts">
-      <div class="module_item" ref="topLeft" @click="handleShowAll('topLeft')">
+      <div class="module_item" ref="topLeft" @click="handleShowAll('topLeft')" v-show="handleHideOther('topLeft')">
         <div
         ref="myChart"
         class="lineCharts"
         id="lineCharts"
       ></div>
       </div>
-      <div class="module_item" ref="topCenter" @click="handleShowAll('topCenter')">
+      <div class="module_item" ref="topCenter" @click="handleShowAll('topCenter')" v-show="handleHideOther('topCenter')">
         <div id="bookRank"  ref="bookRankChart" class="bookRankChart"></div>
       </div>
-      <div class="module_item" ref="topRight" @click="handleShowAll('topRight')">
+      <div class="module_item" ref="topRight" @click="handleShowAll('topRight')" v-show="handleHideOther('topRight')">
         <div  id="loginChart" ref="loginChart" class="loginChart"></div>
       </div>
-      <div class="module_item" ref="bottomLeft" @click="handleShowAll('bottomLeft')">
+      <div class="module_item" ref="bottomLeft" @click="handleShowAll('bottomLeft')" v-show="handleHideOther('bottomLeft')">
         <div  id="dealAmount"  ref="trendEchart" class="trendEchart">
       </div>
       </div>
-      <div class="module_item"  ref="bottomCenter" @click="handleShowAll('bottomCenter')">
+      <div class="module_item"  ref="bottomCenter" @click="handleShowAll('bottomCenter')" v-show="handleHideOther('bottomCenter')">
         <div class="rose-box" ref="roseCharts"></div>
       </div>
-      <div class="module_item" ref="bottomRight" @click="handleShowAll('bottomRight')">
+      <div class="module_item" ref="bottomRight" @click="handleShowAll('bottomRight')" v-show="handleHideOther('bottomRight')">
         <div>上下滚动无缝轮播</div>
         <vueSeamlessScroll
           :data="listData"
@@ -49,6 +49,8 @@ import * as echarts from 'echarts';
 import vueSeamlessScroll from 'vue-seamless-scroll';
 import { rosePieOption } from '../plugins/index';
 import { mixins } from './common/dialogMinxin.js';
+import html2Canvas from 'html2canvas';
+import JsPDF from 'jspdf';
 export default {
   name: 'Overview',
   mixins: [mixins],
@@ -189,6 +191,33 @@ export default {
     this.dealData();
   },
   methods: {
+    // 导出pdf
+    exportPDf () {
+
+    },
+    htmlToCanvas () {
+      html2Canvas(document.querySelector('#overview_container'), {
+        logging: true,
+        width: 1595 * 1.35,
+        height: 1842 * 1.35,
+        scale: 2,
+        scrollX: 0,
+        useCORS: true,
+        scrollY: 0,
+        background: '#ffffff'
+      }).then((canvas) => {
+      // console.log(canvas.toDataURL());
+        this.canvasToPdf(canvas.toDataURL());
+      });
+    },
+
+    canvasToPdf (imgUrl) {
+      const img = new Image();
+      img.src = imgUrl;
+      const pdf = new JsPDF();
+      pdf.addImage(img, 'png', 0, 0, 595.28, 841.89);
+      pdf.save('交货单.pdf');
+    },
     drawLine () {
       this.myChart = echarts.init(document.getElementById('lineCharts'));
       this.bookRankChart = echarts.init(
