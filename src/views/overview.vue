@@ -1,22 +1,28 @@
 <template>
   <div id="overview_container">
-    <div class="title">统计概览</div>
-    <!-- <div :id="id" style="width:100%" /> -->
+    <div class="title" ref="title" v-show="handleHideOther('title')" @click="downloadReport()">统计概览</div>
     <div class="dataCharts">
-      <div
-        class="chart module_item"
+      <div class="module_item" ref="topLeft" @click="handleShowAll('topLeft')" v-show="handleHideOther('topLeft')">
+        <div
+        ref="myChart"
+        class="lineCharts"
         id="lineCharts"
-        style="height:350px;"
       ></div>
-      <div id="bookRank" style="height:350px;" class="module_item"></div>
-      <div style="height:350px;" id="loginChart" class="module_item">
-        <!-- <div>过去一周登录走势图</div> -->
       </div>
-      <div style="height:350px;" id="dealAmount" class="module_item">
-        <!-- <div>过去一周成交总额情况</div> -->
+      <div class="module_item" ref="topCenter" @click="handleShowAll('topCenter')" v-show="handleHideOther('topCenter')">
+        <div id="bookRank"  ref="bookRankChart" class="bookRankChart"></div>
       </div>
-      <div id="roseCharts" class="rose-box module_item"></div>
-      <div style="height:350px;" id="rank_box_chart" class="module_item">
+      <div class="module_item" ref="topRight" @click="handleShowAll('topRight')" v-show="handleHideOther('topRight')">
+        <div  id="loginChart" ref="loginChart" class="loginChart"></div>
+      </div>
+      <div class="module_item" ref="bottomLeft" @click="handleShowAll('bottomLeft')" v-show="handleHideOther('bottomLeft')">
+        <div  id="dealAmount"  ref="trendEchart" class="trendEchart">
+      </div>
+      </div>
+      <div class="module_item"  ref="bottomCenter" @click="handleShowAll('bottomCenter')" v-show="handleHideOther('bottomCenter')">
+        <div class="rose-box" ref="roseCharts"></div>
+      </div>
+      <div class="module_item" ref="bottomRight" @click="handleShowAll('bottomRight')" v-show="handleHideOther('bottomRight')">
         <div>上下滚动无缝轮播</div>
         <vueSeamlessScroll
           :data="listData"
@@ -39,10 +45,13 @@
 </template>
 
 <script>
+import * as echarts from 'echarts';
 import vueSeamlessScroll from 'vue-seamless-scroll';
 import { rosePieOption } from '../plugins/index';
+import { mixins } from './common/dialogMinxin.js';
 export default {
   name: 'Overview',
+  mixins: [mixins],
   data () {
     return {
       id: '',
@@ -50,7 +59,6 @@ export default {
       bookRankChart: null,
       loginChart: null,
       trendEchart: null,
-      rankEchart: null,
       roseCharts: null,
       listData: [
         { number: 1, unit: '家', bookName: '秘密', num: '50' },
@@ -175,30 +183,107 @@ export default {
   mounted () {
     this.$nextTick(function () {
       this.drawLine();
-      this.initChart();
+      // this.initChart();
     });
-    window.addEventListener('resize', () => {
-      console.log('缩放');
-      this.myChart.resize();
-      this.bookRankChart.resize();
-      this.loginChart.resize();
-      this.trendEchart.resize();
-    });
+
     this.dealData();
   },
   methods: {
+    // 导出pdf
+    exportPDf () {
+
+    },
+    downloadReport () {
+      this.isImport = true;
+      this.$message.info('正在导出中...');
+      console.log('开始导出');
+      const DomName = document.getElementById('overview_container');
+      var shareContent = DomName; // 需要截图的包裹的（原生的）DOM 对象
+      console.log(shareContent, '打印看有没有获取到dom');
+      // 打印看有没有获取到dom
+      var width = shareContent.offsetWidth; // 获取dom 宽度
+      var height = shareContent.offsetHeight; // 获取dom 高度
+      var canvas = document.createElement('canvas'); // 创建一个canvas节点
+      var scale = 1.5; // 定义任意放大倍数 支持小数
+      canvas.width = width * scale; // 定义canvas 宽度 * 缩放，在此我是把canvas放大了2倍
+      canvas.height = height * scale; // 定义canvas高度 *缩放
+      canvas.getContext('2d').scale(scale, scale); // 获取context,设置scale
+      // window.pageYoffset = 0; // 滚动置顶
+      // document.documentElement.scrollTop = 0;
+      // document.body.scrollTop = 0;
+      const context = canvas.getContext('2d');
+      context.translate(
+        `-${shareContent.offsetLeft + 150}`,
+        `-${shareContent.offsetTop + 50}`
+      );
+      const opts = {
+        scale, // 添加的scale 参数
+        canvas, // 自定义 canvas
+        logging: false, // 日志开关，便于查看html2canvas的内部执行流程
+        width: width, // dom 原始宽度
+        height: height,
+        useCORS: true // 【重要】开启跨域配置
+      };
+      // eslint-disable-next-line no-undef
+      html2canvas(DomName, opts)
+        .then(function (canvas) {
+          var context = canvas.getContext('2d');
+          // 【重要】关闭抗锯齿
+          context.mozImageSmoothingEnabled = false;
+          context.webkitImageSmoothingEnabled = false;
+          context.msImageSmoothingEnabled = false;
+          context.imageSmoothingEnabled = false;
+          var imgData = canvas.toDataURL('image/', 1.0); // 转化成base64格式,可上网了解此格式
+          var img = new Image();
+          img.src = imgData;
+          img.onload = function () {
+            img.width = img.width / 1.5; // 因为在上面放大了2倍，生成image之后要/2
+            img.height = img.height / 1.5;
+            img.style.transform = 'scale(0.5)';
+            if (this.width > this.height) {
+              // 此可以根据打印的大小进行自动调节
+              // eslint-disable-next-line
+              var doc = new jsPDF('l', 'mm', [
+                this.width * 0.555,
+                this.height * 0.555
+              ]);
+            } else {
+              // eslint-disable-next-line
+              var doc = new jsPDF('p', 'mm', [
+                this.width * 0.555,
+                this.height * 0.555
+              ]);
+            }
+            doc.addImage(
+              imgData,
+              'jpeg',
+              10,
+              0,
+              this.width * 0.505,
+              this.height * 0.545
+            );
+            doc.save('test.pdf');
+          };
+        })
+        .finally(() => {
+          this.isImport = false;
+          this.$message.success('导出成功');
+        })
+        .catch(() => {
+          this.$message.error('导出失败');
+        });
+    },
     drawLine () {
-      this.myChart = this.$echarts.init(document.getElementById('lineCharts'));
-      this.bookRankChart = this.$echarts.init(
+      this.myChart = echarts.init(document.getElementById('lineCharts'));
+      this.bookRankChart = echarts.init(
         document.getElementById('bookRank')
       );
-      this.loginChart = this.$echarts.init(
+      this.loginChart = echarts.init(
         document.getElementById('loginChart')
       );
-      this.trendEchart = this.$echarts.init(
-        document.getElementById('dealAmount')
-      );
-      // this.rankEchart = this.$echarts.init(document.getElementById('rank_box_chart'))
+      this.trendEchart = echarts.init(this.$refs.trendEchart);
+      this.roseCharts = echarts.init(this.$refs.roseCharts);
+      this.chartResize();
       const max = Math.max.apply(Math, this.userAmount.concat(this.dealAmount));
       this.myChart.setOption({
         color: ['#3398DB'],
@@ -474,12 +559,53 @@ export default {
           }
         ]
       });
+
+      const colors = [
+        '#21ce9b',
+        '#34bbf1',
+        '#5bd0ff',
+        '#ffe36e',
+        '#ffc76e',
+        '#ff863b',
+        '#ff5858'
+      ];
+      const originDataLen = this.roseData.length;
+      const spanAngle = 180; // 需要显示的角度
+      const repeatedMultiple = 360 / spanAngle;
+      // 这里根据要显示的角度 计算了需要插入的数据量
+      const addDataLen = parseInt((repeatedMultiple - 1) * originDataLen);
+      const seriseData = this.roseData.map((v, index) => {
+        return {
+          value: v.value,
+          name: v.name,
+          itemStyle: {
+            normal: {
+              color: colors[index]
+            }
+          }
+        };
+      });
+      for (let index = 0; index < addDataLen; index++) {
+        seriseData.push({
+          name: null,
+          // 这里给数据置零，即在视觉上不显示
+          value: 0,
+          // 这里保证了异常情况下(数据都为0时)作为占位的数据在视觉上仍为不可见状态。
+          itemStyle: {
+            color: 'rgba(0,0,0,0)'
+          },
+          tooltip: {
+            show: false,
+            formatter: null
+          }
+        });
+      }
+      const options = rosePieOption(seriseData);
+      this.roseCharts.setOption(options);
     },
 
     initChart () {
-      this.roseCharts = this.$echarts.init(
-        document.getElementById('roseCharts')
-      );
+      this.roseCharts = echarts.init(this.$refs.roseCharts);
       const colors = [
         '#21ce9b',
         '#34bbf1',
@@ -530,12 +656,32 @@ export default {
         this.time.push(item.date);
         this.dealAmount.push(item.sxl);
       });
+    },
+    /**
+     * @desc 图表自适应
+     */
+    chartResize () {
+      const chartList = [
+        'myChart',
+        'bookRankChart',
+        'loginChart',
+        'trendEchart',
+        'roseCharts'
+      ];
+      chartList.forEach(item => {
+        // 使用window.addEventListener监听只会在窗口大小改变的时候重新绘制图表，可通过ResizeObserver来监听图表容器的大小变化实现图表自适应
+        const ro = new ResizeObserver(e => {
+          this[item].resize();
+        });
+        ro.observe(this.$refs[item]);
+      });
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
+@import url('./common/dialogMinxin.less');
 #overview_container {
   width: 100%;
   height: 100%;
@@ -552,11 +698,18 @@ export default {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    height: calc(100% - 105px);
     .module_item {
       background: #fff;
       padding: 20px;
-      width: 30%;
+      width: 32.5%;
+      height:50%;
       margin-bottom: 20px;
+      box-sizing: border-box;
+      .lineCharts,.bookRankChart,.loginChart,.trendEchart,.rose-box {
+        width: 100%;
+        height: 100%;
+      }
     }
     .seamless-warp {
       width: 100%;

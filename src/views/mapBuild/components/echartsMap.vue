@@ -1,8 +1,8 @@
 <!--
  * @Author: mobai
  * @Date: 2022-04-08 13:51:59
- * @LastEditors: mobai
- * @LastEditTime: 2022-04-08 17:17:54
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-08-04 15:25:14
  * @FilePath: \bookstore-Management\src\views\mapBuild\components\echartsMap.vue
 -->
 <template>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import echarts from 'echarts';
+import * as echarts from 'echarts';
 import uploadedDataURL from '../map/zhejiang.json';
 export default {
   name: 'EchartsMap',

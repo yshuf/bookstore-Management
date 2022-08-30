@@ -3,7 +3,7 @@
  * @Author: MoBai
  * @Date: 2022-04-01 10:15:39
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-04-22 11:42:07
+ * @LastEditTime: 2022-08-04 15:24:39
  * @FilePath: \bookstore-Management\src\views\mapBuild\overview.vue
 -->
 <template>
@@ -54,7 +54,7 @@ export default {
   width: 100%;
   height: 100%;
   .selectListBox {
-    z-index: 1;
+    z-index:99999999;
     position: absolute;
     top: 3%;
     left: 2%;
