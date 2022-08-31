@@ -47,6 +47,7 @@
         >
       </div>
     </div>
+    <common-step :stepList="stepList"></common-step>
     <el-table :data="tableData" style="100%" :span-method="objectSpanMethod" :header-cell-style="headerMerge">
       <el-table-column prop="id" label="用水类型" width="200" align="left"></el-table-column>
       <el-table-column prop="name" label="姓名" width="350"></el-table-column>
@@ -106,10 +107,29 @@
 
 <script>
 import tableJsonData from './tableData.json';// 引入本地数据
+import CommonStep from '@/components/common/commonStep';
 export default {
   name: 'UserAccount',
+  components: { CommonStep },
   data () {
     return {
+      stepList: [
+        {
+          num: 1,
+          desc: '填写申报材料',
+          highlight: true
+        },
+        {
+          num: 2,
+          desc: '等待审核',
+          highlight: false
+        },
+        {
+          num: 3,
+          desc: '具备领取资格',
+          highlight: false
+        }
+      ],
       value: '',
       key: '',
       time: '',
