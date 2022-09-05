@@ -11,6 +11,7 @@ module.exports = {
   // 需要 px2rem 的文件或模块（路径用 `/` 分割）从 src 路径开始，如果其它页面不在 src 中需要将路径层级达到 src 这一层，如果到模块这一层则转换该模块下的所有文件，示例：['src/views/home/index.vue', 'src/views/service-platform/setting/frame']
   px2RemModule: [
     'src/views/login/Login.vue'
+    // 'src/views/overview.vue'
   ],
   providePlugin: {
     $: 'jquery',

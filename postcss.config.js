@@ -16,7 +16,7 @@ function resolve (dir) {
 const px2remConfig = {
   // 设计图为750px，一份 root 对应着 rootWidth/10=75px（设计稿宽度的十分之一）
   // width: 16px;->width: 1rem; 1rem=html.font-size
-  rootValue: 16, // 结果为：设计稿元素尺寸/16，比如元素宽320px,最终页面会换算成 20rem
+  rootValue: 1920 / 100, // 结果为：设计稿元素尺寸/16，比如元素宽320px,最终页面会换算成 20rem
   // 这里是基本单位，前面设置了1vw
   unitPrecision: 1,
   propList: [
