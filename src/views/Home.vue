@@ -242,6 +242,11 @@ export default {
               children: []
             }
           ]
+        },
+        {
+          id: 109,
+          authName: 'pdf预览',
+          path: 'previewPdf'
         }
       ];
     },

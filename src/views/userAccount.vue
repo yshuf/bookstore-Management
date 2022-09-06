@@ -47,7 +47,9 @@
         >
       </div>
     </div>
+    <div>步骤条</div>
     <common-step :stepList="stepList"></common-step>
+    <hr>
     <el-table :data="tableData" style="100%" :span-method="objectSpanMethod" :header-cell-style="headerMerge">
       <el-table-column prop="id" label="用水类型" width="200" align="left"></el-table-column>
       <el-table-column prop="name" label="姓名" width="350"></el-table-column>
