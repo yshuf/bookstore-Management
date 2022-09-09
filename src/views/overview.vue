@@ -6,21 +6,23 @@
         <div
         ref="myChart"
         class="lineCharts"
-        id="lineCharts"
       ></div>
       </div>
+      <div v-if="isShowClose" class="closeStyle">
+      <i class="el-icon-close pointer" @click.stop="handleHide"></i>
+    </div>
       <div class="module_item" ref="topCenter" @click="handleShowAll('topCenter')" v-show="handleHideOther('topCenter')">
-        <div id="bookRank"  ref="bookRankChart" class="bookRankChart"></div>
+        <div   ref="bookRankChart" class="bookRankChart"></div>
       </div>
       <div class="module_item" ref="topRight" @click="handleShowAll('topRight')" v-show="handleHideOther('topRight')">
-        <div  id="loginChart" ref="loginChart" class="loginChart"></div>
+        <div   ref="loginChart" class="loginChart"></div>
       </div>
       <div class="module_item" ref="bottomLeft" @click="handleShowAll('bottomLeft')" v-show="handleHideOther('bottomLeft')">
-        <div  id="dealAmount"  ref="trendEchart" class="trendEchart">
+        <div    ref="trendEchart" class="trendEchart">
       </div>
       </div>
       <div class="module_item"  ref="bottomCenter" @click="handleShowAll('bottomCenter')" v-show="handleHideOther('bottomCenter')">
-        <div class="rose-box" ref="roseCharts"></div>
+        <div  ref="roseCharts" class="roseCharts"></div>
       </div>
       <div class="module_item" ref="bottomRight" @click="handleShowAll('bottomRight')" v-show="handleHideOther('bottomRight')">
         <div>上下滚动无缝轮播</div>
@@ -274,13 +276,9 @@ export default {
         });
     },
     drawLine () {
-      this.myChart = echarts.init(document.getElementById('lineCharts'));
-      this.bookRankChart = echarts.init(
-        document.getElementById('bookRank')
-      );
-      this.loginChart = echarts.init(
-        document.getElementById('loginChart')
-      );
+      this.myChart = echarts.init(this.$refs.myChart);
+      this.bookRankChart = echarts.init(this.$refs.bookRankChart);
+      this.loginChart = echarts.init(this.$refs.loginChart);
       this.trendEchart = echarts.init(this.$refs.trendEchart);
       this.roseCharts = echarts.init(this.$refs.roseCharts);
       this.chartResize();
@@ -706,7 +704,7 @@ export default {
       height:50%;
       margin-bottom: 20px;
       box-sizing: border-box;
-      .lineCharts,.bookRankChart,.loginChart,.trendEchart,.rose-box {
+      .lineCharts,.bookRankChart,.loginChart,.trendEchart,.roseCharts {
         width: 100%;
         height: 100%;
       }

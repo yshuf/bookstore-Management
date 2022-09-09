@@ -133,10 +133,10 @@ export const rosePieOption = (data = []) => {
         },
         labelLine: {
           normal: {
-            show: false,
+            show: true,
             smooth: false,
             length: 6,
-            length2: 0
+            length2: 2
           },
           emphasis: {
             show: true
