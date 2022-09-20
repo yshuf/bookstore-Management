@@ -51,6 +51,8 @@ import * as echarts from 'echarts';
 import vueSeamlessScroll from 'vue-seamless-scroll';
 import { rosePieOption } from '../plugins/index';
 import { mixins } from './common/dialogMinxin.js';
+import html2canvas from '@static/pdf/html2canvas.js';
+import jsPDF from '@static/pdf/jspdf.debug.js';
 export default {
   name: 'Overview',
   mixins: [mixins],

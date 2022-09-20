@@ -3,7 +3,7 @@
  * @Author: mobai
  * @Date: 2022-09-02 09:55:19
  * @LastEditors: mobai
- * @LastEditTime: 2022-09-13 14:19:15
+ * @LastEditTime: 2022-09-19 14:35:17
  * @FilePath: \bookstore-Management\summary.md
 -->
 [toc]
@@ -190,14 +190,58 @@ new Vue({
 3. 编译条件：v-if 是惰性的，如果初始条件为假，什么都不会做，只有当条件第一次变为真的时候，才会开始局部编译。v-show 在任何条件下（不管首次是否为真）都是会被编译，被缓存，而且 DOM 元素始终会被保留；
 4. 性能消耗：v-if 有更高的切换消耗，不适合做频繁的切换；v-show 有更高的初始渲染消耗，适合做频繁的切换；
 #### 11、 vuex
-##### state
-##### getters
-##### mutations
-##### actions
+Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。
+&emsp;&emsp; **state** 
+&emsp;&emsp; Vuex 使用单一状态树，即每个应用将仅仅包含一个store实例，但单一状态和模块化并不冲突。存放的数据状态，不可以直接修改里面的数据。
+&emsp;&emsp; **getters** 
+&emsp;&emsp; 类似 vue 的计算属性，主要用来过滤一些数据。
+&emsp;&emsp; **mutations** 
+&emsp;&emsp; mutations定义的方法动态修改 Vuex 的 store 中的状态或数据。
+&emsp;&emsp;  **actions** 
+&emsp;&emsp; 可以理解为通过将 mutations 里面处理数据的方法变成可异步的处理数据的方法，简单的说就是异步操作。view 层通过 store.dispath 来分发action。
 #### 12、 Vue 的路由实现： hash 模式 和 history 模式
 
+&emsp;&emsp; **hash模式：** 在浏览器中符号“#”，#以及#后面的字符称之为hash，用 window.location.hash 读取；特点：hash 虽然在 URL 中，单不被包括在 HTTP 请求中；用来指导浏览器动作，对服务端安全无用，hash 不会重加载页面。[详细解析参考→](https://blog.csdn.net/luanhaiyang/article/details/50731919)
+&emsp;&emsp; **history模式：** history 采用HTML5的新特性；且提供了两个新方法：pushState(),replaceState()可以对浏览器历史记录栈进行修改，以及 popState 事件的监听到状态变更
+#### 13、vue 组件传参
+1. 父子组件传参
+   + 父-子：父组件使用 `<组件名 属性名="xxx">` 发送数据，子组件使用 `props` 接收。
+   + 子-父：子组件使用 `$emit(自定义方法名，子组件属性)` 自定义事件传递属性。父组件绑定事件，并在父组件事件方法中接收子组件属性。
+2. 非父子组件传参
+   + eventBus($on、$emit, 劣势：事件总线方式传递数据同时需要及时的移除事件监听$off)、vuex、sessionStorage、localStore、$attrs/$listeners(多级组件，保持一种“血脉联系”，爷孙)
+#### 14、mvvm 理解
+&emsp;&emsp; MVVM 分为 Model、View、ViewModel 三者。
+&emsp;&emsp; Model 代表数据模型，数据和业务逻辑都在 Model 层中定义；
+&emsp;&emsp; View 代表UI视图，负责数据的展示；
+&emsp;&emsp; 通过双向数据绑定，将 `View` 层和 `Model` 层连接起来。是 `MVVM` 最核心的部分。
+#### 15、vue 生命周期及注意点
+&emsp;&emsp; **beforeCreate**（创建前）在数据观测和初始化时间还未开始
+&emsp;&emsp; **created**（创建后）完成数据观测，属性和方法的运算，初始化事件，el属性还没有显示出来
+&emsp;&emsp; **beforeMount**（载入前）在挂载开始之前被调用，相关的 render 函数首次被调用。实例已完成以下的配置：编译模板，把 data 里面的数据和模板生成html。==注意此时还没有挂载html到页面上。==
+&emsp;&emsp; **mounted**（载入后）在el被新创建的vm.$el替换，并挂载到实例上去之后调用。实例已完成以下的配置：用上面编译好的 html 内容替换 el 属性指向的 DOM 对象。完成模板中的 html 渲染到 html页面中。此过程中进行 ajax 交互。
+&emsp;&emsp; **beforeUpdate**（更新前）在数据更新之前调用，发生在虚拟 DOM 重新渲染和打补丁之前。可以在该钩子中进一步地更改状态，不会触发附加的重渲染过程
+&emsp;&emsp; **updated**（更新后）在由于数据更改导致的虚拟 DOM 重新渲染和打补丁之后调用。调用时，组件 DOM 已经更新，所以可以执行依赖于 DOM 的操作。然而在大多数情况下，应该避免在此期间更改状态，因为这可能会导致更新无限循环。该钩子在服务器端渲染期间不被调用。
+&emsp;&emsp; **beforeDestroy**（销毁前）在实例销毁之前调用。实例仍然完全可用。
+&emsp;&emsp; **destroyed** （销毁后）在实例销毁之后调用。调用后，所有的事件监听器会被移除，所有的自实例也会被销毁。该钩子在服务器端渲染期间不被调用。
+|生命周期钩子|组件状态|最佳实践|
+|----|----|----|
+| beforeCreate | 实例初始化之后，this指向创建的实例，不能访问到data、computed、watch、methods上的方法和数据 | 常用于初始化非响应式变量 |
+| created | 实例创建完成，可以访问data、computed、watch、methods上的方法和数据，未挂载到DOM，不能访问到el属性，ref属性内容为空数组 | 常用于简单的ajax属性，页面的初始 化|
+| beforeMount | 在挂载开始之前被调用，beforeMount之前，会找到对应的 template，并编译成render函数 | - |
+| mounted | 实例挂载到 DOM 上，此时可以通过 DOM API 获取到 DOM 节点，$ref 属性可以访问 | 常用于获取 VNode 信息和操作，ajax 请求|
+| beforeUpdate | 响应式数据更新时调用，发生在虚拟 DOM 打补丁之前 | 适合在更新之前访问现有的 DOM ,比如手动移除已添加的事假监听器 |
+| updated | 虚拟 DOM 重新渲染和打补丁之后调用，组件 DOM 已经更新，可执行依赖于 DOM 的操作 |避免在这个钩子函数中操作数据，可能陷入死循环|
+| beforeDestroy | 实例销毁之前调用。这一步，实例仍然完全可用，this仍能获取到实例 | 常用于销毁定时器，解绑全局事件、销毁插件对象等操作 |
+| destroy |实例销毁后调用，调用后，Vue 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁|-|
+1. `created`阶段的`ajax`请求与`mounted`请求的区别：前者页面视图未出现，如果请求信息过多，页面会长时间处于白屏状态
+2. `mounted`不会承诺所有的子组件也都一起被挂载。如果你希望等到整个视图都渲染完毕，可以用`vm.$nextTick`
+
+#### 16、vue 双向数据绑定
+&emsp;&emsp; vue 使用数据劫持结合发布者/订阅者模式。
+&emsp;&emsp; 
 
 
+ 
 
 
 

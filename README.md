@@ -114,6 +114,9 @@ props: {
 1. cnpm install vue-seamless-scroll --save
 2. 页面引入 import vueSeamlessScroll from 'vue-seamless-scroll'
   
+### html 转 pdf
+
+
 
 ### PostCSS 相关插件使用（autoprefixer，postcss-pxtorem）
   根目录下新建 postcss.config.js 文件

@@ -35,7 +35,8 @@ export default {
         { name: 'echarts地图', componentId: 'echartsMap' },
         { name: 'echarts3D地图', componentId: 'echarts3DMap' },
         { name: '行政区域图层移入悬浮', componentId: 'map' },
-        { name: '气泡下钻', componentId: 'bubbleBrick' }
+        { name: '气泡下钻', componentId: 'bubbleBrick' },
+        { name: '高德3d地图', componentId: '' }
 
       ]
     };
