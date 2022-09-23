@@ -1,6 +1,3 @@
-/* * @Author: mobai * @Date: 2021-05-31 11:35:11 * @Last Modified by:
-mikey.zhaopeng * @Last Modified time: 2021-05-31 11:35:53 */
-
 <template>
   <el-container class="home-container">
     <el-header>
@@ -93,7 +90,11 @@ mikey.zhaopeng * @Last Modified time: 2021-05-31 11:35:53 */
           viewStyle="height:100%"
           style="height:100%"
         >
-          <keep-alive><router-view></router-view></keep-alive>
+          <keep-alive>
+            <transition name="fade-transform" mode="out-in">
+              <router-view></router-view>
+            </transition>
+          </keep-alive>
         </el-scrollbar>
       </el-main>
     </el-container>
@@ -102,6 +103,7 @@ mikey.zhaopeng * @Last Modified time: 2021-05-31 11:35:53 */
 
 <script>
 import screenfull from 'screenfull';
+import { MenuList } from '@/common/commonConstant';
 export default {
   name: 'Home',
   created () {
@@ -148,107 +150,7 @@ export default {
       this.$router.push('/login');
     },
     async getMenuList () {
-      //   const { data: res } = await this.$http.get('menus')
-      //   if (res.meta.status !== 200)
-      //     return this.$message({
-      //       message: '恭喜你，这是一条成功消息',
-      //       type: 'success'
-      //     })
-      this.menuList = [
-        {
-          id: 99,
-          authName: '数据统计',
-          path: 'overview',
-          children: [
-            {
-              id: 100,
-              authName: '概览统计',
-              path: 'overview',
-              children: []
-            }
-          ]
-        },
-        {
-          id: 101,
-          authName: '账号管理',
-          path: 'userAccount',
-          children: [
-            {
-              id: 102,
-              authName: '用户账号',
-              path: 'userAccount',
-              children: []
-            },
-            {
-              id: 103,
-              authName: '员工账号',
-              path: 'adminAccount',
-              children: []
-            }
-          ]
-        },
-        {
-          id: 105,
-          authName: '书籍管理',
-          path: 'bookManagement',
-          children: [
-            {
-              id: 106,
-              authName: '书籍列表',
-              path: 'bookManagement',
-              children: []
-            },
-            {
-              id: 107,
-              authName: '分类参数',
-              path: 'sortParams',
-              children: []
-            },
-            {
-              id: 108,
-              authName: '书籍分类',
-              path: 'booksSort',
-              children: []
-            }
-          ]
-        },
-        {
-          id: 106,
-          authName: '风险预警',
-          path: 'riskOverview',
-          children: [
-            {
-              id: 107,
-              authName: '风险概览',
-              path: 'riskOverview',
-              children: []
-            }
-          ]
-        },
-        {
-          id: 108,
-          authName: '下载中心',
-          path: 'download'
-        },
-        {
-          id: 104,
-          authName: '个人中心',
-          path: 'userCenter',
-          children: [
-            {
-              id: 105,
-              authName: '个人中心',
-              path: 'userCenter',
-              children: []
-            }
-          ]
-        },
-        {
-          id: 109,
-          authName: 'pdf预览',
-          path: 'previewPdf'
-        }
-      ];
+      this.menuList = MenuList;
     },
     // 点击按钮，切换菜单的折叠与展开
     togglemenu () {

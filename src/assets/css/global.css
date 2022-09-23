@@ -120,3 +120,20 @@ html,
 ::-webkit-scrollbar-thumb:window-inactive {
   background: #eee;
 }
+
+
+/* fade-transform 页面切换过渡动画*/
+.fade-transform-leave-active,
+.fade-transform-enter-active {
+  transition: all .5s;
+}
+
+.fade-transform-enter {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}

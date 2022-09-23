@@ -3,7 +3,7 @@
  * @Author: mobai
  * @Date: 2022-09-02 09:55:19
  * @LastEditors: mobai
- * @LastEditTime: 2022-09-19 14:35:17
+ * @LastEditTime: 2022-09-23 16:18:46
  * @FilePath: \bookstore-Management\summary.md
 -->
 [toc]
@@ -14,6 +14,9 @@
 &emsp;&emsp;渲染普通文本的两种方式：{{}} 和 v-text 中，在使用 {{}} 展示或更新页面数据时：当网速比较慢时，会出现一个不好的过度现象，会让用户先看到我们的表达式（比如:{{msg}}）,然后才看到 data 的值，就是闪烁问题！
 * 解决这个问题的办法:
   * 使用 v-cloak 指令，然后为其设置 css 样式 display:none;
+     ```html
+     <div v-clock>{{msg}}</div>
+     ```
     ```javaScript
     [v-cloak]{
       display: none !important;
@@ -238,9 +241,15 @@ Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。
 
 #### 16、vue 双向数据绑定
 &emsp;&emsp; vue 使用数据劫持结合发布者/订阅者模式。
-&emsp;&emsp; 
-
-
+&emsp;&emsp; 当一个`Vue`实例创建时，`Observer`会遍历`data`选项的属性， 用`Object.defineProperty`将它们转为`getter/setter`并且在内部追踪相关依赖，在属性被访问和修改时通知变化。
+&emsp;&emsp; 每个组件实例都有相应的`watcher`程序实例，它会在组件渲染的过程中把属性记录为依赖，之后当依赖项的`setter`被调用时，会通知`watcher`重新计算，从而致使它关联的组件得以更新。
+**具体步骤**
+**第一步：需要 observe 的数据对象进行递归遍历，** 包括子属性对象的属性，都加上`setter`和`getter`。这样的话，给这个对象的某个值赋值，就会触发`setter`,那么就能监听到了数据变化
+**第二步：compile 解析模板指令，** 将模板中的变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知，更新视图
+**第三步：Watcher 订阅者是 Observer 和 Compile 之间通信的桥梁，** 主要做的事情是：
+1. 在自身实例化时往属性订阅器（dep） 里面添加自己
+2. 自身必须有一个 update() 方法
+3. 待属性变动 dep.notice() 通知时，能调用自身的 update() 方法，
  
 
 

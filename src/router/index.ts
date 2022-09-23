@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import NProgress from 'nprogress';
-import Layout from '@/layout/index.vue';
+import Layout from '@/layout/noLayout.vue';
 
 Vue.use(VueRouter);
 
