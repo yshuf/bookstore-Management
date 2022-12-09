@@ -23,7 +23,7 @@
     "nprogress": "^0.2.0",
     "register-service-worker": "^1.6.2",
     "screenfull": "^5.1.0",
-    "tinymce": "^5.10.1",
+    "tinymce": "^5.10.7",
     "vue": "^2.6.11",
     "vue-count-to": "^1.0.13",
     "vue-router": "^3.1.5",
