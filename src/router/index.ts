@@ -103,6 +103,14 @@ const router = new VueRouter({
           component: () => import('@/views/userAccount.vue')
         },
         {
+          path: '/ele-component',
+          name: 'ele-component',
+          meta: {
+            title: '基于elementui封装的组件'
+          },
+          component: () => import('@/views/eleComponent/index.vue')
+        },
+        {
           path: '/adminAccount',
           name: 'AdminAccount',
           meta: {

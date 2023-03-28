@@ -3,7 +3,7 @@
     <el-header>
       <div>
         <img src alt />
-        <span>XXX书店后台管理系统</span>
+        <span>XXXXXX</span>
       </div>
       <div class="right-info">
         <div @click="onclickFullScreen" title="全屏" class="pointer">

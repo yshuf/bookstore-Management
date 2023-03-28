@@ -253,8 +253,14 @@ export const MenuList = [
     children: [
       {
         id: 102,
-        authName: '用户账号',
+        authName: '常用组件封装',
         path: 'userAccount',
+        children: []
+      },
+      {
+        id: 102,
+        authName: '基于element组件',
+        path: 'ele-component',
         children: []
       },
       {
