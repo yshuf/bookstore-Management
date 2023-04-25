@@ -109,7 +109,7 @@ export default {
           level: 'city' // 查询行政级别
         });
         const that = this;
-        let districtList = [];  
+        let districtList = [];
         district.search(name, (status, result) => {
           districtList = result.districtList[0].districtList;
           this.map.add(

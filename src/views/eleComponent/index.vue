@@ -1,7 +1,15 @@
+<!--
+ * @Description:
+ * @Author: mobai
+ * @Date: 2023-03-23 09:42:05
+ * @LastEditors: mobai
+ * @LastEditTime: 2023-04-16 14:20:24
+ * @FilePath: \bookstore-Management\src\views\eleComponent\index.vue
+-->
 <template>
   <div class="page-content">
     基于 elementui 封装的组件
-    <div class="title">季度选择组件</div>
+    <div class="title">季度选择组件（通过传递年月份）</div>
     <quarter-picker
       width="170px"
       format="yyyy年q季度"
@@ -11,14 +19,29 @@
       :disabled-date="disabledQuarter"
       @change="handleChangeQuarter"
     ></quarter-picker>
+    <div class="title">季度选择组件（通过传递年季度）</div>
+    <quarter-picker-new
+      width="170px"
+      format="yyyy年q季度"
+      value-format="yyyy-MM"
+      placeholder="请选择季度"
+      v-model="quarterDateNew"
+      :disabled-date="disabledQuarter"
+      @change="handleChangeQuarterNew"
+    ></quarter-picker-new>
+
+    <div class="words" ref="wordcloud"></div>
   </div>
 </template>
 
 <script>
+import 'echarts-wordcloud';
+import * as echarts from 'echarts';
 import QuarterPicker from '@/components/common/quarter-picker.vue';
+import QuarterPickerNew from '@/components/common/quarter-picker-new.vue';
 export default {
   name: 'EleComponent',
-  components: { QuarterPicker },
+  components: { QuarterPicker, QuarterPickerNew },
   data () {
     return {
       disabledQuarter: time => {
@@ -29,8 +52,13 @@ export default {
       },
       dataYear: null,
       dataQuarter: null,
-      quarterDate: '2022-09'
+      quarterDate: '2022-09',
+      quarterDateNew: '2022年3季度',
+      wordcloud: null
     };
+  },
+  mounted () {
+    this.initWord();
   },
   methods: {
     handleChangeQuarter (data) {
@@ -42,6 +70,49 @@ export default {
         month % 3 === 0 ? month / 3 : month / 3 + 1
       );
       this.dataQuarter = currQuarter;
+    },
+    handleChangeQuarterNew () {
+
+    },
+    initWord () {
+      const that = this;
+      this.wordcloud = echarts.init(this.$refs.wordcloud);
+      const option = {
+        title: {
+          // text: '企业一专利热词'
+        },
+        tooltip: {},
+        series: [
+          {
+            type: 'wordCloud',
+            // gridSize: 18.5,
+            sizeRange: [12, 20],
+            rotationRange: [0, 0],
+            top: '5%',
+            left: '0%',
+            shape: 'circle',
+            width: '100%',
+            height: '100%',
+            drawOutOfBound: false,
+            textStyle: {
+              normal: {
+                fontFamily: 'sans-serif',
+                fontWeight: 'bold',
+                color: function () {
+                  const list = ['#2BFF4A', '#E3973B', '#4AB3EF', '#EF4E4A'];
+                  return list[Math.round(Math.random() * 4)];
+                }
+              },
+              emphasis: {
+                shadowBlur: 10,
+                shadowColor: '#ccc'
+              }
+            },
+            data: that.keyWords
+          }
+        ]
+      };
+      this.wordcloud.setOption(option);
     }
   }
 };
@@ -51,5 +122,8 @@ export default {
 .title {
   line-height: 40px;
 }
-
+.words {
+  width: 500px;
+  height: 500px;
+}
 </style>
