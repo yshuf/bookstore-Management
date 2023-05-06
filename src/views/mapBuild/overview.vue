@@ -2,8 +2,8 @@
  * @Description: 地图初始化页面
  * @Author: MoBai
  * @Date: 2022-04-01 10:15:39
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-08-04 15:24:39
+ * @LastEditors: mobai
+ * @LastEditTime: 2023-05-06 10:03:59
  * @FilePath: \bookstore-Management\src\views\mapBuild\overview.vue
 -->
 <template>
@@ -24,19 +24,20 @@ import EchartsMap from './components/echartsMap.vue';
 import Echarts3DMap from './components/echarts3DMap.vue';
 import Map from './components/map.vue';
 import BubbleBrick from './components/bubbleBrick.vue';
+import GaoDe3DPage from './components/gaoDe3DPage.vue';
 export default {
   name: 'Overview',
-  components: { Map, EchartsMap, BubbleBrick, Echarts3DMap },
+  components: { Map, EchartsMap, BubbleBrick, Echarts3DMap, GaoDe3DPage },
   data () {
     return {
-      componentsId: 'echarts3DMap',
+      componentsId: 'gaoDe3DPage',
       activeIndex: 1,
       selectList: [
         { name: 'echarts地图', componentId: 'echartsMap' },
         { name: 'echarts3D地图', componentId: 'echarts3DMap' },
         { name: '行政区域图层移入悬浮', componentId: 'map' },
         { name: '气泡下钻', componentId: 'bubbleBrick' },
-        { name: '高德3d地图', componentId: '' }
+        { name: '高德3d地图', componentId: 'gaoDe3DPage' }
 
       ]
     };
