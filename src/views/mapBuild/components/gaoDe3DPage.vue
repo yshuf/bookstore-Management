@@ -376,7 +376,7 @@ export default {
         // 添加高度面(只有添加了这个，才会有立体的感觉，这里用2.0版本，Object3DLayer会报错，所以改用1.0版本)
         var object3Dlayer = new AMap.Object3DLayer({ zIndex: 1 });
         var height = -450000;
-        var color = '#384C4B'; // rgba   384C4B — 242D2D  56,76,75  36,45,45    0.2,0.3,0.3   0.15,0.18,0.18
+        var color = '#FFFFFF'; // 墙体颜色 rgba   384C4B — 242D2D  56,76,75  36,45,45    0.2,0.3,0.3   0.15,0.18,0.18
         var wall = new AMap.Object3D.Wall({
           path: bounds,
           height: height,
