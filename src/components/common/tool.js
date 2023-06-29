@@ -1,0 +1,747 @@
+const tableList = [{
+  type: 1,
+  oneTitle: '基本信息',
+  contentList: [{
+    id: 1,
+    type: 1,
+    oneTitle: '基本信息',
+    twoTitle: '登记信息',
+    twoName: 'registerInformation',
+    sourceBigData: 0,
+    sourceThirdParty: 1,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 1,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 2,
+    type: 1,
+    oneTitle: '基本信息',
+    twoTitle: '股东信息',
+    twoName: 'shareHolderInf',
+    sourceBigData: null,
+    sourceThirdParty: 1,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 2,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 3,
+    type: 1,
+    oneTitle: '基本信息',
+    twoTitle: '变更信息',
+    twoName: 'alterInfo',
+    sourceBigData: 1,
+    sourceThirdParty: 1,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 3,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 4,
+    type: 1,
+    oneTitle: '基本信息',
+    twoTitle: '关联信息',
+    twoName: 'relationInfo',
+    sourceBigData: null,
+    sourceThirdParty: 1,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 4,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 5,
+    type: 1,
+    oneTitle: '基本信息',
+    twoTitle: '行业表现信息',
+    twoName: 'industryInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: 1,
+    sourceDepartmentLink: null,
+    orderNum: 5,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }]
+}, {
+  type: 2,
+  oneTitle: '经营信息',
+  contentList: [{
+    id: 6,
+    type: 2,
+    oneTitle: '经营信息',
+    twoTitle: '纳税信息',
+    twoName: 'taxpayerInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 1,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 7,
+    type: 2,
+    oneTitle: '经营信息',
+    twoTitle: '公积金缴存信息',
+    twoName: 'accumulationFundInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 2,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 8,
+    type: 2,
+    oneTitle: '经营信息',
+    twoTitle: '外贸信息',
+    twoName: 'reportForeignTrade',
+    sourceBigData: null,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: 1,
+    orderNum: 3,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 9,
+    type: 2,
+    oneTitle: '经营信息',
+    twoTitle: '用电信息',
+    twoName: 'useElectricInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 4,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 10,
+    type: 2,
+    oneTitle: '经营信息',
+    twoTitle: '用水信息',
+    twoName: 'useWaterInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 5,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 11,
+    type: 2,
+    oneTitle: '经营信息',
+    twoTitle: '用气信息',
+    twoName: 'useGasInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 6,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 12,
+    type: 2,
+    oneTitle: '经营信息',
+    twoTitle: '行政许可',
+    twoName: 'licenceInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 7,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }]
+}, {
+  type: 3,
+  oneTitle: '经营风险',
+  contentList: [{
+    id: 13,
+    type: 3,
+    oneTitle: '经营风险',
+    twoTitle: '企业不动产抵押信息',
+    twoName: 'realEstateMortgageInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 1,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 14,
+    type: 3,
+    oneTitle: '经营风险',
+    twoTitle: '动产抵押登记信息',
+    twoName: 'morDetailInfo',
+    sourceBigData: null,
+    sourceThirdParty: 1,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 2,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 15,
+    type: 3,
+    oneTitle: '经营风险',
+    twoTitle: '股权出质信息',
+    twoName: 'sharesImpInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 3,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 16,
+    type: 3,
+    oneTitle: '经营风险',
+    twoTitle: '欠缴电费信息',
+    twoName: 'arrearsElectricInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 4,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 17,
+    type: 3,
+    oneTitle: '经营风险',
+    twoTitle: '欠缴水费信息',
+    twoName: 'arrearsWaterInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 5,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 18,
+    type: 3,
+    oneTitle: '经营风险',
+    twoTitle: '社保欠缴信息',
+    twoName: 'socialSecurityInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 6,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 19,
+    type: 3,
+    oneTitle: '经营风险',
+    twoTitle: '失信信用信息',
+    twoName: 'creditInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 7,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 20,
+    type: 3,
+    oneTitle: '经营风险',
+    twoTitle: '消防安全不良行为信息',
+    twoName: 'fireSafetyInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 8,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 21,
+    type: 3,
+    oneTitle: '经营风险',
+    twoTitle: '环保处罚信息',
+    twoName: 'environmentPunish',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 9,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 22,
+    type: 3,
+    oneTitle: '经营风险',
+    twoTitle: '欠税信息',
+    twoName: 'dealDebtRateItem',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 10,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 23,
+    type: 3,
+    oneTitle: '经营风险',
+    twoTitle: '税收违法',
+    twoName: 'taxIllegalInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 11,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 33,
+    type: 3,
+    oneTitle: '经营风险',
+    twoTitle: '拖欠工资黑名单信息',
+    twoName: 'defaultSalaryInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 12,
+    createTime: '2020-10-14',
+    checked: 1,
+    json: null
+  }, {
+    id: 34,
+    type: 3,
+    oneTitle: '经营风险',
+    twoTitle: '企业不良行为',
+    twoName: 'badBehaviorInfo',
+    sourceBigData: null,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: 1,
+    orderNum: 13,
+    createTime: '2021-02-01',
+    checked: 1,
+    json: null
+  }]
+}, {
+  type: 4,
+  oneTitle: '司法风险',
+  contentList: [{
+    id: 24,
+    type: 4,
+    oneTitle: '司法风险',
+    twoTitle: '开庭信息',
+    twoName: 'courtNoticeInfo',
+    sourceBigData: null,
+    sourceThirdParty: 1,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 1,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 25,
+    type: 4,
+    oneTitle: '司法风险',
+    twoTitle: '审判案件信息（已公开）',
+    twoName: 'trialCaseInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 2,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 26,
+    type: 4,
+    oneTitle: '司法风险',
+    twoTitle: '裁判文书信息（已公开）',
+    twoName: 'judgementInfo',
+    sourceBigData: null,
+    sourceThirdParty: 0,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 3,
+    createTime: '2020-09-01',
+    checked: 0,
+    json: null
+  }, {
+    id: 27,
+    type: 4,
+    oneTitle: '司法风险',
+    twoTitle: '执行案件信息',
+    twoName: 'executedCaseInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 4,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 28,
+    type: 4,
+    oneTitle: '司法风险',
+    twoTitle: '法院失信被执行信息',
+    twoName: 'dishonestyExecuteInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 5,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 29,
+    type: 4,
+    oneTitle: '司法风险',
+    twoTitle: '当事人基本情况信息',
+    twoName: 'partyBaseInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 6,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 30,
+    type: 4,
+    oneTitle: '司法风险',
+    twoTitle: '涉案民事刑事判决记录信息',
+    twoName: 'civilCaseJudgeInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 7,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }, {
+    id: 31,
+    type: 4,
+    oneTitle: '司法风险',
+    twoTitle: '失信执行人信息',
+    twoName: 'dishonestyPersonExecutorInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 8,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }]
+}, {
+  type: 5,
+  oneTitle: '资产信息',
+  contentList: [{
+    id: 32,
+    type: 5,
+    oneTitle: '资产信息',
+    twoTitle: '不动产信息',
+    twoName: 'realEstateInfo',
+    sourceBigData: 1,
+    sourceThirdParty: null,
+    sourcePlatformOperate: null,
+    sourceDepartmentLink: null,
+    orderNum: 1,
+    createTime: '2020-09-01',
+    checked: 1,
+    json: null
+  }]
+}];
+const listData = [
+  {
+    id: '201808300001',
+    productType: '纺织品',
+    productTypeSecond: '基本电价',
+    amount: '变压器容量',
+    productName: '上衣',
+    price: '80',
+    updateTime: '2018-08-30'
+  },
+  {
+    id: '201808300002',
+    productType: '纺织品',
+    productTypeSecond: '基本电价',
+    amount: '最大需量',
+    productName: '裤子',
+    price: '76',
+    updateTime: '2018-08-31'
+  },
+  {
+    id: '201808300001',
+    productType: '纺织品',
+    productTypeSecond: '电度电价',
+    amount: '1-10千伏',
+    productName: '上衣',
+    price: '80',
+    updateTime: '2018-08-30'
+  },
+  {
+    id: '201808300002',
+    productType: '纺织品',
+    productTypeSecond: '电度电价',
+    amount: '20千伏',
+    productName: '裤子',
+    price: '76',
+    updateTime: '2018-08-31'
+  },
+  {
+    id: '201808300001',
+    productType: '纺织品',
+    productTypeSecond: '电度电价',
+    amount: '35-110千伏',
+    productName: '上衣',
+    price: '80',
+    updateTime: '2018-08-30'
+  },
+  {
+    id: '201808300002',
+    productType: '纺织品',
+    productTypeSecond: '电度电价',
+    amount: '220千伏及以上',
+    productName: '裤子',
+    price: '76',
+    updateTime: '2018-08-31'
+  },
+  {
+    id: '201808300001',
+    productType: '一般工商业用电',
+    productTypeSecond: '不满一千伏',
+    amount: '不满一千伏',
+    productName: '上衣',
+    price: '80',
+    updateTime: '2018-08-30'
+  },
+  {
+    id: '201808300002',
+    productType: '一般工商业用电',
+    productTypeSecond: '1-10千伏',
+    amount: '1-10千伏',
+    productName: '裤子',
+    price: '76',
+    updateTime: '2018-08-31'
+  },
+  {
+    id: '201808300003',
+    productType: '一般工商业用电',
+    productTypeSecond: '20千伏',
+    amount: '20千伏',
+    productName: '挎包',
+    price: '150',
+    updateTime: '2018-08-31'
+  },
+
+  {
+    id: '201808300004',
+    productType: '一般工商业用电',
+    productTypeSecond: '35千伏及以上',
+    amount: '35千伏及以上',
+    productName: '鞋子',
+    price: '76',
+    updateTime: '2018-08-29'
+  },
+  {
+    id: '201808300005',
+    productType: '一般工商业用电',
+    productTypeSecond: '地铁',
+    amount: '地铁',
+    productName: '旗袍',
+    price: '106',
+    updateTime: '2018-08-31'
+  },
+  {
+    id: '201808300006',
+    productType: '居民用电电价',
+    productTypeSecond: '阶梯电价',
+    amount: '第一档',
+    productName: '短裙',
+    price: '36',
+    updateTime: '2018-08-30'
+  },
+  {
+    id: '201808300007',
+    productType: '居民用电电价',
+    productTypeSecond: '阶梯电价',
+    amount: '第二档',
+    productName: '短袖',
+    price: '36',
+    updateTime: '2018-08-30'
+  },
+  {
+    id: '201808300008',
+    productType: '居民用电电价',
+    productTypeSecond: '阶梯电价',
+    amount: '第三档',
+    productName: '短袖',
+    price: '36',
+    updateTime: '2018-08-30'
+  },
+  {
+    id: '201808300009',
+    productType: '居民用电电价',
+    productTypeSecond: '谷峰电价',
+    amount: '峰',
+    productName: '钱包',
+    price: '60',
+    updateTime: '2018-08-30'
+  },
+  {
+    id: '201808300011',
+    productType: '居民用电电价',
+    productTypeSecond: '谷峰电价',
+    amount: '平',
+    productName: '手套',
+    price: '60',
+    updateTime: '2018-08-30'
+  },
+  {
+    id: '201808300012',
+    productType: '居民用电电价',
+    productTypeSecond: '谷峰电价',
+    amount: '谷',
+    productName: '袜子',
+    price: '36',
+    updateTime: '2018-08-30'
+  },
+  {
+    id: '201808300013',
+    productType: '居民用电电价',
+    productTypeSecond: '合表电价',
+    amount: '合表电价',
+    productName: '雪碧',
+    price: '5',
+    updateTime: '2018-08-31'
+  },
+  {
+    id: '201808300013',
+    productType: '农业用电电价',
+    productTypeSecond: '稻田排灌、脱粒电度电价',
+    amount: '稻田排灌、脱粒电度电价',
+    productName: '风衣',
+    price: '50',
+    updateTime: '2018-08-31'
+  },
+  {
+    id: '201808300013',
+    productType: '农业用电电价',
+    productTypeSecond: '农业生产电度电价',
+    amount: '农业生产电度电价',
+    productName: '风衣',
+    price: '50',
+    updateTime: '2018-08-31'
+  }
+];
+const tableData2 = [
+  { value: '23', firstName: '电度电价', secondName: '基本电价', thirdName: '变压器容量' },
+  { value: '32', firstName: '电度电价', secondName: '基本电价', thirdName: '最大需量' },
+  { value: '63.81', firstName: '电度电价', secondName: '电度电价', thirdName: '1-10千伏' },
+  { value: '63.49', firstName: '电度电价', secondName: '电度电价', thirdName: '20千伏' },
+  { value: '61.31', firstName: '电度电价', secondName: '电度电价', thirdName: '35-110千伏' },
+  { value: '58.81', firstName: '电度电价', secondName: '电度电价', thirdName: '220千伏及以上' },
+  { value: '70.02', firstName: '一般工商业用电', secondName: '不满一千伏', thirdName: '220千伏及以上' },
+  { value: '67.52', firstName: '一般工商业用电', secondName: '1-10千伏', thirdName: '220千伏及以上' },
+  { value: '67.11', firstName: '一般工商业用电', secondName: '20千伏', thirdName: '220千伏及以上' },
+  { value: '65.02', firstName: '一般工商业用电', secondName: '35千伏及以上', thirdName: '220千伏及以上' },
+  { value: '60.32', firstName: '一般工商业用电', secondName: '地铁', thirdName: '220千伏及以上' }
+];
+const tableData = [{
+  id: '居民用水',
+  name: '第一阶梯（每户每月用水量26立方米及以下）',
+  amount1: '234',
+  amount2: '3.2',
+  amount3: 10
+}, {
+  id: '12987123',
+  name: '第二阶梯（每户每月用水量27-34立方米，含34立方米）',
+  amount1: '165',
+  amount2: '4.43',
+  amount3: 12
+}, {
+  id: '12987124',
+  name: '第三阶梯（每户每月用水量34立方米以上）',
+  amount1: '324',
+  amount2: '1.9',
+  amount3: 9
+}, {
+  id: '非居民用水',
+  name: '王小虎',
+  amount1: '621',
+  amount2: '2.2',
+  amount3: 17
+}, {
+  id: '特种用水',
+  name: '王小虎',
+  amount1: '539',
+  amount2: '4.1',
+  amount3: 15
+}];
+const tableData1 = [{
+  id: '类别：居民用气',
+  name: ''
+}, {
+  id: '第一档0-320（含）立方米/年',
+  name: '3.45元/立方米'
+
+}, {
+  id: '第二档320-400（含）立方米/年',
+  name: '4.14元/立方米）'
+
+}, {
+  id: '第三档400（含）立方米/年以上的用气部分',
+  name: '5.18元/立方米'
+
+}, {
+  id: '类别：非居民用气',
+  name: ''
+}, {
+  id: '统一最高限价',
+  name: '最高限价标准4.36元/立方米，经营者可以根据市场和经营情况下调标准'
+}];
+export { tableList, listData, tableData2, tableData, tableData1 };

@@ -3,7 +3,7 @@
  * @Author: mobai
  * @Date: 2023-03-23 09:42:05
  * @LastEditors: mobai
- * @LastEditTime: 2023-05-06 09:54:28
+ * @LastEditTime: 2023-06-29 14:34:38
  * @FilePath: \bookstore-Management\src\views\eleComponent\index.vue
 -->
 <template>
@@ -33,9 +33,10 @@
 </template>
 
 <script>
-import * as echarts from 'echarts';
+
 import QuarterPicker from '@/components/common/quarter-picker.vue';
 import QuarterPickerNew from '@/components/common/quarter-picker-new.vue';
+
 export default {
   name: 'EleComponent',
   components: { QuarterPicker, QuarterPickerNew },
@@ -52,6 +53,7 @@ export default {
       quarterDate: '2022-09',
       quarterDateNew: '2022年3季度',
       wordcloud: null
+
     };
   },
   mounted () {
@@ -82,4 +84,5 @@ export default {
   width: 500px;
   height: 500px;
 }
+
 </style>
