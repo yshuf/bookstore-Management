@@ -55,7 +55,9 @@ const configObj = {
     $: true,
     Vue: true,
     jQuery: true,
-    AMap: true
+    AMap: true,
+    _get: true,
+    _omit: true
   }
 };
 

@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack');
+const frameConfig = require('./frame.config')
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
@@ -47,19 +48,11 @@ module.exports = {
   configureWebpack: {
     // 全局 支持jquery 配置
     plugins: [
-      new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
-        'window.jQuery': 'jquery',
-        _get: ['lodash','get']
-      })
+      // 提供全局的变量，自动加载模块，而不必到处，import 或 require(如果有 eslint 需要在 .eslintrc.js 中配置 globals 否则代码中 eslint 校验会报错)
+      new webpack.ProvidePlugin(frameConfig.providePlugin)
     ],
     resolve: {
-      alias: {
-        "@": resolve('src'),
-        "@static": resolve('static'),
-        /* "@utils" : "/src/utils" */
-      }
+      alias: frameConfig.useAlias
     }
   }
 };

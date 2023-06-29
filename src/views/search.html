@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+		<title>输入提示后查询</title>
+		<link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+		<link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css" />
+<!-- 		<script type="text/javascript">
+			window._AMapSecurityConfig = {
+				securityJsCode: '你的安全秘钥',
+			}
+		</script> -->
+		<script type="text/javascript" src="//webapi.amap.com/maps?v=1.4.2&key=7640234d312d07985e824f000e0d954f&plugin=Map3D,AMap.DistrictSearch,Loca,AMap.DistrictLayer,SimpleMarker,DistrictExplorer,AMap.Autocomplete,AMap.Geolocation,AMap.Geocoder"></script>
+		<script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+		<style type="text/css">
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				margin: 0px;
+				font-size: 14px;
+			}
+
+			.map {
+				height: 100%;
+				width: 100%;
+				float: left;
+			}
+
+			#container {
+				height: calc(100% - 100px);
+				position: relative;
+				background-color: #fff;
+				text-align: left;
+				border: 2px solid #3d6eff;
+				border-right: none;
+				border-left: none;
+			}
+
+			#tipinput {
+				border: 1px solid #ced4da;
+			}
+
+			.search_input {
+				margin: 0 10px 0 0;
+				height: 32px;
+				padding: 0 10px;
+				line-height: 32px;
+				border: 1px solid #d7d8d9;
+				border-radius: 2px;
+			}
+
+			div {
+				display: block;
+			}
+
+			#abc {
+				width: 980px;
+				background: #fff;
+				margin: 10px auto;
+				padding: 0 0 10px 10px;
+			}
+
+			table {
+				border-spacing: 0;
+				width: 100%;
+			}
+
+			.picker-btn {
+				background: #3d6eff;
+				display: inline-block;
+				height: 32px;
+				line-height: 32px;
+				padding: 0 20px;
+				text-decoration: none;
+				color: #fff;
+				border-radius: 2px;
+				font-size: 15px;
+			}
+			#copySuccessMessage{
+				font-size: 12px;
+				color: #20d1b5;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="hd" class="barn clearfix">
+			<div id="abc">
+				<table>
+					<tbody>
+						<tr class="tr-radio">
+							<td>
+								<label>按关键字搜索：</label>
+							</td>
+							<td>
+								<label>坐标获取结果：</label>
+								<span id="copySuccessMessage" class="message" style="display: none;">复制成功！</span>
+							</td>
+						</tr>
+						<tr class="tr-text">
+							<td data-spm-anchor-id="0.0.0.i4.37607632hLHuju">
+								<input type="text" style="width: 280px;" class="search_input" name="search" id="tipinput" placeholder="请输入关键字进行搜索"
+								 data-spm-anchor-id="0.0.0.i3.37607632hLHuju">
+							</td>
+							<td>
+								<input type="text" style="width: 280px;" class="search_input" id="txtCoordinate" name="coordinate" readonly="">
+								<a href="javascript:;" title="复制" class="picker-btn picker-copy" id="copy_text" onclick="copyText()">复制</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div id="container"></div>
+		<!-- <div id="myPageTop">
+			<table>
+				<tr>
+					<td>
+						<label>请输入关键字：</label>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input id="tipinput" />
+					</td>
+				</tr>
+			</table>
+		</div> -->
+<!-- 		<div class="input-card">
+			<h4>左击获取经纬度：</h4>
+			<div class="input-item">
+				<input type="text" readonly="true" id="lnglat">
+			</div>
+		</div> -->
+		<script type="text/javascript">
+			//地图加载
+			var map = new window.AMap.Map("container", {
+				resizeEnable: true
+			});
+			//输入提示
+			var autoOptions = {
+				input: "tipinput"
+			};
+
+			AMap.plugin(['AMap.PlaceSearch', 'AMap.AutoComplete'], function() {
+				var auto = new AMap.Autocomplete(autoOptions);
+				var placeSearch = new AMap.PlaceSearch({
+					map: map
+				}); //构造地点查询类
+				auto.on("select", select); //注册监听，当选中某条记录时会触发
+
+				function select(e) {
+					placeSearch.setCity(e.poi.adcode);
+					placeSearch.search(e.poi.name); //关键字查询查询
+				}
+			});
+
+			//为地图注册click事件获取鼠标点击出的经纬度坐标
+			map.on('click', function(e) {
+				document.getElementById("txtCoordinate").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
+			});
+
+			function copyText() {
+				var input = document.getElementById("txtCoordinate");
+				input.select(); // 选中文本
+				document.execCommand("copy"); // 执行浏览器复制命令
+
+				//文字展示
+				document.getElementById("copySuccessMessage").style.display="";
+
+				setTimeout(function(){
+					document.getElementById("copySuccessMessage").style.display="none";
+				},1000);
+
+			}
+		</script>
+	</body>
+</html>

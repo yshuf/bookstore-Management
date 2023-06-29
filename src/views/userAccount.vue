@@ -47,6 +47,16 @@
         >
       </div>
     </div>
+    <p>步骤条</p>
+    <common-step :stepList="stepList"></common-step>
+
+    <p>进度条</p>
+    <common-progress :dataList="processList"></common-progress>
+
+    <p>进度图表</p>
+    <gradient-progress :data="gradientData"></gradient-progress>
+
+    <hr>
     <el-table :data="tableData" style="100%" :span-method="objectSpanMethod" :header-cell-style="headerMerge">
       <el-table-column prop="id" label="用水类型" width="200" align="left"></el-table-column>
       <el-table-column prop="name" label="姓名" width="350"></el-table-column>
@@ -106,10 +116,51 @@
 
 <script>
 import tableJsonData from './tableData.json';// 引入本地数据
+import CommonStep from '@/components/common/commonStep';
+import CommonProgress from '@/components/common/commonProgress';
+import GradientProgress from '@/components/common/bg-gradient/yellow-gradient';
 export default {
   name: 'UserAccount',
+  components: { CommonStep, CommonProgress, GradientProgress },
   data () {
     return {
+      gradientData: {
+        targetValue: 50,
+        nowValue: 10,
+        rate: '10%'
+      },
+      stepList: [
+        {
+          num: 1,
+          desc: '填写申报材料',
+          highlight: true
+        },
+        {
+          num: 2,
+          desc: '等待审核',
+          highlight: false
+        },
+        {
+          num: 3,
+          desc: '具备领取资格',
+          highlight: false
+        }
+      ],
+      processList: [
+        {
+          name: '数据1',
+          time: '2022-10-25'
+        },
+        {
+          name: '数据2',
+          time: ''
+        },
+        {
+          name: '数据3',
+          time: '2022-10-25'
+        }
+      ],
+      dataList: [],
       value: '',
       key: '',
       time: '',
@@ -997,7 +1048,6 @@ _row：代表合并行的行数，_row 的值要么是 1，或者更大的自然
       }
       if (columnIndex === 1) {
         const _row = this.testArr2[rowIndex];
-        console.log(_row);
         const _col = this.testArrCols[rowIndex] === 2 ? 2 : _row > 0 ? 1 : 0;
         return {
           rowspan: _row,

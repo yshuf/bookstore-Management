@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import NProgress from 'nprogress';
-import Layout from '@/layout/index.vue';
+import Layout from '@/layout/noLayout.vue';
 
 Vue.use(VueRouter);
 
@@ -31,10 +31,10 @@ const router = new VueRouter({
           name: 'homePage',
           component: () => import('@/views/homePage/index.vue'),
           meta: { title: '首页', icon: 'dashboard', affix: true }
-        },
+        }
       ]
     }, // 重定向
-   /*  {
+    /*  {
       path: '/homePage',
       name: 'homePage',
       component: () => import('@/views/homePage/index.vue'),
@@ -103,6 +103,14 @@ const router = new VueRouter({
           component: () => import('@/views/userAccount.vue')
         },
         {
+          path: '/ele-component',
+          name: 'ele-component',
+          meta: {
+            title: '基于elementui封装的组件'
+          },
+          component: () => import('@/views/eleComponent/index.vue')
+        },
+        {
           path: '/adminAccount',
           name: 'AdminAccount',
           meta: {
@@ -149,6 +157,14 @@ const router = new VueRouter({
             title: '下载中心'
           },
           component: () => import('@/views/download.vue')
+        },
+        {
+          path: '/previewPdf',
+          name: 'PreviewPDF',
+          meta: {
+            title: 'pdf下载'
+          },
+          component: () => import('@/views/pdf/previewPdf.vue')
         }
       ]
     }
@@ -160,7 +176,7 @@ const router = new VueRouter({
 //   routers
 // });
 
-const whiteList = ['/homePage', '/login','/echartsPage','/map_build','/mapOverview'];
+const whiteList = ['/homePage', '/login', '/echartsPage', '/map_build', '/mapOverview'];
 
 // 挂载路由导航守卫
 router.beforeEach((to, from, next) => {
@@ -171,14 +187,14 @@ router.beforeEach((to, from, next) => {
 
   const tokenStr = window.sessionStorage.getItem('token');
   if (tokenStr) {
-    next()
-  }else {
+    next();
+  } else {
     // to：将要访问的路径 from：代表从哪个路径调转而来 next：放行  next('/login') 强制调转到某路径
     if (whiteList.indexOf(to.path) !== -1) {
-      next()
+      next();
     } else {
-      next('/login')
-      NProgress.done()
+      next('/login');
+      NProgress.done();
     };
   }
 });

@@ -231,3 +231,105 @@ export const IndexModuleSkipList = [
   { id: 5, name: '企业风采', detailUrl: 'entStyleDetail', listUrl: 'entStyle' },
   { id: 6, name: '活动中心', detailUrl: 'entCultivationDetail', listUrl: 'entCultivation' }
 ];
+
+export const MenuList = [
+  {
+    id: 99,
+    authName: '数据统计',
+    path: 'overview',
+    children: [
+      {
+        id: 100,
+        authName: '概览统计',
+        path: 'overview',
+        children: []
+      }
+    ]
+  },
+  {
+    id: 101,
+    authName: '账号管理',
+    path: 'userAccount',
+    children: [
+      {
+        id: 102,
+        authName: '常用组件封装',
+        path: 'userAccount',
+        children: []
+      },
+      {
+        id: 102,
+        authName: '基于element组件',
+        path: 'ele-component',
+        children: []
+      },
+      {
+        id: 103,
+        authName: '员工账号',
+        path: 'adminAccount',
+        children: []
+      }
+    ]
+  },
+  {
+    id: 105,
+    authName: '书籍管理',
+    path: 'bookManagement',
+    children: [
+      {
+        id: 106,
+        authName: '书籍列表',
+        path: 'bookManagement',
+        children: []
+      },
+      {
+        id: 107,
+        authName: '分类参数',
+        path: 'sortParams',
+        children: []
+      },
+      {
+        id: 108,
+        authName: '书籍分类',
+        path: 'booksSort',
+        children: []
+      }
+    ]
+  },
+  {
+    id: 106,
+    authName: '风险预警',
+    path: 'riskOverview',
+    children: [
+      {
+        id: 107,
+        authName: '风险概览',
+        path: 'riskOverview',
+        children: []
+      }
+    ]
+  },
+  {
+    id: 108,
+    authName: '下载中心',
+    path: 'download'
+  },
+  {
+    id: 104,
+    authName: '个人中心',
+    path: 'userCenter',
+    children: [
+      {
+        id: 105,
+        authName: '个人中心',
+        path: 'userCenter',
+        children: []
+      }
+    ]
+  },
+  {
+    id: 109,
+    authName: 'pdf预览',
+    path: 'previewPdf'
+  }
+];

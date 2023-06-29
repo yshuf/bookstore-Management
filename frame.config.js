@@ -1,7 +1,11 @@
 'use strict';
+const path = require('path');
 /**
  * webpack 打包自定义扩展配置文件
  */
+function resolve (dir) {
+  return path.join(__dirname, dir);
+}
 module.exports = {
   // 网站名称
   sys_app_title: '简易书店管理系统', // 网站名称，html 的 title 标签
@@ -11,6 +15,7 @@ module.exports = {
   // 需要 px2rem 的文件或模块（路径用 `/` 分割）从 src 路径开始，如果其它页面不在 src 中需要将路径层级达到 src 这一层，如果到模块这一层则转换该模块下的所有文件，示例：['src/views/home/index.vue', 'src/views/service-platform/setting/frame']
   px2RemModule: [
     'src/views/login/Login.vue'
+    // 'src/views/overview.vue'
   ],
   providePlugin: {
     $: 'jquery',
@@ -53,21 +58,21 @@ module.exports = {
   extensions: ['.js', '.vue'],
   // 自定义 alias 别名
   useAlias: {
-    '@': 'src',
-    '@public': 'public',
-    '@static': 'static',
-    '@node_modules': 'node_modules',
-    '@assets': 'src/assets',
-    '@config': 'src/config',
-    '@plugins': 'src/plugins',
-    '@utils': 'src/utils',
-    '@views': 'src/views',
-    '@packages': 'src/packages',
-    '@mock': 'src/mock',
-    '@service': 'src/service',
-    '@constant': 'src/common/constant',
-    '@store': 'src/store',
-    '@router': 'src/router'
+    '@': resolve('src'),
+    '@public': resolve('public'),
+    '@static': resolve('static'),
+    '@node_modules': resolve('node_modules'),
+    '@assets': resolve('src/assets'),
+    '@config': resolve('src/config'),
+    '@plugins': resolve('src/plugins'),
+    '@utils': resolve('src/utils'),
+    '@views': resolve('src/views'),
+    '@packages': resolve('src/packages'),
+    '@mock': resolve('src/mock'),
+    '@service': resolve('src/service'),
+    '@constant': resolve('src/common/constant'),
+    '@store': resolve('src/store'),
+    '@router': resolve('src/router')
   },
   // 指定的依赖库不会被 splitChunks 分割到 otherDependencies 缓存组内
   removeOtherDependenciesCacheGroupsLibs: [
@@ -88,16 +93,8 @@ module.exports = {
       // 'https://webapi.amap.com/maps?v=1.4.15&key=18e937d8fe8b6995e154df46fb07db83&plugin=Loca,Map3D,AMap.DistrictLayer,AMap.CustomLayer,AMap.DistrictSearch,AMap.Heatmap,AMap.MarkerClusterer'
       'https://webapi.amap.com/maps?key=7640234d312d07985e824f000e0d954f&v=1.4.15&plugin=Map3D,AMap.DistrictSearch,Loca,AMap.DistrictLayer,SimpleMarker,DistrictExplorer,' // 高德地图
       // '/static/plugins/wangEditor/3.1.1/wangEditor.min.js', // 富文本编辑器插件
-      // 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js', // html转pdf并且下载
-      // 'https://cdn.bootcdn.net/ajax/libs/jspdf/1.5.3/jspdf.min.js',
       // 'https://cdn.bootcdn.net/ajax/libs/d3/5.16.0/d3.min.js', // d3
       // 'https://cdn.bootcdn.net/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js'
-      /* {
-        path:
-          'https://cdn.bootcdn.net/ajax/libs/html2canvas/0.4.1/html2canvas.min.js?_bid=100',
-        async: true,
-        defer: true
-      } */
     ],
     outsideCss: [
       '/static/plugins/wangEditor/3.1.1/wangEditor.min.css', // 富文本编辑器插件

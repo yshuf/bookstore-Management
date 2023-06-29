@@ -6,21 +6,23 @@
         <div
         ref="myChart"
         class="lineCharts"
-        id="lineCharts"
       ></div>
       </div>
+      <div v-if="isShowClose" class="closeStyle">
+      <i class="el-icon-close pointer" @click.stop="handleHide"></i>
+    </div>
       <div class="module_item" ref="topCenter" @click="handleShowAll('topCenter')" v-show="handleHideOther('topCenter')">
-        <div id="bookRank"  ref="bookRankChart" class="bookRankChart"></div>
+        <div   ref="bookRankChart" class="bookRankChart"></div>
       </div>
       <div class="module_item" ref="topRight" @click="handleShowAll('topRight')" v-show="handleHideOther('topRight')">
-        <div  id="loginChart" ref="loginChart" class="loginChart"></div>
+        <div   ref="loginChart" class="loginChart"></div>
       </div>
       <div class="module_item" ref="bottomLeft" @click="handleShowAll('bottomLeft')" v-show="handleHideOther('bottomLeft')">
-        <div  id="dealAmount"  ref="trendEchart" class="trendEchart">
+        <div    ref="trendEchart" class="trendEchart">
       </div>
       </div>
       <div class="module_item"  ref="bottomCenter" @click="handleShowAll('bottomCenter')" v-show="handleHideOther('bottomCenter')">
-        <div class="rose-box" ref="roseCharts"></div>
+        <div  ref="roseCharts" class="roseCharts"></div>
       </div>
       <div class="module_item" ref="bottomRight" @click="handleShowAll('bottomRight')" v-show="handleHideOther('bottomRight')">
         <div>上下滚动无缝轮播</div>
@@ -40,6 +42,10 @@
           </div>
         </vueSeamlessScroll>
       </div>
+
+      <div class="module_item"  ref="listedEntSpread" @click="handleShowAll('listedEntSpread')" v-show="handleHideOther('listedEntSpread')">
+        <div  ref="spreadChart" class="spreadChart"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -49,6 +55,8 @@ import * as echarts from 'echarts';
 import vueSeamlessScroll from 'vue-seamless-scroll';
 import { rosePieOption } from '../plugins/index';
 import { mixins } from './common/dialogMinxin.js';
+import html2canvas from '@static/pdf/html2canvas.js';
+import jsPDF from '@static/pdf/jspdf.debug.js';
 export default {
   name: 'Overview',
   mixins: [mixins],
@@ -60,6 +68,7 @@ export default {
       loginChart: null,
       trendEchart: null,
       roseCharts: null,
+      listedEntChart: null,
       listData: [
         { number: 1, unit: '家', bookName: '秘密', num: '50' },
         { number: 2, unit: '家', bookName: '白夜行', num: '50' },
@@ -184,14 +193,185 @@ export default {
     this.$nextTick(function () {
       this.drawLine();
       // this.initChart();
+      // this.intListedEntSpreadChart();
     });
 
     this.dealData();
   },
   methods: {
-    // 导出pdf
-    exportPDf () {
+    intListedEntSpreadChart () {
+      this.listedEntChart = echarts.init(this.$refs.spreadChart);
+      const option = {
+        // 你的代码
+        color: ['#FFC824', '#E2657A', '#67F1CC', '#4CB9F7', '#D6EAF2', '#9253DF'],
+        title: {
+          text: 550,
+          subtext: '数量',
+          // sitemGap: 20,
+          x: 'center',
+          y: '25%',
+          textStyle: {
+            fontSize: 24,
+            fontWeight: 'bold',
+            color: '#000'
+          },
+          subtextStyle: {
+            fontSize: 16,
+            fontWeight: 'normal',
+            align: 'center',
+            color: '#000'
+          }
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b}: {c} ({d}%)'
+        },
+        legend: {
+          width: '70%',
+          orient: 'horizontal',
+          bottom: '5%',
+          itemWidth: 10,
+          itemHeight: 10,
+          itemGap: 20,
+          textStyle: {
+            color: '#000',
+            fontSize: 14
+          }
+        },
+        series: [
+          {
+            name: '上市企业分布',
+            type: 'pie',
+            selectedMode: 'single',
+            center: ['50%', '35%'],
+            radius: ['30%', '40%'],
+            label: {
+              padding: [80, 0, -80, -20],
+              formatter: '{b}\n\n{c}',
+              color: '#000',
+              fontSize: 12,
+              position: 'outside',
+              padding: [0, -40, 0, -30]
+            },
+            labelLine: {
+              length: 10,
+              length2: 70,
+              show: true,
+              color: '#00ffff',
+              fontSize: 15
+            },
+            data: [{ name: 'aaa', value: '30' }, { name: 'bbb', value: '3' }, { name: 'ccc', value: '10' }, { name: 'ddd', value: '20' }]
+          },
+          {
+            color: ['#163d59'],
+            type: 'gauge',
+            center: ['50%', '35%'],
+            startAngle: 150,
+            endAngle: -209.999,
+            splitNumber: 12,
+            radius: '20%',
+            pointer: {
+              show: false
+            },
+            progress: {
+              show: false,
+              roundCap: true,
+              width: 1
+            },
+            axisLine: {
+              show: false,
+              lineStyle: {
+                width: 10,
+                color: [
+                  [0, '#163d59'],
+                  [0.5, '#163d59'],
+                  [1, '#163d59']
+                ]
+              }
+            },
+            axisTick: {
+              distance: -25,
+              length: 12,
+              splitNumber: 5,
+              lineStyle: {
+                width: 2,
+                color: 'rgba(0, 0, 0, 0.05)'
+              }
+            },
+            splitLine: {
+              show: false,
+              distance: -35,
+              length: 10,
+              lineStyle: {
+                width: 2,
+                color: '#099fe4'
+              }
+            },
+            axisLabel: {
+              show: false
+            },
+            anchor: {
+              show: false
+            },
+            title: {
+              show: false
+            },
+            detail: {
+              show: false
+            },
+            data: []
+          },
+          {
+            // 外层阴影圈
+            name: '阴影圈',
+            type: 'pie',
+            radius: ['40%', '50%'],
+            center: ['50%', '35%'],
+            emphasis: {
+              scale: false
+            },
+            tooltip: {
+              show: false
+            },
+            itemStyle: {
+              normal: {
+                labelLine: {
+                  show: false
+                },
+                color: new echarts.graphic.RadialGradient(0.5, 0.5, 1, [
+                  {
+                    offset: 1,
+                    color: 'rgba(46, 114, 156, 0.0374)'
+                  },
+                  {
+                    offset: 0.5,
+                    color: 'rgba(149, 214, 255, 0.17)'
+                  },
+                  {
+                    offset: 0,
+                    color: 'rgba(46, 114, 156, 0.0374)'
+                  }
+                ]),
+                shadowBlur: 60
+              }
+            },
+            labelLine: {
+              show: false
+            },
+            data: [100]
+          }
+        ]
+      };
 
+      this.listedEntChart.setOption(option);
+      this.resizeChart('listedEntChart', 'spreadChart');
+    },
+    resizeChart (obj, refs) {
+      // 使用window.addEventListener监听只会在窗口大小改变的时候重新绘制图表，可通过ResizeObserver来监听图表容器的大小变化实现图表自适应
+      const ro = new ResizeObserver(e => {
+        this[obj].resize();
+      });
+      ro.observe(this.$refs[refs]);
     },
     downloadReport () {
       this.isImport = true;
@@ -274,15 +454,12 @@ export default {
         });
     },
     drawLine () {
-      this.myChart = echarts.init(document.getElementById('lineCharts'));
-      this.bookRankChart = echarts.init(
-        document.getElementById('bookRank')
-      );
-      this.loginChart = echarts.init(
-        document.getElementById('loginChart')
-      );
+      this.myChart = echarts.init(this.$refs.myChart);
+      this.bookRankChart = echarts.init(this.$refs.bookRankChart);
+      this.loginChart = echarts.init(this.$refs.loginChart);
       this.trendEchart = echarts.init(this.$refs.trendEchart);
       this.roseCharts = echarts.init(this.$refs.roseCharts);
+      this.intListedEntSpreadChart();
       this.chartResize();
       const max = Math.max.apply(Math, this.userAmount.concat(this.dealAmount));
       this.myChart.setOption({
@@ -666,12 +843,13 @@ export default {
         'bookRankChart',
         'loginChart',
         'trendEchart',
-        'roseCharts'
+        'roseCharts',
+        'spreadChart'
       ];
       chartList.forEach(item => {
         // 使用window.addEventListener监听只会在窗口大小改变的时候重新绘制图表，可通过ResizeObserver来监听图表容器的大小变化实现图表自适应
         const ro = new ResizeObserver(e => {
-          this[item].resize();
+          this[item] && this[item].resize();
         });
         ro.observe(this.$refs[item]);
       });
@@ -706,7 +884,7 @@ export default {
       height:50%;
       margin-bottom: 20px;
       box-sizing: border-box;
-      .lineCharts,.bookRankChart,.loginChart,.trendEchart,.rose-box {
+      .lineCharts,.bookRankChart,.loginChart,.trendEchart,.roseCharts,.spreadChart {
         width: 100%;
         height: 100%;
       }
