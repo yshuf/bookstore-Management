@@ -1,30 +1,63 @@
 <template>
   <div id="overview_container">
-    <div class="title" ref="title" v-show="handleHideOther('title')" @click="downloadReport()">统计概览</div>
+    <div
+      class="title"
+      ref="title"
+      v-show="handleHideOther('title')"
+      @click="downloadReport()"
+    >
+      统计概览
+    </div>
     <div class="dataCharts">
-      <div class="module_item" ref="topLeft" @click="handleShowAll('topLeft')" v-show="handleHideOther('topLeft')">
-        <div
-        ref="myChart"
-        class="lineCharts"
-      ></div>
+      <div
+        class="module_item"
+        ref="topLeft"
+        @click="handleShowAll('topLeft')"
+        v-show="handleHideOther('topLeft')"
+      >
+        <div ref="myChart" class="lineCharts"></div>
       </div>
       <div v-if="isShowClose" class="closeStyle">
-      <i class="el-icon-close pointer" @click.stop="handleHide"></i>
-    </div>
-      <div class="module_item" ref="topCenter" @click="handleShowAll('topCenter')" v-show="handleHideOther('topCenter')">
-        <div   ref="bookRankChart" class="bookRankChart"></div>
+        <i class="el-icon-close pointer" @click.stop="handleHide"></i>
       </div>
-      <div class="module_item" ref="topRight" @click="handleShowAll('topRight')" v-show="handleHideOther('topRight')">
-        <div   ref="loginChart" class="loginChart"></div>
+      <div
+        class="module_item"
+        ref="topCenter"
+        @click="handleShowAll('topCenter')"
+        v-show="handleHideOther('topCenter')"
+      >
+        <div ref="bookRankChart" class="bookRankChart"></div>
       </div>
-      <div class="module_item" ref="bottomLeft" @click="handleShowAll('bottomLeft')" v-show="handleHideOther('bottomLeft')">
-        <div    ref="trendEchart" class="trendEchart">
+      <div
+        class="module_item"
+        ref="topRight"
+        @click="handleShowAll('topRight')"
+        v-show="handleHideOther('topRight')"
+      >
+        <div ref="loginChart" class="loginChart"></div>
       </div>
+      <div
+        class="module_item"
+        ref="bottomLeft"
+        @click="handleShowAll('bottomLeft')"
+        v-show="handleHideOther('bottomLeft')"
+      >
+        <div ref="trendEchart" class="trendEchart"></div>
       </div>
-      <div class="module_item"  ref="bottomCenter" @click="handleShowAll('bottomCenter')" v-show="handleHideOther('bottomCenter')">
-        <div  ref="roseCharts" class="roseCharts"></div>
+      <div
+        class="module_item"
+        ref="bottomCenter"
+        @click="handleShowAll('bottomCenter')"
+        v-show="handleHideOther('bottomCenter')"
+      >
+        <div ref="roseCharts" class="roseCharts"></div>
       </div>
-      <div class="module_item" ref="bottomRight" @click="handleShowAll('bottomRight')" v-show="handleHideOther('bottomRight')">
+      <div
+        class="module_item"
+        ref="bottomRight"
+        @click="handleShowAll('bottomRight')"
+        v-show="handleHideOther('bottomRight')"
+      >
         <div>上下滚动无缝轮播</div>
         <vueSeamlessScroll
           :data="listData"
@@ -43,8 +76,13 @@
         </vueSeamlessScroll>
       </div>
 
-      <div class="module_item"  ref="listedEntSpread" @click="handleShowAll('listedEntSpread')" v-show="handleHideOther('listedEntSpread')">
-        <div  ref="spreadChart" class="spreadChart"></div>
+      <div
+        class="module_item"
+        ref="listedEntSpread"
+        @click="handleShowAll('listedEntSpread')"
+        v-show="handleHideOther('listedEntSpread')"
+      >
+        <div ref="spreadChart" class="spreadChart"></div>
       </div>
     </div>
   </div>
@@ -60,7 +98,7 @@ import jsPDF from '@static/pdf/jspdf.debug.js';
 export default {
   name: 'Overview',
   mixins: [mixins],
-  data () {
+  data() {
     return {
       id: '',
       myChart: null,
@@ -71,16 +109,16 @@ export default {
       listedEntChart: null,
       listData: [
         { number: 1, unit: '家', bookName: '秘密', num: '50' },
-        { number: 2, unit: '家', bookName: '白夜行', num: '50' },
+        { number: 2, unit: '家', bookName: '白夜行', num: '550' },
         { number: 3, unit: '家', bookName: '追风筝的人', num: '50' },
-        { number: 4, unit: '家', bookName: '白夜行', num: '50' },
+        { number: 4, unit: '家', bookName: '白夜行', num: '250' },
+        { number: 5, unit: '家', bookName: '白夜行', num: '450' },
+        { number: 5, unit: '家', bookName: '白夜行', num: '150' },
+        { number: 5, unit: '家', bookName: '白夜行', num: '500' },
         { number: 5, unit: '家', bookName: '白夜行', num: '50' },
+        { number: 5, unit: '家', bookName: '白夜行', num: '5' },
         { number: 5, unit: '家', bookName: '白夜行', num: '50' },
-        { number: 5, unit: '家', bookName: '白夜行', num: '50' },
-        { number: 5, unit: '家', bookName: '白夜行', num: '50' },
-        { number: 5, unit: '家', bookName: '白夜行', num: '50' },
-        { number: 5, unit: '家', bookName: '白夜行', num: '50' },
-        { number: 5, unit: '家', bookName: '白夜行', num: '50' }
+        { number: 5, unit: '家', bookName: '白夜行', num: '15' }
       ],
       dealTotalAmount: [
         { number: 1, unit: '家', name: '白夜行', num: '50' },
@@ -171,7 +209,7 @@ export default {
   components: { vueSeamlessScroll },
   computed: {
     // 公告滚动自定义
-    defaultOption () {
+    defaultOption() {
       return {
         step: 0.8, // 数值越大速度滚动越快
         limitMoveNum: this.listData.length, // 开始无缝滚动的数据量 this.dataList.length
@@ -184,13 +222,13 @@ export default {
       };
     }
   },
-  created () {
+  created() {
     this.id = Math.random()
       .toString(36)
       .substr(2);
   },
-  mounted () {
-    this.$nextTick(function () {
+  mounted() {
+    this.$nextTick(function() {
       this.drawLine();
       // this.initChart();
       // this.intListedEntSpreadChart();
@@ -199,11 +237,18 @@ export default {
     this.dealData();
   },
   methods: {
-    intListedEntSpreadChart () {
+    intListedEntSpreadChart() {
       this.listedEntChart = echarts.init(this.$refs.spreadChart);
       const option = {
         // 你的代码
-        color: ['#FFC824', '#E2657A', '#67F1CC', '#4CB9F7', '#D6EAF2', '#9253DF'],
+        color: [
+          '#FFC824',
+          '#E2657A',
+          '#67F1CC',
+          '#4CB9F7',
+          '#D6EAF2',
+          '#9253DF'
+        ],
         title: {
           text: 550,
           subtext: '数量',
@@ -260,7 +305,12 @@ export default {
               color: '#00ffff',
               fontSize: 15
             },
-            data: [{ name: 'aaa', value: '30' }, { name: 'bbb', value: '3' }, { name: 'ccc', value: '10' }, { name: 'ddd', value: '20' }]
+            data: [
+              { name: 'aaa', value: '30' },
+              { name: 'bbb', value: '3' },
+              { name: 'ccc', value: '10' },
+              { name: 'ddd', value: '20' }
+            ]
           },
           {
             color: ['#163d59'],
@@ -366,14 +416,14 @@ export default {
       this.listedEntChart.setOption(option);
       this.resizeChart('listedEntChart', 'spreadChart');
     },
-    resizeChart (obj, refs) {
+    resizeChart(obj, refs) {
       // 使用window.addEventListener监听只会在窗口大小改变的时候重新绘制图表，可通过ResizeObserver来监听图表容器的大小变化实现图表自适应
       const ro = new ResizeObserver(e => {
         this[obj].resize();
       });
       ro.observe(this.$refs[refs]);
     },
-    downloadReport () {
+    downloadReport() {
       this.isImport = true;
       this.$message.info('正在导出中...');
       console.log('开始导出');
@@ -406,7 +456,7 @@ export default {
       };
       // eslint-disable-next-line no-undef
       html2canvas(DomName, opts)
-        .then(function (canvas) {
+        .then(function(canvas) {
           var context = canvas.getContext('2d');
           // 【重要】关闭抗锯齿
           context.mozImageSmoothingEnabled = false;
@@ -416,7 +466,7 @@ export default {
           var imgData = canvas.toDataURL('image/', 1.0); // 转化成base64格式,可上网了解此格式
           var img = new Image();
           img.src = imgData;
-          img.onload = function () {
+          img.onload = function() {
             img.width = img.width / 1.5; // 因为在上面放大了2倍，生成image之后要/2
             img.height = img.height / 1.5;
             img.style.transform = 'scale(0.5)';
@@ -453,7 +503,7 @@ export default {
           this.$message.error('导出失败');
         });
     },
-    drawLine () {
+    drawLine() {
       this.myChart = echarts.init(this.$refs.myChart);
       this.bookRankChart = echarts.init(this.$refs.bookRankChart);
       this.loginChart = echarts.init(this.$refs.loginChart);
@@ -503,7 +553,7 @@ export default {
             data: [200, 10, 52, 334, 390],
             itemStyle: {
               normal: {
-                color: function (params) {
+                color: function(params) {
                   const colorList = [
                     '#FBC103',
                     'rgba(0, 183, 147, 0.6)',
@@ -781,7 +831,7 @@ export default {
       this.roseCharts.setOption(options);
     },
 
-    initChart () {
+    initChart() {
       this.roseCharts = echarts.init(this.$refs.roseCharts);
       const colors = [
         '#21ce9b',
@@ -827,7 +877,7 @@ export default {
       this.roseCharts.setOption(options);
     },
 
-    dealData () {
+    dealData() {
       this.loginTrend.map(item => {
         this.userAmount.push(item.sql);
         this.time.push(item.date);
@@ -837,7 +887,7 @@ export default {
     /**
      * @desc 图表自适应
      */
-    chartResize () {
+    chartResize() {
       const chartList = [
         'myChart',
         'bookRankChart',
@@ -881,10 +931,15 @@ export default {
       background: #fff;
       padding: 20px;
       width: 32.5%;
-      height:50%;
+      height: 50%;
       margin-bottom: 20px;
       box-sizing: border-box;
-      .lineCharts,.bookRankChart,.loginChart,.trendEchart,.roseCharts,.spreadChart {
+      .lineCharts,
+      .bookRankChart,
+      .loginChart,
+      .trendEchart,
+      .roseCharts,
+      .spreadChart {
         width: 100%;
         height: 100%;
       }

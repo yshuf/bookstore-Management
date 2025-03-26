@@ -4,7 +4,12 @@
       <div class="login_box_top">
         <div class="login_box_item">热线电话：xxxxxxxx</div>
         <div class="login_box">
-          <div class="login_box_item" @click="$router.push({name: 'helpCenter'})">帮助中心</div>
+          <div
+            class="login_box_item"
+            @click="$router.push({ name: 'helpCenter' })"
+          >
+            帮助中心
+          </div>
           <div class="login_box_item erweima">
             <i class="iconfont icon-lingquqiyefuwuma"></i>领取企业服务码
             <!-- <img src="@/assets/home/erweima.png" alt=""> -->
@@ -56,7 +61,10 @@
                   type="text"
                   class="searchTxt input-border"
                   placeholder="请输入搜索关键词"
-                  :style="{'color':keyword?'#000':'#bbc9d7', 'border-color': isHome?'#fff':'#127ae6'}"
+                  :style="{
+                    color: keyword ? '#000' : '#bbc9d7',
+                    'border-color': isHome ? '#fff' : '#127ae6'
+                  }"
                   v-model="keyword"
                   @keyup.enter="searchByKeyword"
                 />
@@ -88,12 +96,24 @@
             v-for="(item, index) in navList"
             :key="index"
             @click="(activeIndex = index), goToRouter(item)"
-            @mouseenter="showChilds=true"
-            @mouseleave="showChilds=false"
+            @mouseenter="showChilds = true"
+            @mouseleave="showChilds = false"
           >
-            <span :class="activeIndex == index ? 'active' : ''">{{ item.label }} </span>
+            <span :class="activeIndex == index ? 'active' : ''"
+              >{{ item.label }}
+            </span>
             <div class="childList" v-if="showChilds">
-              <div :class="['childList_item', childName == child.name ? 'childActive' : '']" v-for="(child,i) in item.children" :key="i" @click="goToRouter(child)">{{child.label}}</div>
+              <div
+                :class="[
+                  'childList_item',
+                  childName == child.name ? 'childActive' : ''
+                ]"
+                v-for="(child, i) in item.children"
+                :key="i"
+                @click="goToRouter(child)"
+              >
+                {{ child.label }}
+              </div>
             </div>
           </div>
         </div>
@@ -107,7 +127,7 @@ import { PORTAL_MENUS } from '@/common/commonConstant';
 import { mapGetters } from 'vuex';
 export default {
   name: 'AppHeader',
-  data: function () {
+  data: function() {
     return {
       activeIndex: null,
       searchIndex: 0,
@@ -138,18 +158,6 @@ export default {
           path: 'entCultivation'
         },
         {
-          name: '部门',
-          path: 'department'
-        },
-        {
-          name: '镇街',
-          path: 'StreetService'
-        },
-        {
-          name: '园区',
-          path: 'parkStyle'
-        },
-        {
           name: '需求',
           path: 'entNeeds'
         }
@@ -163,7 +171,7 @@ export default {
      * @description 解决刷新后的activeIndex未选中问题,方法是定义的路由路径的第一个path必须和navList的name一致
      */
     $route: {
-      handler (to, from) {
+      handler(to, from) {
         const path = to.path.split('/').slice(1) || [];
         if (path.length > 0) {
           const currentPath = path[0] || '';
@@ -192,27 +200,27 @@ export default {
       },
       immediate: true
     },
-    getKeyword (val) {
+    getKeyword(val) {
       if (val === '') {
         this.keyword = '';
       }
     }
   },
-  created () {},
-  mounted () {
+  created() {},
+  mounted() {
     this.$store.dispatch('app/setKeyword', '');
   },
   computed: {
     ...mapGetters(['getLoginStatus', 'name', 'getKeyword']),
-    isHome () {
+    isHome() {
       return this.$route.name === 'home';
     },
-    logoUrl () {
+    logoUrl() {
       return require('@/assets/home/logo.png');
     }
   },
   methods: {
-    apply (name) {
+    apply(name) {
       if (this.getLoginStatus) {
         this.$router.push({
           name
@@ -222,13 +230,13 @@ export default {
         this.$router.push({ path: '/login' });
       }
     },
-    changeCurrentRoute () {
+    changeCurrentRoute() {
       this.activeIndex = null;
       this.$router.push({
         path: '/person'
       });
     },
-    logout () {
+    logout() {
       this.$confirm('确认要退出登录吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -239,7 +247,7 @@ export default {
         });
       });
     },
-    goToRouter (item) {
+    goToRouter(item) {
       console.log(item);
       debugger;
       // 企业问卷需要登录才能进入
@@ -250,11 +258,11 @@ export default {
       }
       if (item && item.path) this.$router.push(item.path);
     },
-    searchRouter (item, i) {
+    searchRouter(item, i) {
       this.searchIndex = i;
       this.itemPath = item.path;
     },
-    searchByKeyword (item, index) {
+    searchByKeyword(item, index) {
       if (this.itemPath !== this.currentPath) {
         this.$router.push({ name: this.itemPath });
       }
@@ -265,7 +273,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "../../style/mixin.less";
+@import '../../style/mixin.less';
 .home_head_layout {
   // position: fixed;
   // top: 0;
@@ -301,9 +309,9 @@ export default {
           font-size: 13px;
           margin-right: 8px;
         }
-        .erweima:hover{
+        .erweima:hover {
           position: relative;
-          &:after{
+          &:after {
             content: '';
             position: absolute;
             top: 25px;
@@ -332,7 +340,7 @@ export default {
         }
       }
       /deep/ .el-dropdown {
-        color: rgba(255,255,255,100);
+        color: rgba(255, 255, 255, 100);
       }
       .login_box_item:hover {
         color: rgba(255, 255, 255, 1);
@@ -419,9 +427,8 @@ export default {
           }
           .searchTxt {
             width: 440px;
-            height: 36px;
+            height: 30px;
             display: inline-block;
-            // background-color: rgba(255, 255, 255, 1);
             border-top: 1px solid rgba(255, 255, 255, 1);
             border-left: 1px solid rgba(255, 255, 255, 1);
             border-bottom: 1px solid rgba(255, 255, 255, 1);
@@ -509,16 +516,16 @@ export default {
         cursor: pointer;
         width: 110px;
         text-align: center;
-        color: rgba(255,255,255, .8);
+        color: rgba(255, 255, 255, 0.8);
         font-size: 17px;
         .childList {
           position: absolute;
           width: 100%;
           font-size: 16px;
           text-align: center;
-          transition: .5s all;
+          transition: 0.5s all;
           opacity: 0;
-          box-shadow: 0 0 20px 0 rgba(0,0,0,.1);
+          box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
           &_item {
             color: rgba(31, 35, 38, 100);
             background-color: rgba(255, 255, 255, 1);
@@ -529,15 +536,16 @@ export default {
             color: rgba(18, 122, 230, 100);
             background-color: rgba(199, 238, 253, 1);
           }
-          &_item:hover,&_item:active{
+          &_item:hover,
+          &_item:active {
             color: rgba(18, 122, 230, 100);
             background-color: rgba(199, 238, 253, 1);
           }
         }
-        &:hover{
+        &:hover {
           color: #fff;
-          .childList{
-            animation: menu .5s ease-in-out forwards;
+          .childList {
+            animation: menu 0.5s ease-in-out forwards;
             // animation-delay: 0.2s;
           }
         }
@@ -552,11 +560,11 @@ export default {
       @keyframes menu {
         0% {
           opacity: 0;
-          transform: scale(1)
+          transform: scale(1);
         }
         100% {
           opacity: 1;
-          transform: scale(1)
+          transform: scale(1);
         }
       }
     }
@@ -565,16 +573,16 @@ export default {
 </style>
 
 <style lang="less" scoped>
-@import "../../style/mixin.less";
- @keyframes menu {
- 0% {
-   opacity: 0;
-   transform: scale(1)
- }
- 100% {
-   opacity: 1;
-   transform: scale(1)
- }
+@import '../../style/mixin.less';
+@keyframes menu {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 .home_header {
   position: fixed;
@@ -608,9 +616,9 @@ export default {
           font-size: 13px;
           margin-right: 8px;
         }
-        .erweima:hover{
+        .erweima:hover {
           position: relative;
-          &:after{
+          &:after {
             content: '';
             position: absolute;
             top: 25px;
@@ -672,7 +680,6 @@ export default {
           box-sizing: border-box;
           width: 80%;
           display: flex;
-          justify-content: flex-end;
           color: #535b64;
           font-size: 14px;
           align-items: center;
@@ -711,7 +718,7 @@ export default {
           }
           .searchTxt {
             width: 440px;
-            height: 36px;
+            height: 30px;
             display: inline-block;
             color: #bbc9d7;
             background-color: rgba(255, 255, 255, 1);
@@ -796,13 +803,13 @@ export default {
         // margin-right: 42px;
         width: 110px;
         text-align: center;
-        color: rgba(255,255,255, .8);
+        color: rgba(255, 255, 255, 0.8);
         font-size: 17px;
         &:hover {
           color: #fff;
           background-color: #328ff0;
-          .childList{
-            animation: menu .5s ease-in-out forwards;
+          .childList {
+            animation: menu 0.5s ease-in-out forwards;
             // animation-delay: 0.1s;
           }
         }
@@ -811,21 +818,22 @@ export default {
           width: 100%;
           font-size: 16px;
           text-align: center;
-          transition: .5s all;
+          transition: 0.5s all;
           opacity: 0;
-          box-shadow: 0 0 20px 0 rgba(0,0,0,.1);
+          box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
           &_item {
             color: rgba(31, 35, 38, 100);
             background-color: rgba(255, 255, 255, 1);
             height: 40px;
             line-height: 40px;
-            margin:0;
+            margin: 0;
           }
           .childActive {
             color: rgba(18, 122, 230, 100);
             background-color: rgba(199, 238, 253, 1);
           }
-          &_item:hover,&_item:active {
+          &_item:hover,
+          &_item:active {
             color: rgba(18, 122, 230, 100);
             background-color: rgba(199, 238, 253, 1);
           }

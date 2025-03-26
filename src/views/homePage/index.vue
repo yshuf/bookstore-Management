@@ -13,7 +13,7 @@
         :showList="false"
       >
       </base-tree-anchor>
-       <!-- <div class="header-list">
+      <!-- <div class="header-list">
         <div
           :class="['header-list-item', i === currentIndex ? 'active' : '']"
           v-for="(item, i) in NavList"
@@ -42,7 +42,6 @@
         <!-- <div class="home-report"></div> -->
         <div id="xqf" class="section-item"><ent-service></ent-service></div>
         <!-- <div class="home-service"></div> -->
-        <div id="xqt" class="section-item"><ent-notice></ent-notice></div>
         <ent-link></ent-link>
       </div>
       <div class="floating-window" v-if="showWindow">
@@ -59,12 +58,11 @@
 </template>
 <script>
 // eslint-disable-next-line quotes
-import banner from "./components/banner.vue";
+import banner from './components/banner.vue';
 // eslint-disable-next-line quotes
-import entSee from "./components/ent-see/index.vue";
+import entSee from './components/ent-see/index.vue';
 import entReport from './components/ent-report/index.vue';
 import entService from './components/ent-service/index.vue';
-import entNotice from './components/ent-notice/index.vue';
 import entLink from './components/ent-link/index.vue';
 import BaseTreeAnchor from '@/components/tree-anchor';
 import { leftNavTree } from '@/common/commonConstant';
@@ -78,29 +76,28 @@ export default {
     entSee,
     entReport,
     entService,
-    entNotice,
     entLink,
     BaseTreeAnchor
   },
-  data () {
+  data() {
     return {
       NavList: leftNavTree,
       currentIndex: '',
       showWindow: false
     };
   },
-  created () {
+  created() {
     window.addEventListener('scroll', this.scroll, true);
   },
-  mounted () {},
+  mounted() {},
   computed: {
     ...mapGetters(['getLoginStatus'])
   },
-  destroyed () {
+  destroyed() {
     window.removeEventListener('scroll', this.scroll, true);
   },
   methods: {
-    scroll (e) {
+    scroll(e) {
       // 滚动距离 大于 第一个导航切换距离
       if (
         e.target.scrollingElement.scrollTop >
@@ -111,21 +108,21 @@ export default {
         $('.nav-list').removeClass('active');
       }
     },
-    getImgUrl (index) {
+    getImgUrl(index) {
       const i = index + 1;
       return require('@/assets/images/ent/navImg' + i + '.png');
     },
-    getActiveAnchor (data) {
-      this.currentIndex = this.NavList.findIndex((item) => {
+    getActiveAnchor(data) {
+      this.currentIndex = this.NavList.findIndex(item => {
         return item.id === data;
       });
     },
-    changeSelect (item, i) {
+    changeSelect(item, i) {
       this.currentIndex = i;
       this.$refs.anchorTree.goAnchor(item.id, item.id);
     },
     // 五企培育企业入口
-    enterQuestionnaire () {
+    enterQuestionnaire() {
       if (this.getLoginStatus) {
         this.getEntIsHasSpecialForm();
       } else {
@@ -134,9 +131,9 @@ export default {
       }
     },
     // 获取当前登录企业有特殊表单
-    getEntIsHasSpecialForm () {
+    getEntIsHasSpecialForm() {
       getEntSpecialForm()
-        .then((res) => {
+        .then(res => {
           if (res.code === '000000') {
             if (res.data) {
               this.$router.push({
@@ -152,7 +149,7 @@ export default {
             }
           }
         })
-        .catch((err) => {
+        .catch(err => {
           this.$message.error(err.msg);
         });
     }
@@ -206,7 +203,7 @@ export default {
       }
       &.active {
         background-color: rgba(245, 245, 245, 1);
-         &::before {
+        &::before {
           content: '';
           display: block;
           position: absolute;
@@ -249,7 +246,7 @@ export default {
       }
       &.active {
         background-color: rgba(245, 245, 245, 1);
-         &::before {
+        &::before {
           content: '';
           display: block;
           position: absolute;

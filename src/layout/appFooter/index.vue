@@ -1,47 +1,63 @@
 <template>
-    <article class="footer">
-        <section class="footer_box">
-          <div class="footer_nav">
-            <div class="footer_nav_left">
-              <div class="system_des">
-                <div class="nav_title">登录入口：</div>
-                <div class="nav_list">
-                  <span class="nav_list_item" @click="skipLogin(item)" v-for="(item,index) in loginList" :key="index">{{item.name}}</span>
-                </div>
-              </div>
-              <div class="system_des">
-                <div class="nav_title">导&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;航：</div>
-                <div class="nav_list">
-                  <span  class="nav_list_item" @click="JumpList(item)"  v-for="(item,index) in navList" :key="index">{{item.label}}</span>
-                </div>
-              </div>
-              <div class="system_des tips">请使用1920*1080分辨率/IE9及以上版本、Chrome、Firefox和360等主流浏览器浏览本网站</div>
-            </div>
-            <div class="telephone">
-              <div>热线电话</div>
-              <div class="phone">xxxxxxxx</div>
+  <article class="footer">
+    <section class="footer_box">
+      <div class="footer_nav">
+        <div class="footer_nav_left">
+          <div class="system_des">
+            <div class="nav_title">登录入口：</div>
+            <div class="nav_list">
+              <span
+                class="nav_list_item"
+                @click="skipLogin(item)"
+                v-for="(item, index) in loginList"
+                :key="index"
+                >{{ item.name }}</span
+              >
             </div>
           </div>
-          <div class="footer_des">
-              <div class="footer_center">
-                <div>
-                      主办单位：书店经济与信息化局
-                    <span>技术支持：xxxxxxxx </span><span>备案编号 浙ICP备17003364号-3</span>
-                </div>
-                <div>
-                  Copyright ©2019-2021  |  xxxxxxxx  |  公安部备案号：xxxxxxxx
-                </div>
-              </div>
+          <div class="system_des">
+            <div class="nav_title">
+              导&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;航：
+            </div>
+            <div class="nav_list">
+              <span
+                class="nav_list_item"
+                @click="JumpList(item)"
+                v-for="(item, index) in navList"
+                :key="index"
+                >{{ item.label }}</span
+              >
+            </div>
           </div>
-        </section>
-    </article>
+          <div class="system_des tips">
+            请使用1920*1080分辨率/IE9及以上版本、Chrome、Firefox和360等主流浏览器浏览本网站
+          </div>
+        </div>
+        <div class="telephone">
+          <div>热线电话</div>
+          <div class="phone">xxxxxxxx</div>
+        </div>
+      </div>
+      <div class="footer_des">
+        <div class="footer_center">
+          <div>
+            主办单位：书店
+            <span>技术支持：xxxxxxxx </span><span>备案编号 </span>
+          </div>
+          <div>
+            Copyright ©2019-2021 | xxxxxxxx | 备案号：xxxxxxxx
+          </div>
+        </div>
+      </div>
+    </section>
+  </article>
 </template>
 
 <script>
 import { FOOTER_MENUS } from '@/common/commonConstant';
 export default {
   name: 'AppFooter',
-  data () {
+  data() {
     return {
       loginList: [
         {
@@ -51,14 +67,15 @@ export default {
         {
           name: '服务机构（个人）入驻',
           type: 'serve'
-        }],
+        }
+      ],
       navList: FOOTER_MENUS,
       marginTop: 0
     };
   },
   watch: {
     $route: {
-      handler (to, from) {
+      handler(to, from) {
         const path = to.path.split('/').slice(1) || [];
         if (path.length > 0) {
           const currentPath = path[0] || '';
@@ -74,7 +91,7 @@ export default {
   },
   methods: {
     // 跳转对应列表
-    JumpList (item) {
+    JumpList(item) {
       // 企业问卷需要登录才能进入
       if (item.path == '/business' && !this.getLoginStatus) {
         this.$message.warning('请先登录');
@@ -99,7 +116,7 @@ export default {
     width: 100%;
     height: 100%;
     margin: 0 auto;
-    color: #7793B0;
+    color: #7793b0;
     font-size: 12px;
     .footer_nav {
       .widthMiddle;
@@ -122,7 +139,7 @@ export default {
           &:nth-child(2n) {
             margin-top: 2px;
           }
-          &:last-child{
+          &:last-child {
             margin-bottom: 21px;
           }
           .nav_title {
@@ -136,17 +153,17 @@ export default {
               margin-bottom: 15px;
               display: inline-block;
               cursor: pointer;
-              &:hover{
+              &:hover {
                 color: rgba(255, 255, 255, 100);
               }
             }
           }
         }
         .tips {
-          font-size: 12px
+          font-size: 12px;
         }
       }
-      .telephone{
+      .telephone {
         flex: 1;
         text-align: center;
         font-size: 14px;

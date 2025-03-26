@@ -1,13 +1,13 @@
 <template>
   <div class="step-content">
-      <div class="step-item" v-for="(item, index) in stepList" :key="index">
-        <div :class="['step-item-num', item.highlight ? 'active' : '']">
-          {{ item.num }}
-        </div>
-        <div class="step-item-desc">{{ item.desc }}</div>
-        <div class="step-item-line" v-if="index !== stepList.length-1"></div>
+    <div class="step-item" v-for="(item, index) in stepList" :key="index">
+      <div :class="['step-item-num', item.highlight ? 'active' : '']">
+        {{ item.num }}
       </div>
+      <div class="step-item-desc">{{ item.desc }}</div>
+      <div class="step-item-line" v-if="index !== stepList.length - 1"></div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -19,10 +19,8 @@ export default {
       default: () => []
     }
   },
-  data () {
-    return {
-
-    };
+  data() {
+    return {};
   }
 };
 </script>

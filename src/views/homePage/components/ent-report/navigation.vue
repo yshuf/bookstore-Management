@@ -4,7 +4,7 @@
       <el-carousel-item v-for="(item, index) in navData" :key="index">
         <div class="nav-list">
           <div
-            @click.prevent="JumpLink(ele.id,0)"
+            @click.prevent="JumpLink(ele.id, 0)"
             class="nav-list-item"
             @mouseenter="showDetail(index, idx, true)"
             @mouseleave="showDetail(index, idx, false)"
@@ -17,8 +17,8 @@
               </div>
               <div class="nav-list-item-normal-title">{{ ele.name }}</div>
               <div class="nav-list-item-normal-desc">
-                申报日期: {{ ele.startTime | parseTime("{y}-{m}-{d}") }}至{{
-                  ele.endTime | parseTime("{y}-{m}-{d}")
+                申报日期: {{ ele.startTime | parseTime('{y}-{m}-{d}') }}至{{
+                  ele.endTime | parseTime('{y}-{m}-{d}')
                 }}
               </div>
             </div>
@@ -37,31 +37,44 @@
                 </div>
                 <div>
                   <span>发布日期：</span
-                  ><span>{{ ele.createTime | parseTime("{y}-{m}-{d}") }}</span>
+                  ><span>{{ ele.createTime | parseTime('{y}-{m}-{d}') }}</span>
                 </div>
                 <div>
                   <span>申报日期：</span
                   ><span
-                    >{{ ele.startTime | parseTime("{y}-{m}-{d}") }}至{{
-                      ele.endTime | parseTime("{y}-{m}-{d}")
+                    >{{ ele.startTime | parseTime('{y}-{m}-{d}') }}至{{
+                      ele.endTime | parseTime('{y}-{m}-{d}')
                     }}</span
                   >
                 </div>
               </div>
             </div>
 
-            <div v-if="ele.mouseOver" class="number">{{ (index * 5 + idx + 1 < 10) ? `0${index * 5 + idx + 1}` : index * 5 + idx + 1 }}</div>
+            <div v-if="ele.mouseOver" class="number">
+              {{
+                index * 5 + idx + 1 < 10
+                  ? `0${index * 5 + idx + 1}`
+                  : index * 5 + idx + 1
+              }}
+            </div>
 
             <div class="nav-list-item-button">
-              <div class="nav-list-item-button-hover" @click.stop="JumpLink(ele.id,0)">申报指南</div>
-              <div v-if="ele.url" @click.stop="JumpLink(ele.url,1)">网上申报</div>
+              <div
+                class="nav-list-item-button-hover"
+                @click.stop="JumpLink(ele.id, 0)"
+              >
+                申报指南
+              </div>
+              <div v-if="ele.url" @click.stop="JumpLink(ele.url, 1)">
+                网上申报
+              </div>
             </div>
           </div>
         </div>
       </el-carousel-item>
     </el-carousel>
     <div class="more-box">
-      <div class="more" @click="$router.push({name:'navigation'})">
+      <div class="more" @click="$router.push({ name: 'navigation' })">
         查看更多 <i class="el-icon-arrow-right"></i>
       </div>
     </div>
@@ -69,8 +82,8 @@
 </template>
 <script>
 // import { getList } from '@api/homePage/homePage.js'
-import _chunk from 'lodash/chunk'
-import { IndexModuleSkipList } from '@/common/commonConstant'
+import _chunk from 'lodash/chunk';
+import { IndexModuleSkipList } from '@/common/commonConstant';
 export default {
   data() {
     return {
@@ -147,10 +160,10 @@ export default {
           }
         ]
       ]
-    }
+    };
   },
   created() {
-    this.getListData()
+    this.getListData();
   },
   methods: {
     /**
@@ -159,19 +172,21 @@ export default {
      *  dataType：
      */
     JumpLink(params, type) {
-      if (type === 0) { // 内链
-        this.IndexSkipUrl.map((item) => {
+      if (type === 0) {
+        // 内链
+        this.IndexSkipUrl.map(item => {
           if (item.id === 2) {
             this.$router.push({
               name: item.detailUrl,
               query: {
                 id: params
               }
-            })
+            });
           }
-        })
-      } else { // 外链
-        window.open(params)
+        });
+      } else {
+        // 外链
+        window.open(params);
       }
     },
     /**
@@ -183,12 +198,12 @@ export default {
     showDetail(index, idx, status) {
       this.navData.map(item => {
         item.map(ele => {
-          ele.mouseOver = false
-        })
-      })
+          ele.mouseOver = false;
+        });
+      });
 
       if (this.navData[index][idx]) {
-        this.navData[index][idx].mouseOver = status
+        this.navData[index][idx].mouseOver = status;
       }
     },
     /**
@@ -197,7 +212,7 @@ export default {
     getListData() {
       const params = {
         type: 2
-      }
+      };
 
       getList(params).then(res => {
         if (res.code == '000000') {
@@ -205,21 +220,21 @@ export default {
             return {
               ...item,
               mouseOver: false
-            }
-          })
+            };
+          });
 
-          this.navData = _chunk(data, 5)
+          this.navData = _chunk(data, 5);
         }
-      })
+      });
     }
   }
-}
+};
 </script>
 <style lang="less" scoped>
 .nav {
   width: 100%;
   padding: 20px;
-
+  box-sizing: border-box;
   .nav-list {
     display: flex;
     cursor: pointer;
@@ -334,8 +349,8 @@ export default {
       // border-radius: 8px;
 
       .nav-list-item-button-hover {
-          background: #fff!important;
-          color: rgba(18, 122, 230, 1)!important;
+        background: #fff !important;
+        color: rgba(18, 122, 230, 1) !important;
       }
     }
 
